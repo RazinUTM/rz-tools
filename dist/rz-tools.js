@@ -150,8 +150,9 @@
   // Banded contour painter: tri([[x,y,v],[x,y,v],[x,y,v]]) collects clipped polygons per band; paint(g) fills them.
   U.bandPainter = function (lo, hi, diverging, C, oneSided) {
     var scales = U.scales(C), nb, cols, i;
-    if (diverging && oneSided && lo >= 0 && hi > lo) { nb = 10; cols = U.ramp([scales.div[1], scales.div[2]], nb + 2).slice(2); }
-    else if (diverging && oneSided && hi <= 0 && hi > lo) { nb = 10; cols = U.ramp([scales.div[0], scales.div[1]], nb + 2).slice(0, nb); }
+    var tiny = 1e-9 * Math.max(Math.abs(lo), Math.abs(hi), 1e-30);
+    if (diverging && oneSided && lo >= 0) { if (!(hi - lo > tiny)) lo = 0; if (!(hi > lo)) hi = lo + 1; nb = 10; cols = U.ramp([scales.div[1], scales.div[2]], nb + 2).slice(2); }
+    else if (diverging && oneSided && hi <= 0) { if (!(hi - lo > tiny)) hi = 0; if (!(hi > lo)) lo = hi - 1; nb = 10; cols = U.ramp([scales.div[0], scales.div[1]], nb + 2).slice(0, nb); }
     else if (diverging) { var mx = Math.max(Math.abs(lo), Math.abs(hi)) || 1; lo = -mx; hi = mx; nb = 11; cols = U.ramp(scales.div, nb); }
     else { if (!(hi - lo > 1e-9 * Math.max(Math.abs(hi), 1e-30))) lo = hi - (Math.abs(hi) || 1); nb = 10; cols = U.ramp(scales.seq, nb); }
     var span = hi - lo, lev = []; for (i = 0; i <= nb; i++) lev.push(lo + span * i / nb);
