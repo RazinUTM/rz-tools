@@ -1,0 +1,71 @@
+<div lang="en">
+<details open><summary>How the solver works</summary><div>
+<p>The principle of virtual work turns plane stress elasticity into a linear system K u = f, assembled element by element:</p>
+<div class="rzt-eq">K = &Sigma;<sub>e</sub> &int;<sub>&Omega;e</sub> B<sup>T</sup> D B t dA &nbsp;&nbsp;&nbsp; f = &Sigma;<sub>e</sub> &int;<sub>&Gamma;e</sub> N<sup>T</sup> t&#x0304; t ds &nbsp;&nbsp;&nbsp; D = E/(1 &minus; &nu;&sup2;) [1 &nu; 0; &nu; 1 0; 0 0 (1 &minus; &nu;)/2]</div>
+<ul>
+<li><b>T3</b> (constant strain triangle): linear displacement, one strain state per element.</li>
+<li><b>Q4</b> (bilinear quadrilateral, 2 &times; 2 Gauss points): it cannot represent pure bending without spurious shear strain, so it locks in bending.</li>
+<li><b>QM6</b>: Q4 plus the incompatible modes 1 &minus; &xi;&sup2; and 1 &minus; &eta;&sup2;, condensed out at element level. Taylor&rsquo;s correction makes it pass the patch test on distorted meshes. On rectangles it bends almost exactly.</li>
+<li><b>Q8</b> (serendipity quadrilateral, 3 &times; 3 Gauss points): quadratic displacement with curved edges, so the hole boundary is followed closely.</li>
+</ul>
+<p>The equations are solved with a skyline L D L<sup>T</sup> factorisation, the method used in most classic FE textbooks. Nodes are numbered along the shorter side of the mesh to keep the profile narrow, and prescribed displacements are moved to the right-hand side.</p>
+<p>Stresses are computed at the Gauss points and extrapolated to the nodes. <b>Raw</b> shows each element&rsquo;s own field, so the jumps between elements reveal the discretisation error. <b>Averaged</b> takes the mean at each node, as most commercial codes do by default. The error is measured in the energy norm,</p>
+<div class="rzt-eq">&#8214;e&#8214;<sub>E</sub> / &#8214;u&#8214;<sub>E</sub> = [ &int; (&sigma; &minus; &sigma;<sup>h</sup>)<sup>T</sup> D<sup>&minus;1</sup> (&sigma; &minus; &sigma;<sup>h</sup>) dA / &int; &sigma;<sup>T</sup> D<sup>&minus;1</sup> &sigma; dA ]<sup>1/2</sup></div>
+<p>It uses the raw finite element stresses, 4 &times; 4 Gauss points per quadrilateral and 7 points per triangle. Material: E = 200 GPa, thickness t = 10 mm.</p>
+</div></details>
+<details><summary>The three benchmarks</summary><div>
+<p><b>Cantilever with end shear.</b> L = 2 m, depth D = L / (L/D), and P = 20 kN applied as a parabolic shear traction at x = L. Timoshenko and Goodier&rsquo;s exact solution, with I = tD&sup3;/12, is</p>
+<div class="rzt-eq">&sigma;<sub>xx</sub> = P (L &minus; x) y / I &nbsp;&nbsp; &tau;<sub>xy</sub> = &minus;P (D&sup2;/4 &minus; y&sup2;) / 2I &nbsp;&nbsp; v(L, 0) = &minus;P L&sup3;/3EI &minus; (4 + 5&nu;) P D&sup2; L / 24EI</div>
+<p>The <b>exact</b> support prescribes the exact displacements at x = 0, so the finite element solution converges to it. The <b>clamped</b> support fixes every node there; the exact solution then no longer applies, and the corners become stress singularities.</p>
+<p><b>Plate with a circular hole.</b> A quarter of a 2 m &times; 2 m plate with hole radius a under &sigma;<sub>0</sub> = 100 MPa, with symmetry rollers on x = 0 and y = 0. Kirsch&rsquo;s solution for an infinite plate gives &sigma;<sub>&theta;&theta;</sub>(a, &theta;) = &sigma;<sub>0</sub> (1 &minus; 2 cos 2&theta;), so the stress concentration factor is 3 at the top of the hole. Applying Kirsch&rsquo;s tractions on the outer edges makes the quarter plate an exact benchmark; uniform tension models a real finite plate instead.</p>
+<p><b>Patch test.</b> A unit square under uniform tension on a distorted mesh. Any element that converges must reproduce this constant stress state exactly; it is the practical form of the consistency requirement.</p>
+</div></details>
+<details><summary>Things to try</summary><div>
+<ol>
+<li>Cantilever, one element through the depth. Read the tip deflection for T3, Q4, QM6 and Q8. Then increase the mesh density for Q4 and watch it approach the exact value slowly.</li>
+<li>Run the convergence study on the cantilever. T3, Q4 and QM6 fall with slope &minus;1/2 (error &prop; h), Q8 with slope &minus;1 (error &prop; h&sup2;). QM6 starts far lower but converges at the same rate as Q4.</li>
+<li>Choose Q4 on a coarse mesh and switch the stresses from Averaged to Raw. The jumps between elements are the error that averaging hides. Look at &tau;<sub>xy</sub> through the depth as well.</li>
+<li>Add distortion of 0.3 to the cantilever and compare QM6 with Q8. QM6 loses much of its bending advantage on distorted elements, while Q8 barely changes.</li>
+<li>Plate with a hole, Q4: refine from 2 to 16 and follow the stress concentration factor towards 3. Plot &sigma;<sub>&theta;&theta;</sub> around the hole, where compression appears at &theta; = 0.</li>
+<li>Switch the outer edges to uniform tension and enlarge the hole. The stress concentration rises well above Kirsch&rsquo;s value of 3: this is the finite-width effect.</li>
+<li>Clamp the cantilever and refine. The maximum von Mises stress keeps rising at the corners instead of converging, which is the signature of a stress singularity.</li>
+<li>Run the patch test with each element and press &ldquo;New layout&rdquo; a few times. Every element passes to machine precision.</li>
+</ol>
+</div></details>
+</div>
+
+<div lang="ms">
+<details open><summary>Bagaimana solver berfungsi</summary><div>
+<p>Prinsip kerja maya menukar keanjalan plane stress kepada sistem linear K u = f, yang dipasang element demi element:</p>
+<div class="rzt-eq">K = &Sigma;<sub>e</sub> &int;<sub>&Omega;e</sub> B<sup>T</sup> D B t dA &nbsp;&nbsp;&nbsp; f = &Sigma;<sub>e</sub> &int;<sub>&Gamma;e</sub> N<sup>T</sup> t&#x0304; t ds &nbsp;&nbsp;&nbsp; D = E/(1 &minus; &nu;&sup2;) [1 &nu; 0; &nu; 1 0; 0 0 (1 &minus; &nu;)/2]</div>
+<ul>
+<li><b>T3</b> (constant strain triangle): sesaran linear, satu keadaan terikan bagi setiap element.</li>
+<li><b>Q4</b> (sisi empat bilinear, 2 &times; 2 Gauss points): ia tidak boleh mewakili lenturan tulen tanpa terikan ricih palsu, jadi ia mengalami locking dalam lenturan.</li>
+<li><b>QM6</b>: Q4 ditambah incompatible modes 1 &minus; &xi;&sup2; dan 1 &minus; &eta;&sup2;, yang dikondensasi pada aras element. Pembetulan Taylor membolehkannya lulus patch test pada mesh terherot. Pada segi empat tepat ia melentur hampir tepat.</li>
+<li><b>Q8</b> (sisi empat serendipity, 3 &times; 3 Gauss points): sesaran kuadratik dengan sisi melengkung, jadi sempadan lubang diikuti dengan rapat.</li>
+</ul>
+<p>Persamaan diselesaikan dengan pemfaktoran skyline L D L<sup>T</sup>, kaedah yang digunakan dalam kebanyakan buku teks FE klasik. Nod dinomborkan sepanjang sisi mesh yang lebih pendek supaya profil kekal sempit, dan sesaran yang ditetapkan dipindahkan ke sebelah kanan persamaan.</p>
+<p>Tegasan dikira pada Gauss points dan diekstrapolasi ke nod. <b>Mentah</b> memaparkan medan setiap element itu sendiri, jadi lompatan antara element mendedahkan ralat discretisation. <b>Purata</b> mengambil min pada setiap nod, seperti kebanyakan perisian komersial secara lalai. Ralat diukur dalam energy norm,</p>
+<div class="rzt-eq">&#8214;e&#8214;<sub>E</sub> / &#8214;u&#8214;<sub>E</sub> = [ &int; (&sigma; &minus; &sigma;<sup>h</sup>)<sup>T</sup> D<sup>&minus;1</sup> (&sigma; &minus; &sigma;<sup>h</sup>) dA / &int; &sigma;<sup>T</sup> D<sup>&minus;1</sup> &sigma; dA ]<sup>1/2</sup></div>
+<p>Ia menggunakan tegasan finite element mentah, 4 &times; 4 Gauss points bagi setiap sisi empat dan 7 titik bagi setiap segi tiga. Bahan: E = 200 GPa, ketebalan t = 10 mm.</p>
+</div></details>
+<details><summary>Tiga benchmark</summary><div>
+<p><b>Cantilever dengan ricih hujung.</b> L = 2 m, kedalaman D = L / (L/D), dan P = 20 kN dikenakan sebagai traction ricih parabola pada x = L. Exact solution Timoshenko dan Goodier, dengan I = tD&sup3;/12, ialah</p>
+<div class="rzt-eq">&sigma;<sub>xx</sub> = P (L &minus; x) y / I &nbsp;&nbsp; &tau;<sub>xy</sub> = &minus;P (D&sup2;/4 &minus; y&sup2;) / 2I &nbsp;&nbsp; v(L, 0) = &minus;P L&sup3;/3EI &minus; (4 + 5&nu;) P D&sup2; L / 24EI</div>
+<p>Support <b>exact</b> menetapkan sesaran exact pada x = 0, jadi penyelesaian finite element menumpu kepadanya. Support <b>clamped</b> menetapkan setiap nod di situ; exact solution tidak lagi terpakai, dan sudut-sudutnya menjadi stress singularity.</p>
+<p><b>Plat dengan lubang bulat.</b> Satu perempat daripada plat 2 m &times; 2 m dengan jejari lubang a di bawah &sigma;<sub>0</sub> = 100 MPa, dengan roller simetri pada x = 0 dan y = 0. Penyelesaian Kirsch bagi plat tak terhingga memberi &sigma;<sub>&theta;&theta;</sub>(a, &theta;) = &sigma;<sub>0</sub> (1 &minus; 2 cos 2&theta;), jadi faktor kepekatan tegasan ialah 3 di puncak lubang. Mengenakan traction Kirsch pada sisi luar menjadikan plat suku ini benchmark exact; tegangan seragam pula memodelkan plat terhingga sebenar.</p>
+<p><b>Patch test.</b> Segi empat sama unit di bawah tegangan seragam pada mesh terherot. Mana-mana element yang menumpu mesti menghasilkan semula keadaan tegasan malar ini dengan tepat; inilah bentuk praktikal syarat consistency.</p>
+</div></details>
+<details><summary>Cubaan untuk anda</summary><div>
+<ol>
+<li>Cantilever, satu element merentas kedalaman. Baca pesongan hujung bagi T3, Q4, QM6 dan Q8. Kemudian naikkan ketumpatan mesh bagi Q4 dan lihat ia menghampiri nilai exact dengan perlahan.</li>
+<li>Jalankan kajian convergence pada cantilever. T3, Q4 dan QM6 jatuh dengan cerun &minus;1/2 (ralat &prop; h), Q8 dengan cerun &minus;1 (ralat &prop; h&sup2;). QM6 bermula jauh lebih rendah tetapi menumpu pada kadar yang sama dengan Q4.</li>
+<li>Pilih Q4 pada mesh kasar dan tukar tegasan dari Purata ke Mentah. Lompatan antara element ialah ralat yang disembunyikan oleh purata. Lihat juga &tau;<sub>xy</sub> merentas kedalaman.</li>
+<li>Tambah herotan 0.3 pada cantilever dan bandingkan QM6 dengan Q8. QM6 kehilangan sebahagian besar kelebihan lenturannya pada element terherot, manakala Q8 hampir tidak berubah.</li>
+<li>Plat berlubang, Q4: haluskan dari 2 ke 16 dan ikuti faktor kepekatan tegasan menghampiri 3. Plotkan &sigma;<sub>&theta;&theta;</sub> sekeliling lubang, di mana mampatan muncul pada &theta; = 0.</li>
+<li>Tukar sisi luar ke tegangan seragam dan besarkan lubang. Kepekatan tegasan naik jauh melebihi nilai Kirsch iaitu 3: inilah kesan lebar terhingga.</li>
+<li>Clamp cantilever dan haluskan mesh. Tegasan von Mises maksimum terus meningkat di sudut dan tidak menumpu, iaitu tanda stress singularity.</li>
+<li>Jalankan patch test dengan setiap element dan tekan &ldquo;Susunan baharu&rdquo; beberapa kali. Setiap element lulus pada ketepatan mesin.</li>
+</ol>
+</div></details>
+</div>

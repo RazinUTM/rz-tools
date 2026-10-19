@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MLS Approximation Explorer · rz-tools</title>
-<meta name="description" content="Interactive Moving Least Squares (MLS) approximation explorer: dilation parameter, basis, weight function, shape functions and error sweep.">
+<title>{{TITLE}} · rz-tools</title>
+<meta name="description" content="{{DESC}}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
@@ -52,18 +52,18 @@ body[data-rzlang="en"] [lang="ms"], body[data-rzlang="ms"] [lang="en"] { display
     </div>
   </header>
   <div class="intro">
-    <p class="eyebrow"><span lang="en">Interactive tool &middot; Meshfree methods</span><span lang="ms">Alatan interaktif &middot; Meshfree methods</span></p>
-    <h1>MLS Approximation Explorer</h1>
-    <p class="lead" lang="en">Change the dilation parameter &alpha;, the basis and the weight function, and watch how the Moving Least Squares approximation, its shape functions and its error respond. The sweep finds the &alpha; that minimises the error for your current settings.</p>
-    <p class="lead" lang="ms">Ubah dilation parameter &alpha;, basis dan weight function, dan lihat bagaimana Moving Least Squares approximation, shape functions dan ralatnya bertindak balas. Sweep mencari &alpha; yang meminimumkan ralat bagi tetapan semasa anda.</p>
+    <p class="eyebrow"><span lang="en">Interactive tool &middot; {{EYEBROW}}</span><span lang="ms">Alatan interaktif &middot; {{EYEBROW}}</span></p>
+    <h1>{{TITLE}}</h1>
+    <p class="lead" lang="en">{{LEAD_EN}}</p>
+    <p class="lead" lang="ms">{{LEAD_MS}}</p>
   </div>
 
-  <div data-rz-tool="mls"><p>Loading the interactive tool&hellip; (JavaScript required)</p></div>
+  <div data-rz-tool="{{TOOL}}"><p>Loading the interactive tool&hellip; (JavaScript required)</p></div>
 
   <div class="rzt-doc">
-{{DOC_MLS}}
+{{DOC}}
   </div>
-  <p class="foot">rz-tools v{{VERSION}} &middot; Built for teaching meshfree methods &middot; Faculty of Civil Engineering, Universiti Teknologi Malaysia &middot; <a href="https://people.utm.my/arazin/">people.utm.my/arazin</a> &middot; <a href="https://github.com/RazinUTM/rz-tools">source</a></p>
+  <p class="foot">rz-tools v{{VERSION}} &middot; Faculty of Civil Engineering, Universiti Teknologi Malaysia &middot; <a href="https://people.utm.my/arazin/">people.utm.my/arazin</a> &middot; <a href="https://github.com/RazinUTM/rz-tools">source</a></p>
 </div>
 <script>
 (function () {
