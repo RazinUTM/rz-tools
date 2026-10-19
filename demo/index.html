@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MLS Approximation Explorer · rz-tools</title>
+<meta name="description" content="Interactive Moving Least Squares (MLS) approximation explorer: dilation parameter, basis, weight function, shape functions and error sweep.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* UTM maroon/gold tokens, shared with people.utm.my/arazin */
+:root {
+  --bg: #F4F6FA; --surface: #FFFFFF; --fg: #0F1624; --fg2: #5D6B85; --border: #DDE3EF;
+  --accent: #7B1535; --gold: #C8A020; --tag-bg: #F8EEF0;
+  --font-body: 'Poppins', system-ui, -apple-system, sans-serif; --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0B1020; --surface: #131D35; --fg: #E4EAF6; --fg2: #8A9BBC; --border: #22324F;
+  --accent: #D4607A; --gold: #D4A830; --tag-bg: #2A1520; color-scheme: dark; }
+  :root:not([data-theme="light"]) .rzt.rzt-on { --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414; } }
+:root[data-theme="dark"] {
+  --bg: #0B1020; --surface: #131D35; --fg: #E4EAF6; --fg2: #8A9BBC; --border: #22324F;
+  --accent: #D4607A; --gold: #D4A830; --tag-bg: #2A1520; color-scheme: dark; }
+:root[data-theme="dark"] .rzt.rzt-on { --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); }
+a { color: var(--accent); }
+.page { max-width: 1180px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-right, 0px)) 48px max(16px, env(safe-area-inset-left, 0px)); }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; border-bottom: 1px solid var(--border); }
+.brand { font-weight: 600; font-size: 15px; color: var(--fg); text-decoration: none; }
+.brand em { font-style: normal; color: var(--accent); } .brand span { color: var(--fg2); font-weight: 400; }
+.sw { display: flex; gap: 8px; }
+.seg { display: flex; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.seg button { font: 500 12px var(--font-mono); letter-spacing: .05em; padding: 5px 10px; border: 0; background: var(--surface); color: var(--fg2); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.intro { padding-block: 28px 22px; max-width: 760px; }
+.eyebrow { margin: 0 0 8px; font: 500 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+h1 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 36px); font-weight: 700; letter-spacing: -.01em; line-height: 1.15; text-wrap: balance; }
+.lead { margin: 0; font-size: 16px; line-height: 1.65; color: var(--fg2); }
+.rzt-doc { margin-top: 22px; max-width: 900px; }
+.foot { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--fg2); }
+body[data-rzlang="en"] [lang="ms"], body[data-rzlang="ms"] [lang="en"] { display: none !important; }
+</style>
+</head>
+<body data-rzlang="en">
+<div class="page">
+  <header class="top">
+    <a class="brand" href="https://people.utm.my/arazin/">A R <em>Zainal Abidin</em> <span>&middot; UTM</span></a>
+    <div class="sw">
+      <div class="seg" role="group" aria-label="Language" data-sw="lang"><button type="button" data-v="en" aria-pressed="true">EN</button><button type="button" data-v="ms" aria-pressed="false">BM</button></div>
+      <div class="seg" role="group" aria-label="Theme" data-sw="theme"><button type="button" data-v="light" aria-pressed="false">Light</button><button type="button" data-v="dark" aria-pressed="false">Dark</button></div>
+    </div>
+  </header>
+  <div class="intro">
+    <p class="eyebrow"><span lang="en">Interactive tool &middot; Meshfree methods</span><span lang="ms">Alatan interaktif &middot; Meshfree methods</span></p>
+    <h1>MLS Approximation Explorer</h1>
+    <p class="lead" lang="en">Change the dilation parameter &alpha;, the basis and the weight function, and watch how the Moving Least Squares approximation, its shape functions and its error respond. The sweep finds the &alpha; that minimises the error for your current settings.</p>
+    <p class="lead" lang="ms">Ubah dilation parameter &alpha;, basis dan weight function, dan lihat bagaimana Moving Least Squares approximation, shape functions dan ralatnya bertindak balas. Sweep mencari &alpha; yang meminimumkan ralat bagi tetapan semasa anda.</p>
+  </div>
+
+  <div data-rz-tool="mls"><p>Loading the interactive tool&hellip; (JavaScript required)</p></div>
+
+  <div class="rzt-doc">
+<div lang="en">
+<details open><summary>How MLS works</summary><div>
+<p>Moving Least Squares fits a small weighted polynomial around every point x. Each node I has a weight function w<sub>I</sub>(x) that is zero outside its support domain of radius d<sub>I</sub> = &alpha;h, where h is the nodal spacing and &alpha; is the dilation parameter. The approximation and its shape functions are</p>
+<div class="rzt-eq">u<sup>h</sup>(x) = &Sigma;<sub>I</sub> &phi;<sub>I</sub>(x) u<sub>I</sub> &nbsp;&nbsp;&nbsp; &phi;<sub>I</sub>(x) = p<sup>T</sup>(x) A<sup>&minus;1</sup>(x) w<sub>I</sub>(x) p(x<sub>I</sub>)</div>
+<div class="rzt-eq">A(x) = &Sigma;<sub>I</sub> w<sub>I</sub>(x) p(x<sub>I</sub>) p<sup>T</sup>(x<sub>I</sub>) &nbsp;&nbsp;&nbsp; (m &times; m moment matrix)</div>
+<ul>
+<li><b>&alpha; too small.</b> Some points see fewer than m nodes, A(x) becomes singular and the approximation breaks down. Near the boundary the support is one-sided, so on a regular grid the quadratic basis needs &alpha; &gt; 2 there, but only &alpha; &gt; 1.5 in the interior.</li>
+<li><b>&alpha; too large.</b> Every point averages over many nodes, the fit over-smooths, locality is lost and cond A(x) grows.</li>
+<li><b>In between</b> lies an &alpha;* that minimises the error. It depends on the basis, the weight function, the node layout and the function itself, so the sweep is recomputed for your current settings.</li>
+<li><b>MLS does not interpolate.</b> In general u<sup>h</sup>(x<sub>I</sub>) &ne; u<sub>I</sub>. This is why the Element-Free Galerkin method needs special treatment of essential boundary conditions, such as Lagrange multipliers, penalty, or coupling with finite elements.</li>
+</ul>
+<p>Implementation: shifted and scaled basis p(s) = [1, s, s&sup2;] with s = (x<sub>I</sub> &minus; x)/h, which keeps A(x) well conditioned. Errors are relative L2 norms over 401 sample points on [0, 1]; du/dx is obtained by second-order finite differences of u<sup>h</sup>.</p>
+</div></details>
+<details><summary>Things to try</summary><div>
+<ol>
+<li>Choose f = 1 + 2x &minus; 3x&sup2; with the quadratic basis. The error drops to machine precision for every &alpha; that keeps A(x) non-singular. This is the reproducing, or consistency, property.</li>
+<li>Keep that function and switch to the linear basis. The error now depends on &alpha;. Where is &alpha;*?</li>
+<li>With the quadratic basis, slide &alpha; down from 2.5 towards 1.5. Where does the singular region appear first?</li>
+<li>Pick the tanh function and switch the sweep between u and du/dx. Is &alpha;* the same for both?</li>
+<li>Switch to irregular nodes and press &ldquo;New layout&rdquo; a few times. How do &alpha;* and the singular region move?</li>
+<li>Double the number of nodes and read the error. How fast does it fall with h for each basis?</li>
+</ol>
+</div></details>
+</div>
+
+<div lang="ms">
+<details open><summary>Bagaimana MLS berfungsi</summary><div>
+<p>Moving Least Squares memadankan polinomial berpemberat yang kecil di sekitar setiap titik x. Setiap nod I mempunyai weight function w<sub>I</sub>(x) yang sifar di luar support domain berjejari d<sub>I</sub> = &alpha;h, dengan h ialah jarak antara nod dan &alpha; ialah dilation parameter. Approximation dan shape functions-nya ialah</p>
+<div class="rzt-eq">u<sup>h</sup>(x) = &Sigma;<sub>I</sub> &phi;<sub>I</sub>(x) u<sub>I</sub> &nbsp;&nbsp;&nbsp; &phi;<sub>I</sub>(x) = p<sup>T</sup>(x) A<sup>&minus;1</sup>(x) w<sub>I</sub>(x) p(x<sub>I</sub>)</div>
+<div class="rzt-eq">A(x) = &Sigma;<sub>I</sub> w<sub>I</sub>(x) p(x<sub>I</sub>) p<sup>T</sup>(x<sub>I</sub>) &nbsp;&nbsp;&nbsp; (moment matrix m &times; m)</div>
+<ul>
+<li><b>&alpha; terlalu kecil.</b> Sesetengah titik melihat kurang daripada m nod, A(x) menjadi singular dan approximation gagal. Berhampiran sempadan support hanya sebelah, jadi pada grid seragam basis kuadratik memerlukan &alpha; &gt; 2 di situ, tetapi hanya &alpha; &gt; 1.5 di bahagian dalam.</li>
+<li><b>&alpha; terlalu besar.</b> Setiap titik mempuratakan banyak nod, padanan menjadi terlalu licin, sifat setempat hilang dan cond A(x) meningkat.</li>
+<li><b>Di antaranya</b> terdapat &alpha;* yang meminimumkan ralat. Ia bergantung pada basis, weight function, susunan nod dan fungsi itu sendiri, jadi sweep dikira semula untuk tetapan semasa anda.</li>
+<li><b>MLS tidak menginterpolasi.</b> Secara umum u<sup>h</sup>(x<sub>I</sub>) &ne; u<sub>I</sub>. Inilah sebabnya Element-Free Galerkin method memerlukan rawatan khas bagi essential boundary conditions, seperti Lagrange multipliers, penalty, atau gandingan dengan finite elements.</li>
+</ul>
+<p>Pelaksanaan: basis teranjak dan berskala p(s) = [1, s, s&sup2;] dengan s = (x<sub>I</sub> &minus; x)/h, yang mengekalkan A(x) berkeadaan baik. Ralat ialah norma relatif L2 atas 401 titik sampel pada [0, 1]; du/dx diperoleh melalui finite differences peringkat kedua bagi u<sup>h</sup>.</p>
+</div></details>
+<details><summary>Cubaan untuk anda</summary><div>
+<ol>
+<li>Pilih f = 1 + 2x &minus; 3x&sup2; dengan basis kuadratik. Ralat jatuh ke ketepatan mesin bagi setiap &alpha; yang mengekalkan A(x) tidak singular. Inilah sifat reproducing, atau consistency.</li>
+<li>Kekalkan fungsi itu dan tukar ke basis linear. Ralat kini bergantung pada &alpha;. Di manakah &alpha;*?</li>
+<li>Dengan basis kuadratik, gerakkan &alpha; turun dari 2.5 ke arah 1.5. Di manakah kawasan singular mula-mula muncul?</li>
+<li>Pilih fungsi tanh dan tukar sweep antara u dan du/dx. Adakah &alpha;* sama bagi kedua-duanya?</li>
+<li>Tukar ke nod tak seragam dan tekan &ldquo;Susunan baharu&rdquo; beberapa kali. Bagaimana &alpha;* dan kawasan singular berubah?</li>
+<li>Gandakan bilangan nod dan baca ralatnya. Seberapa pantas ia jatuh dengan h bagi setiap basis?</li>
+</ol>
+</div></details>
+</div>
+
+  </div>
+  <p class="foot">rz-tools v1.0.0 &middot; Built for teaching meshfree methods &middot; Faculty of Civil Engineering, Universiti Teknologi Malaysia &middot; <a href="https://people.utm.my/arazin/">people.utm.my/arazin</a> &middot; <a href="https://github.com/RazinUTM/rz-tools">source</a></p>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  if (!document.body.getAttribute('data-rzlang')) document.body.setAttribute('data-rzlang', 'en');
+  function press(g, v) { document.querySelectorAll('[data-sw="' + g + '"] button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === v)); }); }
+  var dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+  press('theme', dark ? 'dark' : 'light');
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-sw] button'); if (!b) return;
+    var g = b.parentNode.getAttribute('data-sw'), v = b.getAttribute('data-v');
+    if (g === 'lang') document.body.setAttribute('data-rzlang', v); else root.setAttribute('data-theme', v);
+    press(g, v);
+  });
+})();
+</script>
+<script src="../dist/rz-tools.js"></script>
+</body>
+</html>

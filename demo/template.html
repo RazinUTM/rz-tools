@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MLS Approximation Explorer · rz-tools</title>
+<meta name="description" content="Interactive Moving Least Squares (MLS) approximation explorer: dilation parameter, basis, weight function, shape functions and error sweep.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* UTM maroon/gold tokens, shared with people.utm.my/arazin */
+:root {
+  --bg: #F4F6FA; --surface: #FFFFFF; --fg: #0F1624; --fg2: #5D6B85; --border: #DDE3EF;
+  --accent: #7B1535; --gold: #C8A020; --tag-bg: #F8EEF0;
+  --font-body: 'Poppins', system-ui, -apple-system, sans-serif; --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0B1020; --surface: #131D35; --fg: #E4EAF6; --fg2: #8A9BBC; --border: #22324F;
+  --accent: #D4607A; --gold: #D4A830; --tag-bg: #2A1520; color-scheme: dark; }
+  :root:not([data-theme="light"]) .rzt.rzt-on { --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414; } }
+:root[data-theme="dark"] {
+  --bg: #0B1020; --surface: #131D35; --fg: #E4EAF6; --fg2: #8A9BBC; --border: #22324F;
+  --accent: #D4607A; --gold: #D4A830; --tag-bg: #2A1520; color-scheme: dark; }
+:root[data-theme="dark"] .rzt.rzt-on { --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); }
+a { color: var(--accent); }
+.page { max-width: 1180px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-right, 0px)) 48px max(16px, env(safe-area-inset-left, 0px)); }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; border-bottom: 1px solid var(--border); }
+.brand { font-weight: 600; font-size: 15px; color: var(--fg); text-decoration: none; }
+.brand em { font-style: normal; color: var(--accent); } .brand span { color: var(--fg2); font-weight: 400; }
+.sw { display: flex; gap: 8px; }
+.seg { display: flex; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.seg button { font: 500 12px var(--font-mono); letter-spacing: .05em; padding: 5px 10px; border: 0; background: var(--surface); color: var(--fg2); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.intro { padding-block: 28px 22px; max-width: 760px; }
+.eyebrow { margin: 0 0 8px; font: 500 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+h1 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 36px); font-weight: 700; letter-spacing: -.01em; line-height: 1.15; text-wrap: balance; }
+.lead { margin: 0; font-size: 16px; line-height: 1.65; color: var(--fg2); }
+.rzt-doc { margin-top: 22px; max-width: 900px; }
+.foot { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--fg2); }
+body[data-rzlang="en"] [lang="ms"], body[data-rzlang="ms"] [lang="en"] { display: none !important; }
+</style>
+</head>
+<body data-rzlang="en">
+<div class="page">
+  <header class="top">
+    <a class="brand" href="https://people.utm.my/arazin/">A R <em>Zainal Abidin</em> <span>&middot; UTM</span></a>
+    <div class="sw">
+      <div class="seg" role="group" aria-label="Language" data-sw="lang"><button type="button" data-v="en" aria-pressed="true">EN</button><button type="button" data-v="ms" aria-pressed="false">BM</button></div>
+      <div class="seg" role="group" aria-label="Theme" data-sw="theme"><button type="button" data-v="light" aria-pressed="false">Light</button><button type="button" data-v="dark" aria-pressed="false">Dark</button></div>
+    </div>
+  </header>
+  <div class="intro">
+    <p class="eyebrow"><span lang="en">Interactive tool &middot; Meshfree methods</span><span lang="ms">Alatan interaktif &middot; Meshfree methods</span></p>
+    <h1>MLS Approximation Explorer</h1>
+    <p class="lead" lang="en">Change the dilation parameter &alpha;, the basis and the weight function, and watch how the Moving Least Squares approximation, its shape functions and its error respond. The sweep finds the &alpha; that minimises the error for your current settings.</p>
+    <p class="lead" lang="ms">Ubah dilation parameter &alpha;, basis dan weight function, dan lihat bagaimana Moving Least Squares approximation, shape functions dan ralatnya bertindak balas. Sweep mencari &alpha; yang meminimumkan ralat bagi tetapan semasa anda.</p>
+  </div>
+
+  <div data-rz-tool="mls"><p>Loading the interactive tool&hellip; (JavaScript required)</p></div>
+
+  <div class="rzt-doc">
+{{DOC_MLS}}
+  </div>
+  <p class="foot">rz-tools v{{VERSION}} &middot; Built for teaching meshfree methods &middot; Faculty of Civil Engineering, Universiti Teknologi Malaysia &middot; <a href="https://people.utm.my/arazin/">people.utm.my/arazin</a> &middot; <a href="https://github.com/RazinUTM/rz-tools">source</a></p>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  if (!document.body.getAttribute('data-rzlang')) document.body.setAttribute('data-rzlang', 'en');
+  function press(g, v) { document.querySelectorAll('[data-sw="' + g + '"] button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === v)); }); }
+  var dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+  press('theme', dark ? 'dark' : 'light');
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-sw] button'); if (!b) return;
+    var g = b.parentNode.getAttribute('data-sw'), v = b.getAttribute('data-v');
+    if (g === 'lang') document.body.setAttribute('data-rzlang', v); else root.setAttribute('data-theme', v);
+    press(g, v);
+  });
+})();
+</script>
+<script src="../dist/rz-tools.js"></script>
+</body>
+</html>
