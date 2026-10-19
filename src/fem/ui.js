@@ -12,7 +12,7 @@
       gModel: 'Model', gMesh: 'Mesh', gView: 'View',
       problem: 'Problem', pcantilever: 'Cantilever (Timoshenko)', phole: 'Plate with a hole (Kirsch)', ppatch: 'Patch test',
       elem: 'Element', ld: 'Span / depth L/D', support: 'Left support', supExact: 'Exact', supClamp: 'Clamped',
-      ar: 'Hole radius a / b', outer: 'Outer edges', outKirsch: 'Kirsch', outUniform: 'Uniform',
+      ar: 'Hole radius `a / b`', outer: 'Outer edges', outKirsch: 'Kirsch', outUniform: 'Uniform',
       nu: 'Poisson’s ratio ν', ncantilever: 'Elements through depth', nhole: 'Elements along radius', npatch: 'Elements per side',
       size: '{dof} DOF · {ne} elements', distort: 'Distortion', shuffle: 'New layout',
       field: 'Contour', fumag: 'Displacement |u|', fux: 'Displacement ux', fuy: 'Displacement uy', fsxx: 'Stress σxx', fsyy: 'Stress σyy',
@@ -49,7 +49,7 @@
       gModel: 'Model', gMesh: 'Mesh', gView: 'Paparan',
       problem: 'Masalah', pcantilever: 'Cantilever (Timoshenko)', phole: 'Plat berlubang (Kirsch)', ppatch: 'Patch test',
       elem: 'Element', ld: 'Rentang / kedalaman L/D', support: 'Support kiri', supExact: 'Exact', supClamp: 'Clamped',
-      ar: 'Jejari lubang a / b', outer: 'Sisi luar', outKirsch: 'Kirsch', outUniform: 'Seragam',
+      ar: 'Jejari lubang `a / b`', outer: 'Sisi luar', outKirsch: 'Kirsch', outUniform: 'Seragam',
       nu: 'Poisson’s ratio ν', ncantilever: 'Element merentas kedalaman', nhole: 'Element sepanjang jejari', npatch: 'Element setiap sisi',
       size: '{dof} DOF · {ne} element', distort: 'Herotan', shuffle: 'Susunan baharu',
       field: 'Kontur', fumag: 'Sesaran |u|', fux: 'Sesaran ux', fuy: 'Sesaran uy', fsxx: 'Tegasan σxx', fsyy: 'Tegasan σyy',
@@ -84,23 +84,13 @@
     }
   };
 
-  var FIELD = {
-    umag: { unit: 'mm', k: 1e3, div: false }, ux: { unit: 'mm', k: 1e3, div: true }, uy: { unit: 'mm', k: 1e3, div: true },
-    sxx: { unit: 'MPa', k: 1e-6, div: true }, syy: { unit: 'MPa', k: 1e-6, div: true }, sxy: { unit: 'MPa', k: 1e-6, div: true },
-    svm: { unit: 'MPa', k: 1e-6, div: false }
-  };
-  var SYM = { umag: '|u|', ux: 'ux', uy: 'uy', sxx: 'σxx', syy: 'σyy', sxy: 'τxy', svm: 'σvM' };
+  var FIELD = U.FIELD, SYM = U.FSYM, fmt = U.fmt;
   var NMAX = { cantilever: 16, hole: 24, patch: 12 }, NDEF = { cantilever: 4, hole: 8, patch: 4 };
   var LINES = { cantilever: ['sxx', 'sxy', 'uy'], hole: ['sxx', 'stt'], patch: ['sxx', 'ux'] };
   var STUDY_N = { cantilever: [1, 2, 4, 8], hole: [2, 4, 8, 16], patch: [1, 2, 4, 8] };
   var LIVE_DOF = 5000;
 
-  function fmt(v) {
-    if (!isFinite(v)) return '—';
-    if (v === 0) return '0';
-    var a = Math.abs(v);
-    return (a >= 1e4 || a < 1e-2 ? U.sci(v) : String(+v.toPrecision(3))).replace(/^-/, '\u2212');
-  }
+
 
   function seg(name, opts) {
     return '<div class="rzt-seg" role="group" data-seg="' + name + '">' + opts.map(function (o) {
@@ -242,8 +232,7 @@
       qa('[data-k]').forEach(function (el) {
         var key = el.getAttribute('data-k'); if (!key) return;
         var txt = t(key);
-        if (/[α-ω]/.test(txt) && el.tagName !== 'OPTION') el.innerHTML = U.esc(txt).replace(/([α-ω]+)/g, '<span class="rzt-nt">$1</span>');
-        else el.textContent = txt;
+        if (el.tagName !== 'OPTION' && /[`\u03B1-\u03C9]/.test(txt)) el.innerHTML = U.labelHtml(txt); else el.textContent = U.plain(txt);
       });
       fillLineSelect();
       redraw();
@@ -328,16 +317,6 @@
     var Q8TRI = (function () { var tr = []; for (var j = 0; j < 3; j++) for (var i = 0; i < 3; i++) { var p = j * 4 + i; tr.push([p, p + 1, p + 5], [p, p + 5, p + 4]); } return tr; })();
     var Q8RIM = [0, 1, 2, 3, 7, 11, 15, 14, 13, 12, 8, 4];
 
-    function clip(P, lev, above) {
-      var out = [], n = P.length;
-      for (var i = 0; i < n; i++) {
-        var a = P[i], b = P[(i + 1) % n], ia = above ? a[2] >= lev : a[2] <= lev, ib = above ? b[2] >= lev : b[2] <= lev;
-        if (ia) out.push(a);
-        if (ia !== ib) { var s = (lev - a[2]) / (b[2] - a[2]); out.push([a[0] + s * (b[0] - a[0]), a[1] + s * (b[1] - a[1]), lev]); }
-      }
-      return out;
-    }
-
     function drawContour() {
       var m = cur.model, g, dpr = window.devicePixelRatio || 1, W = cv1.parentNode.clientWidth;
       var h = q('[data-h="1"]'), sub = q('[data-sub="1"]'), cbar = q('[data-cbar]');
@@ -365,26 +344,8 @@
       var fd = FIELD[S.field], raw = S.smooth === 'raw' && F.isStress(S.field), vals = F.elementField(m, S.field, raw ? 'raw' : 'avg');
       var lo = Infinity, hi = -Infinity;
       for (i = 0; i < vals.length; i++) { vals[i] *= fd.k; if (vals[i] < lo) lo = vals[i]; if (vals[i] > hi) hi = vals[i]; }
-      var scales = U.scales(C), nb, cols;
-      if (fd.div) { var mx = Math.max(Math.abs(lo), Math.abs(hi)) || 1; lo = -mx; hi = mx; nb = 11; cols = U.ramp(scales.div, nb); }
-      else { if (hi - lo < 1e-9 * Math.max(Math.abs(hi), 1e-30)) lo = hi - (Math.abs(hi) || 1); nb = 10; cols = U.ramp(scales.seq, nb); }
-      var span = hi - lo, lev = []; for (i = 0; i <= nb; i++) lev.push(lo + span * i / nb);
-      function band(v) { var b = Math.floor((v - lo) / span * nb); return b < 0 ? 0 : b >= nb ? nb - 1 : b; }
-
-      var paths = []; for (i = 0; i < nb; i++) paths.push(new Path2D());
+      var bp = U.bandPainter(lo, hi, fd.div, C), tri = bp.tri, cols = bp.cols, lev = bp.lev;
       var edges = new Path2D();
-      function tri(P) {
-        var v0 = P[0][2], v1 = P[1][2], v2 = P[2][2], b0 = band(Math.min(v0, v1, v2)), b1 = band(Math.max(v0, v1, v2));
-        for (var bk = b0; bk <= b1; bk++) {
-          var poly = P;
-          if (bk > b0) poly = clip(poly, lev[bk], true);
-          if (bk < b1) poly = clip(poly, lev[bk + 1], false);
-          if (poly.length < 3) continue;
-          var p = paths[bk]; p.moveTo(poly[0][0], poly[0][1]);
-          for (var r = 1; r < poly.length; r++) p.lineTo(poly[r][0], poly[r][1]);
-          p.closePath();
-        }
-      }
       var type = mesh.type, pts = [];
       for (e = 0; e < ne; e++) {
         var base = e * npe;
@@ -409,7 +370,7 @@
           edges.moveTo(pts[0][0], pts[0][1]); for (a = 1; a < npe; a++) edges.lineTo(pts[a][0], pts[a][1]); edges.closePath();
         }
       }
-      for (i = 0; i < nb; i++) { g.fillStyle = cols[i]; g.fill(paths[i]); g.strokeStyle = cols[i]; g.lineWidth = 0.5; g.stroke(paths[i]); }
+      bp.paint(g);
       if (S.mesh === '1') { g.strokeStyle = U.rgba(C.fg, ne > 1500 ? 0.22 : 0.4); g.lineWidth = 0.6; g.stroke(edges); }
 
       // undeformed outline
@@ -424,97 +385,16 @@
         for (i = 0; i <= 40; i++) { var pp = d.pt(d.xr[0] + (d.xr[1] - d.xr[0]) * i / 40); if (i) g.lineTo(SX(pp[0]), SY(pp[1])); else g.moveTo(SX(pp[0]), SY(pp[1])); }
         g.stroke(); g.restore();
       }
-      glyphs(g, m, px, py, SX, SY);
+      U.bcGlyphs(g, { X: mesh.X, Y: mesh.Y, bedges: mesh.bedges, fixed: m.fixed, pr: m.pr, px: px, py: py, SX: SX, SY: SY, C: C });
 
       view = { SX: SX, SY: SY, px: px, py: py, W: W, H: H, nodal: F.nodalField(m, S.field) };
       sub.textContent = U.fill(t(sc > 0 ? 'p1s' : 'p1sU'), { smooth: F.isStress(S.field) ? t(raw ? 'sRaw' : 'sAvg') : t('sDisp'), s: fmt(sc) });
-      colorbar(cbar, cols, lev, fd.unit);
+      U.colorbar(cbar, cols, lev, fd.unit);
       drawHover(null);
     }
     function setSize(W, H) {
       var dpr = window.devicePixelRatio || 1;
       [cv1, ov1].forEach(function (c) { c.style.height = H + 'px'; if (c.width !== Math.round(W * dpr) || c.height !== Math.round(H * dpr)) { c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); } });
-    }
-    function colorbar(el, cols, lev, unit) {
-      var W = el.clientWidth || 300, nb = cols.length, stride = Math.max(1, Math.ceil(56 / (W / nb)));
-      var sw = cols.map(function (c) { return '<i style="background:' + c + '"></i>'; }).join(''), show = [];
-      for (var i = 0; i <= nb; i += stride) show.push(i);
-      if (show[show.length - 1] !== nb) { if (nb - show[show.length - 1] < stride) show.pop(); show.push(nb); }
-      var tk = show.map(function (i) {
-        var tf = i === 0 ? 'translateX(0)' : i === nb ? 'translateX(-100%)' : 'translateX(-50%)';
-        return '<b style="left:' + (100 * i / nb) + '%;transform:' + tf + '">' + fmt(lev[i]) + '</b>';
-      }).join('');
-      el.innerHTML = '<div class="rzt-cb-sw">' + sw + '</div><div class="rzt-cb-tk">' + tk + '</div><span class="rzt-cb-u">' + unit + '</span>';
-    }
-
-    // supports (walls / rollers / pins) and load arrows
-    function glyphs(g, m, px, py, SX, SY) {
-      var mesh = m.mesh, fx = m.fixed, pr = m.pr, bb = pr.bbox, cxm = (bb[0] + bb[1]) / 2, cym = (bb[2] + bb[3]) / 2;
-      g.save(); g.strokeStyle = C.fg2; g.fillStyle = C.fg2; g.lineWidth = 1.2;
-      function outward(be) {
-        var A = be.n[0], B = be.n[be.n.length - 1], tx = mesh.X[B] - mesh.X[A], ty = mesh.Y[B] - mesh.Y[A], nx = ty, ny = -tx, l = Math.hypot(nx, ny) || 1;
-        nx /= l; ny /= l;
-        var mx = (mesh.X[A] + mesh.X[B]) / 2 - cxm, my = (mesh.Y[A] + mesh.Y[B]) / 2 - cym;
-        if (pr.key === 'hole' && be.tag !== 's1') { nx = be.tag === 't0' ? 0 : -1; ny = be.tag === 't0' ? -1 : 0; return [nx, ny]; }
-        if (nx * mx + ny * my < 0) { nx = -nx; ny = -ny; }
-        return [nx, ny];
-      }
-      var nodeN = {}, walls = [];
-      mesh.bedges.forEach(function (be) {
-        var all = be.n.every(function (n) { return fx[2 * n] && fx[2 * n + 1]; }), any = be.n.some(function (n) { return fx[2 * n] || fx[2 * n + 1]; });
-        if (!any) return;
-        var o = outward(be);
-        if (all) walls.push([be, o]);
-        be.n.forEach(function (n) { if (!nodeN[n] && (fx[2 * n] || fx[2 * n + 1])) nodeN[n] = o; });
-      });
-      // walls: offset line + hatch
-      walls.forEach(function (w) {
-        var be = w[0], o = w[1], ox = o[0] * 4, oy = -o[1] * 4, A = be.n[0], B = be.n[be.n.length - 1];
-        var ax = SX(px[A]) + ox, ay = SY(py[A]) + oy, bx = SX(px[B]) + ox, by = SY(py[B]) + oy, len = Math.hypot(bx - ax, by - ay);
-        g.beginPath(); g.moveTo(ax, ay); g.lineTo(bx, by);
-        var nh = Math.max(1, Math.round(len / 7));
-        var ux = (bx - ax) / (len || 1), uy = (by - ay) / (len || 1);
-        for (var i = 0; i <= nh; i++) { var tt = i / nh, hx = ax + tt * (bx - ax), hy = ay + tt * (by - ay); g.moveTo(hx, hy); g.lineTo(hx + o[0] * 6 + ux * 4, hy - o[1] * 6 + uy * 4); }
-        g.stroke();
-      });
-      // rollers and pins
-      var last = {}, step = 9;
-      Object.keys(nodeN).forEach(function (key) {
-        var n = +key, o = nodeN[key], both = fx[2 * n] && fx[2 * n + 1], sx = SX(px[n]), sy = SY(py[n]);
-        if (both) {
-          var onWall = walls.some(function (w) { return w[0].n.indexOf(n) >= 0; });
-          if (onWall) return;
-          g.beginPath(); g.moveTo(sx, sy + 2); g.lineTo(sx - 5, sy + 10); g.lineTo(sx + 5, sy + 10); g.closePath(); g.fill();
-          return;
-        }
-        var tag = o.join(','), lp = last[tag];
-        if (lp && Math.hypot(lp[0] - sx, lp[1] - sy) < step) return;
-        last[tag] = [sx, sy];
-        var cx = sx + o[0] * 5, cy = sy - o[1] * 5;
-        g.beginPath(); g.arc(cx, cy, 2.6, 0, Math.PI * 2); g.stroke();
-        g.beginPath(); g.moveTo(cx + o[0] * 3 - o[1] * 4, cy - o[1] * 3 - o[0] * 4); g.lineTo(cx + o[0] * 3 + o[1] * 4, cy - o[1] * 3 + o[0] * 4); g.stroke();
-      });
-      // load arrows on traction edges
-      var loaded = mesh.bedges.filter(function (be) { return be.tag === 's1'; }), tr = [], tmax = 0;
-      var every = Math.max(1, Math.ceil(loaded.length / 14));
-      loaded.forEach(function (be, i) {
-        if (i % every) return;
-        var nA = be.n[0], nB = be.n[be.n.length - 1], mid = be.n.length === 3 ? be.n[1] : -1;
-        var x = mid >= 0 ? mesh.X[mid] : (mesh.X[nA] + mesh.X[nB]) / 2, y = mid >= 0 ? mesh.Y[mid] : (mesh.Y[nA] + mesh.Y[nB]) / 2;
-        var dx = mid >= 0 ? px[mid] - mesh.X[mid] : (px[nA] + px[nB] - mesh.X[nA] - mesh.X[nB]) / 2, dy = mid >= 0 ? py[mid] - mesh.Y[mid] : (py[nA] + py[nB] - mesh.Y[nA] - mesh.Y[nB]) / 2;
-        var tv = pr.traction('s1', x, y); if (!tv) return;
-        var mag = Math.hypot(tv[0], tv[1]); tmax = Math.max(tmax, mag);
-        tr.push({ x: x + dx, y: y + dy, t: tv, mag: mag, o: outward(be) });
-      });
-      g.strokeStyle = C.gold; g.fillStyle = C.gold; g.lineWidth = 1.8;
-      tr.forEach(function (a) {
-        if (!(a.mag > 1e-9 * tmax)) return;
-        var L = 6 + 22 * a.mag / tmax, ux = a.t[0] / a.mag, uy = -a.t[1] / a.mag;
-        var sx = SX(a.x) + a.o[0] * 6, sy = SY(a.y) - a.o[1] * 6, ex = sx + ux * L, ey = sy + uy * L;
-        g.beginPath(); g.moveTo(sx, sy); g.lineTo(ex, ey); g.stroke();
-        g.beginPath(); g.moveTo(ex, ey); g.lineTo(ex - ux * 5 - uy * 3, ey - uy * 5 + ux * 3); g.lineTo(ex - ux * 5 + uy * 3, ey - uy * 5 - ux * 3); g.closePath(); g.fill();
-      });
-      g.restore();
     }
 
     function drawHover(n) {

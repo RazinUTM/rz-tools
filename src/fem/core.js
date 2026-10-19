@@ -183,11 +183,11 @@
     function exists(hi, hj) { return !(quad8 && (hi & 1) && (hj & 1)); }
     if (jFast) { for (i = 0; i < I; i++) for (j = 0; j < J; j++) if (exists(i, j)) id[i * J + j] = nn++; }
     else { for (j = 0; j < J; j++) for (i = 0; i < I; i++) if (exists(i, j)) id[i * J + j] = nn++; }
-    var X = new Float64Array(nn), Y = new Float64Array(nn), tagS = new Int8Array(nn), tagT = new Int8Array(nn);
+    var X = new Float64Array(nn), Y = new Float64Array(nn), PS = new Float64Array(nn), PT = new Float64Array(nn), tagS = new Int8Array(nn), tagT = new Int8Array(nn);
     for (i = 0; i < I; i++) for (j = 0; j < J; j++) {
       var n = id[i * J + j]; if (n < 0) continue;
       var pq = param(i, j), sg = pr.grade ? Math.pow(pq[0], pr.grade) : pq[0], xy = pr.map(sg, pq[1]);
-      X[n] = xy[0]; Y[n] = xy[1];
+      X[n] = xy[0]; Y[n] = xy[1]; PS[n] = pq[0]; PT[n] = pq[1];
       tagS[n] = i === 0 ? 1 : i === I - 1 ? 2 : 0;
       tagT[n] = j === 0 ? 1 : j === J - 1 ? 2 : 0;
     }
@@ -210,7 +210,7 @@
       if (j === ny - 1) bedges.push({ tag: 't1', n: mid ? [n11, N(a + 1, b + 2), n01] : [n11, n01] });
     }
     var C = new Int32Array(conn);
-    return { type: type, npe: npe, nn: nn, ne: C.length / npe, X: X, Y: Y, C: C, bedges: bedges, tagS: tagS, tagT: tagT, nx: nx, ny: ny };
+    return { type: type, npe: npe, nn: nn, ne: C.length / npe, X: X, Y: Y, PS: PS, PT: PT, C: C, bedges: bedges, tagS: tagS, tagT: tagT, nx: nx, ny: ny };
   }
 
   /* ── element routines ───────────────────────────────────────── */

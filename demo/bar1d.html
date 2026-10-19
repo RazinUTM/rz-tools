@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1D Bar FEM Explorer · rz-tools</title>
+<meta name="description" content="Interactive 1D axial bar finite element solver: tip and distributed loads, tapered section, linear and quadratic elements, exact solution and convergence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* UTM maroon/gold tokens, shared with people.utm.my/arazin */
+:root {
+  --bg: #F4F6FA; --surface: #FFFFFF; --fg: #0F1624; --fg2: #5D6B85; --border: #DDE3EF;
+  --accent: #7B1535; --gold: #C8A020; --tag-bg: #F8EEF0;
+  --font-body: 'Poppins', system-ui, -apple-system, sans-serif; --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0B1020; --surface: #131D35; --fg: #E4EAF6; --fg2: #8A9BBC; --border: #22324F;
+  --accent: #D4607A; --gold: #D4A830; --tag-bg: #2A1520; color-scheme: dark; }
+  :root:not([data-theme="light"]) .rzt.rzt-on { --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414; } }
+:root[data-theme="dark"] {
+  --bg: #0B1020; --surface: #131D35; --fg: #E4EAF6; --fg2: #8A9BBC; --border: #22324F;
+  --accent: #D4607A; --gold: #D4A830; --tag-bg: #2A1520; color-scheme: dark; }
+:root[data-theme="dark"] .rzt.rzt-on { --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); }
+a { color: var(--accent); }
+.page { max-width: 1180px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-right, 0px)) 48px max(16px, env(safe-area-inset-left, 0px)); }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; border-bottom: 1px solid var(--border); }
+.brand { font-weight: 600; font-size: 15px; color: var(--fg); text-decoration: none; }
+.brand em { font-style: normal; color: var(--accent); } .brand span { color: var(--fg2); font-weight: 400; }
+.sw { display: flex; gap: 8px; }
+.seg { display: flex; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.seg button { font: 500 12px var(--font-mono); letter-spacing: .05em; padding: 5px 10px; border: 0; background: var(--surface); color: var(--fg2); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.intro { padding-block: 28px 22px; max-width: 760px; }
+.eyebrow { margin: 0 0 8px; font: 500 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+h1 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 36px); font-weight: 700; letter-spacing: -.01em; line-height: 1.15; text-wrap: balance; }
+.lead { margin: 0; font-size: 16px; line-height: 1.65; color: var(--fg2); }
+.rzt-doc { margin-top: 22px; max-width: 900px; }
+.foot { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--fg2); }
+body[data-rzlang="en"] [lang="ms"], body[data-rzlang="ms"] [lang="en"] { display: none !important; }
+</style>
+</head>
+<body data-rzlang="en">
+<div class="page">
+  <header class="top">
+    <a class="brand" href="https://people.utm.my/arazin/">A R <em>Zainal Abidin</em> <span>&middot; UTM</span></a>
+    <div class="sw">
+      <div class="seg" role="group" aria-label="Language" data-sw="lang"><button type="button" data-v="en" aria-pressed="true">EN</button><button type="button" data-v="ms" aria-pressed="false">BM</button></div>
+      <div class="seg" role="group" aria-label="Theme" data-sw="theme"><button type="button" data-v="light" aria-pressed="false">Light</button><button type="button" data-v="dark" aria-pressed="false">Dark</button></div>
+    </div>
+  </header>
+  <div class="intro">
+    <p class="eyebrow"><span lang="en">Interactive tool &middot; Finite element method</span><span lang="ms">Alatan interaktif &middot; Finite element method</span></p>
+    <h1>1D Bar FEM Explorer</h1>
+    <p class="lead" lang="en">An axially loaded bar, fixed at one end. Change the material, geometry, loads and mesh, and compare the finite element displacement and stress with the exact solution.</p>
+    <p class="lead" lang="ms">Bar yang dibebankan secara paksi, ditetapkan pada satu hujung. Ubah bahan, geometri, beban dan mesh, dan bandingkan sesaran dan tegasan finite element dengan exact solution.</p>
+  </div>
+
+  <div data-rz-tool="bar1d"><p>Loading the interactive tool&hellip; (JavaScript required)</p></div>
+
+  <div class="rzt-doc">
+<div lang="en">
+<details open><summary>How it works</summary><div>
+<p>A bar fixed at x = 0 carries a tip load P and a uniform distributed load q, with an area that varies linearly from A₀ at the support to A(L) at the tip. The governing equation and its exact solution are</p>
+<div class="rzt-eq">d/dx ( E A(x) du/dx ) + q = 0 &nbsp;&nbsp;&nbsp; u(0) = 0 &nbsp;&nbsp;&nbsp; E A du/dx |<sub>x=L</sub> = P &nbsp;&nbsp;&nbsp; N(x) = P + q (L &minus; x)</div>
+<p>Each element contributes a stiffness matrix and a consistent load vector,</p>
+<div class="rzt-eq">k<sub>e</sub> = &int; B<sup>T</sup> E A B dx &nbsp;&nbsp;&nbsp; f<sub>e</sub> = &int; N<sup>T</sup> q dx &nbsp;&nbsp;&nbsp; linear, uniform bar: k<sub>e</sub> = (EA / L<sub>e</sub>) [1 &minus;1; &minus;1 1], f<sub>e</sub> = (q L<sub>e</sub> / 2) [1; 1]</div>
+<p>The element matrices are assembled into K u = f, the fixed node is removed, and the stress follows from &sigma; = E du/dx. Linear elements give a constant stress in each element; quadratic elements give a linearly varying stress.</p>
+<ul>
+<li><b>Tip load only, uniform bar:</b> the axial force is constant, so linear elements are exact everywhere. This is the case of the original app, u<sub>max</sub> = PL / EA.</li>
+<li><b>Distributed load:</b> linear elements still give exact nodal displacements (a property of one-dimensional problems with constant EA), but the stress inside each element is only an average of the exact linear variation.</li>
+<li><b>Tapered bar:</b> the exact displacement is logarithmic, so the nodal values are no longer exact, and the error falls with the mesh size.</li>
+</ul>
+</div></details>
+<details><summary>Things to try</summary><div>
+<ol>
+<li>Keep the default tip load and change the number of elements. The displacement and stress stay exact.</li>
+<li>Add q = 100 kN/m. Compare the stress plot with the exact line, then switch to quadratic elements.</li>
+<li>Set the taper to 0.25 and run through n = 1, 2, 4, 8. Read the convergence plot: linear elements converge at rate 1 in the energy norm, quadratic elements at rate 2.</li>
+<li>Make P negative to put the bar in compression and watch the colour change.</li>
+<li>Open the tables to compare the nodal values with the exact solution, and copy the Python code to run the same model yourself.</li>
+</ol>
+</div></details>
+</div>
+
+<div lang="ms">
+<details open><summary>Bagaimana ia berfungsi</summary><div>
+<p>Satu bar yang ditetapkan pada x = 0 menanggung beban hujung P dan beban teragih seragam q, dengan luas yang berubah secara linear dari A₀ di support ke A(L) di hujung. Persamaan menakluk dan exact solution-nya ialah</p>
+<div class="rzt-eq">d/dx ( E A(x) du/dx ) + q = 0 &nbsp;&nbsp;&nbsp; u(0) = 0 &nbsp;&nbsp;&nbsp; E A du/dx |<sub>x=L</sub> = P &nbsp;&nbsp;&nbsp; N(x) = P + q (L &minus; x)</div>
+<p>Setiap element menyumbang stiffness matrix dan consistent load vector,</p>
+<div class="rzt-eq">k<sub>e</sub> = &int; B<sup>T</sup> E A B dx &nbsp;&nbsp;&nbsp; f<sub>e</sub> = &int; N<sup>T</sup> q dx &nbsp;&nbsp;&nbsp; linear, bar seragam: k<sub>e</sub> = (EA / L<sub>e</sub>) [1 &minus;1; &minus;1 1], f<sub>e</sub> = (q L<sub>e</sub> / 2) [1; 1]</div>
+<p>Matriks element dipasang menjadi K u = f, nod yang ditetapkan dikeluarkan, dan tegasan diperoleh daripada &sigma; = E du/dx. Element linear memberi tegasan malar dalam setiap element; element kuadratik memberi tegasan yang berubah secara linear.</p>
+<ul>
+<li><b>Beban hujung sahaja, bar seragam:</b> daya paksi adalah malar, jadi element linear exact di semua tempat. Inilah kes app asal, u<sub>max</sub> = PL / EA.</li>
+<li><b>Beban teragih:</b> element linear masih memberi sesaran nodal yang exact (sifat masalah satu dimensi dengan EA malar), tetapi tegasan dalam setiap element hanyalah purata bagi perubahan linear yang exact.</li>
+<li><b>Bar tirus:</b> sesaran exact adalah logaritma, jadi nilai nodal tidak lagi exact, dan ralat berkurang mengikut saiz mesh.</li>
+</ul>
+</div></details>
+<details><summary>Cubaan untuk anda</summary><div>
+<ol>
+<li>Kekalkan beban hujung lalai dan ubah bilangan element. Sesaran dan tegasan kekal exact.</li>
+<li>Tambah q = 100 kN/m. Bandingkan plot tegasan dengan garis exact, kemudian tukar ke element kuadratik.</li>
+<li>Tetapkan tirus kepada 0.25 dan cuba n = 1, 2, 4, 8. Baca plot convergence: element linear menumpu pada kadar 1 dalam energy norm, element kuadratik pada kadar 2.</li>
+<li>Jadikan P negatif supaya bar dalam mampatan dan lihat warnanya berubah.</li>
+<li>Buka jadual untuk membandingkan nilai nodal dengan exact solution, dan salin kod Python untuk menjalankan model yang sama sendiri.</li>
+</ol>
+</div></details>
+</div>
+
+  </div>
+  <p class="foot">rz-tools v1.2.0 &middot; Faculty of Civil Engineering, Universiti Teknologi Malaysia &middot; <a href="https://people.utm.my/arazin/">people.utm.my/arazin</a> &middot; <a href="https://github.com/RazinUTM/rz-tools">source</a></p>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  if (!document.body.getAttribute('data-rzlang')) document.body.setAttribute('data-rzlang', 'en');
+  function press(g, v) { document.querySelectorAll('[data-sw="' + g + '"] button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === v)); }); }
+  var dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+  press('theme', dark ? 'dark' : 'light');
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-sw] button'); if (!b) return;
+    var g = b.parentNode.getAttribute('data-sw'), v = b.getAttribute('data-v');
+    if (g === 'lang') document.body.setAttribute('data-rzlang', v); else root.setAttribute('data-theme', v);
+    press(g, v);
+  });
+})();
+</script>
+<script src="../dist/rz-tools.js"></script>
+</body>
+</html>

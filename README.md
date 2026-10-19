@@ -13,6 +13,8 @@ Assoc. Prof. Ts. Dr. Ahmad Razin Zainal Abidin, Faculty of Civil Engineering, Un
 | ----- | ---- | ------------- |
 | `mls` | MLS Approximation Explorer | 1D Moving Least Squares: dilation parameter α, linear/quadratic basis, cubic/quartic/Gaussian weight, regular/irregular nodes. Plots the approximation and its derivative, all shape functions with Σφ, and an α-sweep of the relative L2 error with α* and EFF = E(α)/E(α*). |
 | `fem2d` | 2D Plane Stress FEM Explorer | T3, Q4, QM6 (incompatible modes) and Q8 elements on three benchmarks: Timoshenko cantilever, plate with a hole (Kirsch) and the patch test. Banded stress contours on the deformed shape, raw or averaged stresses, line plots against the exact solution, energy-norm error and a convergence study across all four elements. |
+| `efg2d` | 2D Meshfree EFG Explorer | Element-Free Galerkin on the same three benchmarks: MLS shape functions (linear or quadratic basis, cubic or quartic spline weight, dilation parameter α), Gauss quadrature on background cells, essential boundary conditions by penalty or Nitsche's method. Shows nodes, supports, cells, Gauss points and the shape function of any node, and compares the energy-norm error with Q4 finite elements on the same nodes. |
+| `bar1d` | 1D Bar FEM Explorer | Browser version of the earlier Streamlit app: fixed–free axial bar with tip load, plus a uniform distributed load, a linearly tapered section and quadratic elements. Deformed bar shaded by stress, u(x) and σ(x) against the exact solution, convergence, nodal and element tables, and the equivalent Python code. |
 
 ## Embedding
 
@@ -41,7 +43,7 @@ npm run build   # dist/rz-tools.js, dist/rz-tools.min.js, demo/<tool>.html
 npm test        # numerical checks of the MLS and FEM cores
 ```
 
-Open `demo/mls.html` or `demo/fem2d.html` in a browser to try the tools without the website.
+Open any page in `demo/` (mls, fem2d, efg2d, bar1d) in a browser to try the tools without the website.
 
 ```
 src/registry.js     RZTools.register / mount / boot
@@ -53,6 +55,10 @@ src/mls/doc.html    bilingual explanation blocks used on the demo and website pa
 src/fem/core.js     2D plane stress FEM (window.RZFEM): meshes, elements, skyline solver, recovery, errors
 src/fem/ui.js       FEM user interface
 src/fem/doc.html    bilingual explanation blocks
+src/efg/core.js     2D EFG (window.RZEFG): MLS shape functions, cell quadrature, penalty / Nitsche BCs; reuses RZFEM benchmarks and solver
+src/efg/ui.js       EFG user interface
+src/bar/core.js     1D bar FEM (window.RZBAR) with exact solutions
+src/bar/ui.js       1D bar user interface
 demo/template.html  demo page template (build writes demo/<tool>.html)
 ```
 
@@ -83,3 +89,16 @@ browser refuse any file that differs from the reviewed build.
 - Stresses: 2 × 2 Gauss-point values extrapolated to the element nodes (raw), then averaged at shared nodes. The relative energy-norm error uses the direct B·u stresses with 4 × 4 points per quadrilateral and the 7-point degree-5 rule per triangle.
 - Exact solutions: Timoshenko and Goodier's cantilever (sign convention checked against Hooke's law for a downward load) and Kirsch's plate with a hole; both satisfy equilibrium and compatibility to round-off in the tests.
 - The tests check the solver against a dense solve, the patch test for all elements on distorted meshes, equilibrium of reactions, energy-norm rates (≈ 1 for T3, Q4, QM6 and ≈ 2 for Q8), shear locking of T3 and Q4, and the stress concentration factor at the hole.
+
+## Notes on the 2D EFG implementation
+
+- Nodes are the corner nodes of the same mapped grids as the FEM explorer; their cells serve as background integration cells, mapped through the exact geometry (curved hole included).
+- Circular supports d_I = α c_I, with c_I the longest grid edge at node I. MLS uses a basis centred and scaled at each evaluation point; derivatives follow from γ = A⁻¹p, γ,x = A⁻¹(p,x − A,x γ). A(x) is factorised by Cholesky; fewer than m nodes or a non-positive pivot flags the point as singular.
+- Essential boundary conditions on the supported edges: penalty β = 10ᵖ E/h̄, or symmetric Nitsche with β = 100 E/h̄ (stable for β ≳ 10 E/h̄ in these benchmarks). The EFG patch test uses rollers on x = 0 and y = 0, which match the exact field without a point constraint.
+- Tests check partition of unity and reproduction of the basis and its derivatives, non-interpolation, the patch-test integration error, convergence and the advantage over Q4 on the same nodes, the penalty trade-off, singular moment matrices for small α, and the stress concentration factor.
+
+## Notes on the 1D bar
+
+- Fixed at x = 0; tip load P, uniform load q and area varying linearly from A₀ to A(L). Element matrices by 3-point Gauss quadrature (exact for these integrands); consistent loads.
+- Exact solution N(x) = P + q(L − x), u(x) = ∫ N / (E A) dx in closed form, including the logarithmic tapered case.
+- Tests check exactness for the tip load, nodal exactness with a distributed load, quadratic elements reproducing the quadratic solution, energy-norm rates on the tapered bar, and the support reaction.

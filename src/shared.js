@@ -20,6 +20,11 @@
   U.pow10Label = function (e) { return '10' + supNum(e); };
   U.fill = function (s, o) { return s.replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); };
   U.esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  // Labels are set in upper case; `…` marks symbols and units that must keep their case, as do Greek letters.
+  U.labelHtml = function (txt) {
+    return U.esc(txt).replace(/`([^`]*)`/g, '<span class="rzt-nt">$1</span>').replace(/([\u03B1-\u03C9]+)/g, '<span class="rzt-nt">$1</span>');
+  };
+  U.plain = function (txt) { return String(txt).replace(/`/g, ''); };
   U.group = function (n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
 
   /* ── colours from the host page ─────────────────────────────── */
@@ -83,6 +88,140 @@
     return C.dark ? ['#3987e5', '#d95926', '#199e70', '#c98500'] : ['#2a78d6', '#eb6834', '#1baf7a', '#eda100'];
   };
 
+
+  /* ── field definitions, number format, banded contours ─────── */
+  U.FIELD = {
+    umag: { unit: 'mm', k: 1e3, div: false }, ux: { unit: 'mm', k: 1e3, div: true }, uy: { unit: 'mm', k: 1e3, div: true },
+    sxx: { unit: 'MPa', k: 1e-6, div: true }, syy: { unit: 'MPa', k: 1e-6, div: true }, sxy: { unit: 'MPa', k: 1e-6, div: true },
+    svm: { unit: 'MPa', k: 1e-6, div: false }, phi: { unit: '', k: 1, div: true }
+  };
+  U.FSYM = { umag: '|u|', ux: 'ux', uy: 'uy', sxx: 'σxx', syy: 'σyy', sxy: 'τxy', svm: 'σvM', phi: 'φ' };
+  U.fmt = function (v) {
+    if (!isFinite(v)) return '—';
+    if (v === 0) return '0';
+    var a = Math.abs(v);
+    return (a >= 1e4 || a < 1e-2 ? U.sci(v) : String(+v.toPrecision(3))).replace(/^-/, '\u2212');
+  };
+  function clip(P, lev, above) {
+    var out = [], n = P.length;
+    for (var i = 0; i < n; i++) {
+      var a = P[i], b = P[(i + 1) % n], ia = above ? a[2] >= lev : a[2] <= lev, ib = above ? b[2] >= lev : b[2] <= lev;
+      if (ia) out.push(a);
+      if (ia !== ib) { var s = (lev - a[2]) / (b[2] - a[2]); out.push([a[0] + s * (b[0] - a[0]), a[1] + s * (b[1] - a[1]), lev]); }
+    }
+    return out;
+  }
+  // Banded contour painter: tri([[x,y,v],[x,y,v],[x,y,v]]) collects clipped polygons per band; paint(g) fills them.
+  U.bandPainter = function (lo, hi, diverging, C, oneSided) {
+    var scales = U.scales(C), nb, cols, i;
+    if (diverging && oneSided && lo >= 0 && hi > lo) { nb = 10; cols = U.ramp([scales.div[1], scales.div[2]], nb + 2).slice(2); }
+    else if (diverging && oneSided && hi <= 0 && hi > lo) { nb = 10; cols = U.ramp([scales.div[0], scales.div[1]], nb + 2).slice(0, nb); }
+    else if (diverging) { var mx = Math.max(Math.abs(lo), Math.abs(hi)) || 1; lo = -mx; hi = mx; nb = 11; cols = U.ramp(scales.div, nb); }
+    else { if (!(hi - lo > 1e-9 * Math.max(Math.abs(hi), 1e-30))) lo = hi - (Math.abs(hi) || 1); nb = 10; cols = U.ramp(scales.seq, nb); }
+    var span = hi - lo, lev = []; for (i = 0; i <= nb; i++) lev.push(lo + span * i / nb);
+    function band(v) { var b = Math.floor((v - lo) / span * nb); return b < 0 ? 0 : b >= nb ? nb - 1 : b; }
+    var paths = []; for (i = 0; i < nb; i++) paths.push(new Path2D());
+    return {
+      cols: cols, lev: lev,
+      tri: function (P) {
+        var v0 = P[0][2], v1 = P[1][2], v2 = P[2][2];
+        if (!isFinite(v0) || !isFinite(v1) || !isFinite(v2)) return;
+        var b0 = band(Math.min(v0, v1, v2)), b1 = band(Math.max(v0, v1, v2));
+        for (var bk = b0; bk <= b1; bk++) {
+          var poly = P;
+          if (bk > b0) poly = clip(poly, lev[bk], true);
+          if (bk < b1) poly = clip(poly, lev[bk + 1], false);
+          if (poly.length < 3) continue;
+          var p = paths[bk]; p.moveTo(poly[0][0], poly[0][1]);
+          for (var r = 1; r < poly.length; r++) p.lineTo(poly[r][0], poly[r][1]);
+          p.closePath();
+        }
+      },
+      paint: function (g) { for (var j = 0; j < nb; j++) { g.fillStyle = cols[j]; g.fill(paths[j]); g.strokeStyle = cols[j]; g.lineWidth = 0.5; g.stroke(paths[j]); } }
+    };
+  };
+  U.colorbar = function (el, cols, lev, unit) {
+    var W = el.clientWidth || 300, nb = cols.length, stride = Math.max(1, Math.ceil(56 / (W / nb)));
+    var sw = cols.map(function (c) { return '<i style="background:' + c + '"></i>'; }).join(''), show = [];
+    for (var i = 0; i <= nb; i += stride) show.push(i);
+    if (show[show.length - 1] !== nb) { if (nb - show[show.length - 1] < stride) show.pop(); show.push(nb); }
+    var tk = show.map(function (i) {
+      var tf = i === 0 ? 'translateX(0)' : i === nb ? 'translateX(-100%)' : 'translateX(-50%)';
+      return '<b style="left:' + (100 * i / nb) + '%;transform:' + tf + '">' + U.fmt(lev[i]) + '</b>';
+    }).join('');
+    el.innerHTML = '<div class="rzt-cb-sw">' + sw + '</div><div class="rzt-cb-tk">' + tk + '</div><span class="rzt-cb-u">' + unit + '</span>';
+  };
+
+  // supports (walls / rollers / pins) and load arrows. o = { X, Y, bedges, fixed (per dof), pr, px, py, SX, SY, C }
+  U.bcGlyphs = function (g, o) {
+    var mesh = { X: o.X, Y: o.Y, bedges: o.bedges }, fx = o.fixed, pr = o.pr, px = o.px, py = o.py, SX = o.SX, SY = o.SY, C = o.C, bb = pr.bbox, cxm = (bb[0] + bb[1]) / 2, cym = (bb[2] + bb[3]) / 2;
+    g.save(); g.strokeStyle = C.fg2; g.fillStyle = C.fg2; g.lineWidth = 1.2;
+    function outward(be) {
+      var A = be.n[0], B = be.n[be.n.length - 1], tx = mesh.X[B] - mesh.X[A], ty = mesh.Y[B] - mesh.Y[A], nx = ty, ny = -tx, l = Math.hypot(nx, ny) || 1;
+      nx /= l; ny /= l;
+      var mx = (mesh.X[A] + mesh.X[B]) / 2 - cxm, my = (mesh.Y[A] + mesh.Y[B]) / 2 - cym;
+      if (pr.key === 'hole' && be.tag !== 's1') { nx = be.tag === 't0' ? 0 : -1; ny = be.tag === 't0' ? -1 : 0; return [nx, ny]; }
+      if (nx * mx + ny * my < 0) { nx = -nx; ny = -ny; }
+      return [nx, ny];
+    }
+    var nodeN = {}, walls = [];
+    mesh.bedges.forEach(function (be) {
+      var all = be.n.every(function (n) { return fx[2 * n] && fx[2 * n + 1]; }), any = be.n.some(function (n) { return fx[2 * n] || fx[2 * n + 1]; });
+      if (!any) return;
+      var o = outward(be);
+      if (all) walls.push([be, o]);
+      be.n.forEach(function (n) { if (!nodeN[n] && (fx[2 * n] || fx[2 * n + 1])) nodeN[n] = o; });
+    });
+    // walls: offset line + hatch
+    walls.forEach(function (w) {
+      var be = w[0], o = w[1], ox = o[0] * 4, oy = -o[1] * 4, A = be.n[0], B = be.n[be.n.length - 1];
+      var ax = SX(px[A]) + ox, ay = SY(py[A]) + oy, bx = SX(px[B]) + ox, by = SY(py[B]) + oy, len = Math.hypot(bx - ax, by - ay);
+      g.beginPath(); g.moveTo(ax, ay); g.lineTo(bx, by);
+      var nh = Math.max(1, Math.round(len / 7));
+      var ux = (bx - ax) / (len || 1), uy = (by - ay) / (len || 1);
+      for (var i = 0; i <= nh; i++) { var tt = i / nh, hx = ax + tt * (bx - ax), hy = ay + tt * (by - ay); g.moveTo(hx, hy); g.lineTo(hx + o[0] * 6 + ux * 4, hy - o[1] * 6 + uy * 4); }
+      g.stroke();
+    });
+    // rollers and pins
+    var last = {}, step = 9;
+    Object.keys(nodeN).forEach(function (key) {
+      var n = +key, o = nodeN[key], both = fx[2 * n] && fx[2 * n + 1], sx = SX(px[n]), sy = SY(py[n]);
+      if (both) {
+        var onWall = walls.some(function (w) { return w[0].n.indexOf(n) >= 0; });
+        if (onWall) return;
+        g.beginPath(); g.moveTo(sx, sy + 2); g.lineTo(sx - 5, sy + 10); g.lineTo(sx + 5, sy + 10); g.closePath(); g.fill();
+        return;
+      }
+      var tag = o.join(','), lp = last[tag];
+      if (lp && Math.hypot(lp[0] - sx, lp[1] - sy) < step) return;
+      last[tag] = [sx, sy];
+      var cx = sx + o[0] * 5, cy = sy - o[1] * 5;
+      g.beginPath(); g.arc(cx, cy, 2.6, 0, Math.PI * 2); g.stroke();
+      g.beginPath(); g.moveTo(cx + o[0] * 3 - o[1] * 4, cy - o[1] * 3 - o[0] * 4); g.lineTo(cx + o[0] * 3 + o[1] * 4, cy - o[1] * 3 + o[0] * 4); g.stroke();
+    });
+    // load arrows on traction edges
+    var loaded = mesh.bedges.filter(function (be) { return be.tag === 's1'; }), tr = [], tmax = 0;
+    var every = Math.max(1, Math.ceil(loaded.length / 14));
+    loaded.forEach(function (be, i) {
+      if (i % every) return;
+      var nA = be.n[0], nB = be.n[be.n.length - 1], mid = be.n.length === 3 ? be.n[1] : -1;
+      var x = mid >= 0 ? mesh.X[mid] : (mesh.X[nA] + mesh.X[nB]) / 2, y = mid >= 0 ? mesh.Y[mid] : (mesh.Y[nA] + mesh.Y[nB]) / 2;
+      var dx = mid >= 0 ? px[mid] - mesh.X[mid] : (px[nA] + px[nB] - mesh.X[nA] - mesh.X[nB]) / 2, dy = mid >= 0 ? py[mid] - mesh.Y[mid] : (py[nA] + py[nB] - mesh.Y[nA] - mesh.Y[nB]) / 2;
+      var tv = pr.traction('s1', x, y); if (!tv) return;
+      var mag = Math.hypot(tv[0], tv[1]); tmax = Math.max(tmax, mag);
+      tr.push({ x: x + dx, y: y + dy, t: tv, mag: mag, o: outward(be) });
+    });
+    g.strokeStyle = C.gold; g.fillStyle = C.gold; g.lineWidth = 1.8;
+    tr.forEach(function (a) {
+      if (!(a.mag > 1e-9 * tmax)) return;
+      var L = 6 + 22 * a.mag / tmax, ux = a.t[0] / a.mag, uy = -a.t[1] / a.mag;
+      var sx = SX(a.x) + a.o[0] * 6, sy = SY(a.y) - a.o[1] * 6, ex = sx + ux * L, ey = sy + uy * L;
+      g.beginPath(); g.moveTo(sx, sy); g.lineTo(ex, ey); g.stroke();
+      g.beginPath(); g.moveTo(ex, ey); g.lineTo(ex - ux * 5 - uy * 3, ey - uy * 5 + ux * 3); g.lineTo(ex - ux * 5 + uy * 3, ey - uy * 5 - ux * 3); g.closePath(); g.fill();
+    });
+    g.restore();
+  };
+
   /* ── minimal canvas plotter ──────────────────────────────────── */
   function niceStep(range, count) {
     var raw = range / count, mag = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / mag;
@@ -109,7 +248,7 @@
     if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
     var g = cv.getContext('2d');
     g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
-    var mg = { l: spec.ml || 52, r: 12, t: 10, b: 26 }, xr = spec.xr, yr = spec.yr, ly = !!spec.ylog, lx = !!spec.xlog;
+    var mg = { l: spec.ml || 52, r: 12, t: spec.ylabel ? 22 : 10, b: 26 }, xr = spec.xr, yr = spec.yr, ly = !!spec.ylog, lx = !!spec.xlog;
     var ty = ly ? Math.log10 : function (v) { return v; }, tx = lx ? Math.log10 : function (v) { return v; };
     var y0 = ty(yr[0]), y1 = ty(yr[1]), x0 = tx(xr[0]), x1 = tx(xr[1]), pw = W - mg.l - mg.r, ph = H - mg.t - mg.b;
     function X(v) { return mg.l + (tx(v) - x0) / (x1 - x0) * pw; }
@@ -141,7 +280,7 @@
       }
     }
     if (spec.xlabel) { g.textAlign = 'right'; g.textBaseline = 'bottom'; g.fillText(spec.xlabel, W - mg.r, H - mg.b - 3); }
-    if (spec.ylabel) { g.textAlign = 'left'; g.textBaseline = 'top'; g.fillText(spec.ylabel, mg.l + 4, mg.t + 2); }
+    if (spec.ylabel) { g.textAlign = 'left'; g.textBaseline = 'top'; g.fillText(spec.ylabel, 4, 2); }
 
     g.save(); g.beginPath(); g.rect(mg.l, mg.t, pw, ph); g.clip();
     (spec.bands || []).forEach(function (b) {

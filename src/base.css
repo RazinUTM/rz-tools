@@ -117,6 +117,32 @@ body.razin-dark .rzt.rzt-on, .rzt.rzt-on.is-dark {
 .rzt.rzt-on .rzt-sw.mk-tri { clip-path: polygon(50% 0, 100% 100%, 0 100%); }
 .rzt.rzt-on .rzt-sw.mk-diamond { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
 
+/* 1D bar: number inputs, paired plots, tables, code */
+.rzt.rzt-on .rzt-num { -moz-appearance: textfield; font-variant-numeric: tabular-nums; }
+.rzt.rzt-on .rzt-cv-bar { height: 170px; cursor: default; }
+.rzt.rzt-on .rzt-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 1100px) { .rzt.rzt-on .rzt-pair { grid-template-columns: minmax(0, 1fr); } }
+.rzt.rzt-on details.rzt-acc { margin: 0; background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); border-radius: 6px; }
+.rzt.rzt-on details.rzt-acc > summary { cursor: pointer; padding: 12px 16px; font-size: 14.5px; font-weight: 600; color: var(--fg, #0F1624); list-style: none; display: flex; justify-content: space-between; }
+.rzt.rzt-on details.rzt-acc > summary::-webkit-details-marker { display: none; }
+.rzt.rzt-on details.rzt-acc > summary::after { content: '+'; font-family: 'IBM Plex Mono', ui-monospace, monospace; color: var(--accent, #7B1535); }
+.rzt.rzt-on details.rzt-acc[open] > summary::after { content: '\2212'; }
+.rzt.rzt-on .rzt-tblwrap { overflow-x: auto; padding: 0 16px 14px; }
+.rzt.rzt-on .rzt-tbl { width: 100%; margin: 0; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+.rzt.rzt-on .rzt-tbl th, .rzt.rzt-on .rzt-tbl td { padding: 6px 10px; border: 0; border-bottom: 1px solid var(--border, #DDE3EF); text-align: right; white-space: nowrap; color: var(--fg, #0F1624); background: transparent; }
+.rzt.rzt-on .rzt-tbl th { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11.5px; font-weight: 500; color: var(--fg2, #5D6B85); }
+.rzt.rzt-on .rzt-tbl th:first-child, .rzt.rzt-on .rzt-tbl td:first-child, .rzt.rzt-on .rzt-tbl td:last-child, .rzt.rzt-on .rzt-tbl th:last-child { text-align: left; }
+.rzt.rzt-on .rzt-code { position: relative; padding: 0 16px 14px; }
+.rzt.rzt-on .rzt-code .rzt-btn { position: absolute; right: 24px; top: 8px; }
+.rzt.rzt-on .rzt-code pre { margin: 0; padding: 14px 16px; overflow-x: auto; background: var(--bg, #F4F6FA); border: 1px solid var(--border, #DDE3EF); border-radius: 4px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12.5px; line-height: 1.55; color: var(--fg, #0F1624); white-space: pre; }
+.rzt.rzt-on .rzt-code code { font: inherit; color: inherit; background: none; padding: 0; }
+
+/* toggle chips (EFG overlays) */
+.rzt.rzt-on .rzt-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.rzt.rzt-on .rzt-chips button { margin: 0; padding: 5px 10px; font: inherit; font-size: 12.5px; line-height: 1.2; cursor: pointer; border-radius: 999px;
+  color: var(--fg2, #5D6B85); background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); box-shadow: none; }
+.rzt.rzt-on .rzt-chips button[aria-pressed="true"] { color: var(--accent, #7B1535); border-color: var(--accent, #7B1535); background: var(--tag-bg, #F8EEF0); }
+
 /* explanation blocks (rendered by the host page, styled here) */
 .rzt-doc details { margin: 0 0 10px; background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); border-radius: 6px; }
 .rzt-doc summary { cursor: pointer; padding: 13px 16px; font-weight: 600; color: var(--fg, #0F1624); }

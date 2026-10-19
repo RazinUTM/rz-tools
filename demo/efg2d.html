@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2D Meshfree EFG Explorer · rz-tools</title>
+<meta name="description" content="Interactive 2D Element-Free Galerkin solver with MLS shape functions, penalty and Nitsche boundary conditions, and a comparison with finite elements on exact benchmarks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* UTM maroon/gold tokens, shared with people.utm.my/arazin */
+:root {
+  --bg: #F4F6FA; --surface: #FFFFFF; --fg: #0F1624; --fg2: #5D6B85; --border: #DDE3EF;
+  --accent: #7B1535; --gold: #C8A020; --tag-bg: #F8EEF0;
+  --font-body: 'Poppins', system-ui, -apple-system, sans-serif; --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0B1020; --surface: #131D35; --fg: #E4EAF6; --fg2: #8A9BBC; --border: #22324F;
+  --accent: #D4607A; --gold: #D4A830; --tag-bg: #2A1520; color-scheme: dark; }
+  :root:not([data-theme="light"]) .rzt.rzt-on { --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414; } }
+:root[data-theme="dark"] {
+  --bg: #0B1020; --surface: #131D35; --fg: #E4EAF6; --fg2: #8A9BBC; --border: #22324F;
+  --accent: #D4607A; --gold: #D4A830; --tag-bg: #2A1520; color-scheme: dark; }
+:root[data-theme="dark"] .rzt.rzt-on { --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); }
+a { color: var(--accent); }
+.page { max-width: 1180px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-right, 0px)) 48px max(16px, env(safe-area-inset-left, 0px)); }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; border-bottom: 1px solid var(--border); }
+.brand { font-weight: 600; font-size: 15px; color: var(--fg); text-decoration: none; }
+.brand em { font-style: normal; color: var(--accent); } .brand span { color: var(--fg2); font-weight: 400; }
+.sw { display: flex; gap: 8px; }
+.seg { display: flex; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.seg button { font: 500 12px var(--font-mono); letter-spacing: .05em; padding: 5px 10px; border: 0; background: var(--surface); color: var(--fg2); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.intro { padding-block: 28px 22px; max-width: 760px; }
+.eyebrow { margin: 0 0 8px; font: 500 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+h1 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 36px); font-weight: 700; letter-spacing: -.01em; line-height: 1.15; text-wrap: balance; }
+.lead { margin: 0; font-size: 16px; line-height: 1.65; color: var(--fg2); }
+.rzt-doc { margin-top: 22px; max-width: 900px; }
+.foot { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--fg2); }
+body[data-rzlang="en"] [lang="ms"], body[data-rzlang="ms"] [lang="en"] { display: none !important; }
+</style>
+</head>
+<body data-rzlang="en">
+<div class="page">
+  <header class="top">
+    <a class="brand" href="https://people.utm.my/arazin/">A R <em>Zainal Abidin</em> <span>&middot; UTM</span></a>
+    <div class="sw">
+      <div class="seg" role="group" aria-label="Language" data-sw="lang"><button type="button" data-v="en" aria-pressed="true">EN</button><button type="button" data-v="ms" aria-pressed="false">BM</button></div>
+      <div class="seg" role="group" aria-label="Theme" data-sw="theme"><button type="button" data-v="light" aria-pressed="false">Light</button><button type="button" data-v="dark" aria-pressed="false">Dark</button></div>
+    </div>
+  </header>
+  <div class="intro">
+    <p class="eyebrow"><span lang="en">Interactive tool &middot; Meshfree methods</span><span lang="ms">Alatan interaktif &middot; Meshfree methods</span></p>
+    <h1>2D Meshfree EFG Explorer</h1>
+    <p class="lead" lang="en">Solve the same plane stress benchmarks with the Element-Free Galerkin method: nodes only, no elements. Change the basis, the dilation parameter, the integration and the treatment of the boundary conditions, and compare the accuracy with finite elements on the same nodes.</p>
+    <p class="lead" lang="ms">Selesaikan benchmark plane stress yang sama dengan Element-Free Galerkin method: nod sahaja, tanpa element. Ubah basis, dilation parameter, kamiran dan rawatan syarat sempadan, dan bandingkan ketepatannya dengan finite element pada nod yang sama.</p>
+  </div>
+
+  <div data-rz-tool="efg2d"><p>Loading the interactive tool&hellip; (JavaScript required)</p></div>
+
+  <div class="rzt-doc">
+<div lang="en">
+<details open><summary>How the Element-Free Galerkin method works</summary><div>
+<p>EFG discretises the same weak form as the finite element method, but the trial functions are built from nodes alone. Each node I has a circular support of radius d<sub>I</sub> = &alpha; c<sub>I</sub>, where c<sub>I</sub> is the spacing to its neighbours. Moving Least Squares gives the shape functions:</p>
+<div class="rzt-eq">u<sup>h</sup>(x) = &Sigma;<sub>I</sub> &phi;<sub>I</sub>(x) u<sub>I</sub> &nbsp;&nbsp;&nbsp; &phi;<sub>I</sub>(x) = p<sup>T</sup>(x) A<sup>&minus;1</sup>(x) w<sub>I</sub>(x) p(x<sub>I</sub>) &nbsp;&nbsp;&nbsp; A(x) = &Sigma;<sub>I</sub> w<sub>I</sub>(x) p(x<sub>I</sub>) p<sup>T</sup>(x<sub>I</sub>)</div>
+<p>The basis is p = [1, x, y] (linear) or [1, x, y, x&sup2;, xy, y&sup2;] (quadratic), centred and scaled at each evaluation point. The derivatives come from A<sup>&minus;1</sup>,<sub>x</sub> = &minus;A<sup>&minus;1</sup> A,<sub>x</sub> A<sup>&minus;1</sup>. The shape functions form a partition of unity and reproduce the basis exactly, but they are rational functions and they do not interpolate: &phi;<sub>I</sub>(x<sub>J</sub>) &ne; &delta;<sub>IJ</sub>. Select the shape function field and tap a node: an interior node gives &phi;<sub>I</sub>(x<sub>I</sub>) &asymp; 0.3 with &alpha; = 2.5.</p>
+<ul>
+<li><b>Integration.</b> The stiffness integrals use Gauss points on background cells. The cells follow the exact geometry, including the curved hole. Because the integrands are rational and the supports cross the cell edges, quadrature is never exact, so EFG fails the patch test by a small amount that falls as you add Gauss points.</li>
+<li><b>Essential boundary conditions.</b> Since u<sup>h</sup>(x<sub>I</sub>) &ne; u<sub>I</sub>, a support cannot be applied by fixing nodal values. The <b>penalty</b> method adds &beta; &int;<sub>&Gamma;u</sub> v &middot; (u &minus; &ubar;) d&Gamma;: a small &beta; enforces the condition only weakly, while a large &beta; over-constrains the edge and spoils the conditioning. <b>Nitsche&rsquo;s method</b> adds the consistent traction terms as well, &minus;&int; v &middot; t(u) + t(v) &middot; (u &minus; &ubar;) d&Gamma; + &beta; &int; v &middot; (u &minus; &ubar;) d&Gamma;. It is accurate for any &beta; above a stability limit (here &beta; = 100 E/h). The original EFG used Lagrange multipliers, which lead to a larger, indefinite system.</li>
+<li><b>Dilation parameter.</b> &alpha; must be large enough for A(x) to be invertible everywhere: at least 3 non-collinear nodes in every support for the linear basis, and 6 for the quadratic basis, with the boundary as the critical place. A larger &alpha; gives smoother fields but more nodes per support, so the stiffness matrix becomes denser and assembly slower.</li>
+</ul>
+<p>The equations are solved with the same skyline L D L<sup>T</sup> solver as the FEM explorer, and all three benchmarks are identical, so you can compare both methods directly.</p>
+</div></details>
+<details><summary>Things to try</summary><div>
+<ol>
+<li>Choose the shape function field and tap different nodes: one in the interior, one at a corner. Compare &phi;<sub>I</sub>(x<sub>I</sub>), and look for the small negative regions near the edge of the support.</li>
+<li>Lower &alpha; until A(x) becomes singular, first with the linear basis, then with the quadratic basis. Where does it fail first?</li>
+<li>Switch the boundary conditions to penalty and move p from 0 to 8. Read the tip deflection and the boundary error at each step, then return to Nitsche.</li>
+<li>Open the patch test and change the Gauss points per cell from 2 &times; 2 to 5 &times; 5. Watch the error fall without ever reaching machine precision.</li>
+<li>Run the comparison on the cantilever. On the same nodes, EFG with a linear basis is several times more accurate than bilinear Q4 elements, which lock in bending.</li>
+<li>Plate with a hole: compare the stress concentration factor for the linear and the quadratic basis as you add nodes.</li>
+<li>Add distortion of 0.3. There are no element Jacobians to break down, so the solution changes but nothing fails.</li>
+</ol>
+</div></details>
+</div>
+
+<div lang="ms">
+<details open><summary>Bagaimana Element-Free Galerkin method berfungsi</summary><div>
+<p>EFG mendiskretkan weak form yang sama seperti finite element method, tetapi fungsi cubaan dibina daripada nod sahaja. Setiap nod I mempunyai support bulat berjejari d<sub>I</sub> = &alpha; c<sub>I</sub>, dengan c<sub>I</sub> ialah jarak ke nod jirannya. Moving Least Squares memberi shape functions:</p>
+<div class="rzt-eq">u<sup>h</sup>(x) = &Sigma;<sub>I</sub> &phi;<sub>I</sub>(x) u<sub>I</sub> &nbsp;&nbsp;&nbsp; &phi;<sub>I</sub>(x) = p<sup>T</sup>(x) A<sup>&minus;1</sup>(x) w<sub>I</sub>(x) p(x<sub>I</sub>) &nbsp;&nbsp;&nbsp; A(x) = &Sigma;<sub>I</sub> w<sub>I</sub>(x) p(x<sub>I</sub>) p<sup>T</sup>(x<sub>I</sub>)</div>
+<p>Basis ialah p = [1, x, y] (linear) atau [1, x, y, x&sup2;, xy, y&sup2;] (kuadratik), dipusatkan dan diskala pada setiap titik penilaian. Terbitan diperoleh daripada A<sup>&minus;1</sup>,<sub>x</sub> = &minus;A<sup>&minus;1</sup> A,<sub>x</sub> A<sup>&minus;1</sup>. Shape functions ini membentuk partition of unity dan menghasilkan semula basis dengan tepat, tetapi ia fungsi rasional dan tidak menginterpolasi: &phi;<sub>I</sub>(x<sub>J</sub>) &ne; &delta;<sub>IJ</sub>. Pilih medan shape function dan ketik satu nod: nod dalaman memberi &phi;<sub>I</sub>(x<sub>I</sub>) &asymp; 0.3 dengan &alpha; = 2.5.</p>
+<ul>
+<li><b>Kamiran.</b> Kamiran kekukuhan menggunakan Gauss points pada background cells. Cell ini mengikut geometri sebenar, termasuk lubang melengkung. Oleh kerana integrand adalah rasional dan support merentasi sisi cell, quadrature tidak pernah exact, jadi EFG gagal patch test dengan jumlah kecil yang berkurang apabila Gauss points ditambah.</li>
+<li><b>Essential boundary conditions.</b> Oleh kerana u<sup>h</sup>(x<sub>I</sub>) &ne; u<sub>I</sub>, support tidak boleh dikenakan dengan menetapkan nilai nodal. Kaedah <b>penalti</b> menambah &beta; &int;<sub>&Gamma;u</sub> v &middot; (u &minus; &ubar;) d&Gamma;: &beta; kecil hanya mengenakan syarat secara lemah, manakala &beta; besar terlalu mengekang sisi dan merosakkan conditioning. <b>Kaedah Nitsche</b> turut menambah sebutan traction yang konsisten, &minus;&int; v &middot; t(u) + t(v) &middot; (u &minus; &ubar;) d&Gamma; + &beta; &int; v &middot; (u &minus; &ubar;) d&Gamma;. Ia tepat untuk sebarang &beta; di atas had kestabilan (di sini &beta; = 100 E/h). EFG asal menggunakan Lagrange multipliers, yang menghasilkan sistem lebih besar dan tidak tentu.</li>
+<li><b>Dilation parameter.</b> &alpha; mesti cukup besar supaya A(x) boleh disongsangkan di semua tempat: sekurang-kurangnya 3 nod tidak segaris dalam setiap support untuk basis linear, dan 6 untuk basis kuadratik, dengan sempadan sebagai tempat paling kritikal. &alpha; yang lebih besar memberi medan lebih licin tetapi lebih banyak nod setiap support, jadi stiffness matrix menjadi lebih padat dan assembly lebih perlahan.</li>
+</ul>
+<p>Persamaan diselesaikan dengan solver skyline L D L<sup>T</sup> yang sama seperti FEM Explorer, dan ketiga-tiga benchmark adalah sama, jadi anda boleh membandingkan kedua-dua kaedah secara langsung.</p>
+</div></details>
+<details><summary>Cubaan untuk anda</summary><div>
+<ol>
+<li>Pilih medan shape function dan ketik nod yang berbeza: satu di dalam, satu di sudut. Bandingkan &phi;<sub>I</sub>(x<sub>I</sub>), dan cari kawasan negatif kecil berhampiran tepi support.</li>
+<li>Turunkan &alpha; sehingga A(x) menjadi singular, mula-mula dengan basis linear, kemudian basis kuadratik. Di manakah ia gagal dahulu?</li>
+<li>Tukar syarat sempadan ke penalti dan gerakkan p dari 0 ke 8. Baca pesongan hujung dan ralat sempadan pada setiap langkah, kemudian kembali ke Nitsche.</li>
+<li>Buka patch test dan ubah Gauss points setiap cell dari 2 &times; 2 ke 5 &times; 5. Lihat ralat berkurang tanpa pernah mencapai ketepatan mesin.</li>
+<li>Jalankan perbandingan pada cantilever. Pada nod yang sama, EFG dengan basis linear beberapa kali lebih tepat daripada element bilinear Q4, yang mengalami locking dalam lenturan.</li>
+<li>Plat berlubang: bandingkan faktor kepekatan tegasan bagi basis linear dan kuadratik apabila nod ditambah.</li>
+<li>Tambah herotan 0.3. Tiada Jacobian element yang boleh rosak, jadi penyelesaian berubah tetapi tiada yang gagal.</li>
+</ol>
+</div></details>
+</div>
+
+  </div>
+  <p class="foot">rz-tools v1.2.0 &middot; Faculty of Civil Engineering, Universiti Teknologi Malaysia &middot; <a href="https://people.utm.my/arazin/">people.utm.my/arazin</a> &middot; <a href="https://github.com/RazinUTM/rz-tools">source</a></p>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  if (!document.body.getAttribute('data-rzlang')) document.body.setAttribute('data-rzlang', 'en');
+  function press(g, v) { document.querySelectorAll('[data-sw="' + g + '"] button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === v)); }); }
+  var dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+  press('theme', dark ? 'dark' : 'light');
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-sw] button'); if (!b) return;
+    var g = b.parentNode.getAttribute('data-sw'), v = b.getAttribute('data-v');
+    if (g === 'lang') document.body.setAttribute('data-rzlang', v); else root.setAttribute('data-theme', v);
+    press(g, v);
+  });
+})();
+</script>
+<script src="../dist/rz-tools.js"></script>
+</body>
+</html>

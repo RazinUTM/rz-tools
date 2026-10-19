@@ -16,6 +16,8 @@ const SHARED = ['src/registry.js', 'src/shared.js'];
 const TOOLS = [
   { name: 'mls', files: ['src/mls/core.js', 'src/mls/ui.js'] },
   { name: 'fem2d', files: ['src/fem/core.js', 'src/fem/ui.js'] },
+  { name: 'bar1d', files: ['src/bar/core.js', 'src/bar/ui.js'] },
+  { name: 'efg2d', files: ['src/efg/core.js', 'src/efg/ui.js'] },
 ];
 
 const css = read('./src/base.css');
@@ -52,6 +54,14 @@ const DEMOS = {
     desc: 'Interactive 2D plane stress finite element solver with T3, Q4, QM6 and Q8 elements, stress contours, exact benchmarks and convergence studies.',
     en: 'Solve three classic plane stress benchmarks with four element types, then compare the stresses and deflections with the exact solutions. See shear locking, stress averaging, mesh distortion and convergence rates for yourself.',
     ms: 'Selesaikan tiga benchmark plane stress klasik dengan empat jenis element, kemudian bandingkan tegasan dan pesongan dengan exact solution. Lihat sendiri shear locking, purata tegasan, herotan mesh dan kadar convergence.' },
+  bar1d: { title: '1D Bar FEM Explorer', eyebrow: 'Finite element method', doc: 'src/bar/doc.html',
+    desc: 'Interactive 1D axial bar finite element solver: tip and distributed loads, tapered section, linear and quadratic elements, exact solution and convergence.',
+    en: 'An axially loaded bar, fixed at one end. Change the material, geometry, loads and mesh, and compare the finite element displacement and stress with the exact solution.',
+    ms: 'Bar yang dibebankan secara paksi, ditetapkan pada satu hujung. Ubah bahan, geometri, beban dan mesh, dan bandingkan sesaran dan tegasan finite element dengan exact solution.' },
+  efg2d: { title: '2D Meshfree EFG Explorer', eyebrow: 'Meshfree methods', doc: 'src/efg/doc.html',
+    desc: 'Interactive 2D Element-Free Galerkin solver with MLS shape functions, penalty and Nitsche boundary conditions, and a comparison with finite elements on exact benchmarks.',
+    en: 'Solve the same plane stress benchmarks with the Element-Free Galerkin method: nodes only, no elements. Change the basis, the dilation parameter, the integration and the treatment of the boundary conditions, and compare the accuracy with finite elements on the same nodes.',
+    ms: 'Selesaikan benchmark plane stress yang sama dengan Element-Free Galerkin method: nod sahaja, tanpa element. Ubah basis, dilation parameter, kamiran dan rawatan syarat sempadan, dan bandingkan ketepatannya dengan finite element pada nod yang sama.' },
 };
 const tpl = read('./demo/template.html');
 for (const [name, d] of Object.entries(DEMOS)) {
