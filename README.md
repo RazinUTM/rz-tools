@@ -18,7 +18,7 @@ Assoc. Prof. Ts. Dr. Ahmad Razin Zainal Abidin, Faculty of Civil Engineering, Un
 Load the bundle once, then place a placeholder wherever a tool should appear:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/RazinUTM/rz-tools@v1.0.0/dist/rz-tools.min.js"
+<script src="https://cdn.jsdelivr.net/gh/RazinUTM/rz-tools@<commit>/dist/rz-tools.min.js"
         integrity="sha384-…" crossorigin="anonymous" defer></script>
 
 <div data-rz-tool="mls"></div>
@@ -26,7 +26,7 @@ Load the bundle once, then place a placeholder wherever a tool should appear:
 
 On the WordPress site the script tag is not pasted into pages. The site bundle (Divi → Theme
 Options → Integration → head) injects it only on pages that contain a `data-rz-tool` element,
-using the version and SRI hash printed by `npm run build`.
+pinned to a commit hash with the SRI hash printed by `npm run build`.
 
 Colours come from the host page's CSS custom properties (`--accent`, `--gold`, `--fg`, `--fg2`,
 `--border`, `--surface`, `--bg`), with UTM maroon/gold fallbacks. Language follows
@@ -54,12 +54,13 @@ demo/template.html  demo page template
 ## Releasing a new version
 
 1. Bump `version` in `package.json`, run `npm run build` and `npm test`.
-2. Commit, then tag: `git tag v1.0.1 && git push --tags`.
-3. Update the version and SRI hash in the website's loader.
+2. Commit and push to `main`. Optionally create a GitHub Release with a matching tag (`v1.0.1`) for the record.
+3. Update the commit hash and SRI hash in the website's loader.
 
-Tagged files on jsDelivr are cached permanently, so a released version never changes. That is
-why the website pins an exact tag with an SRI hash rather than a range such as `@1`, which jsDelivr
-caches for up to 7 days and which would load whatever is tagged next.
+jsDelivr caches files requested by commit hash (or exact tag) permanently, so a pinned build never
+changes. The website pins a commit with an SRI hash rather than a range such as `@1`, which jsDelivr
+caches for up to 7 days and which would load whatever is released next; the SRI hash makes the
+browser refuse any file that differs from the reviewed build.
 
 ## Notes on the MLS implementation
 
