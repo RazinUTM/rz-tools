@@ -27,8 +27,8 @@
     return [[1 / 3, 1 / 3, 0.225], [a1, b1, w1], [b1, a1, w1], [b1, b1, w1], [a2, b2, w2], [b2, a2, w2], [b2, b2, w2]];
   })();
 
-  function Dmat(nu) {
-    var c = E / (1 - nu * nu);
+  function Dmat(nu, Ey) {
+    var c = (Ey || E) / (1 - nu * nu);
     return [c, c * nu, 0, c * nu, c, 0, 0, 0, c * (1 - nu) / 2];
   }
 
@@ -380,8 +380,9 @@
   // cfg: { problem, elem, n, distort, seed, nu, ld, ar, support, outer }
   function run(cfg) {
     var t0 = now();
-    var pr = PROBLEMS[cfg.problem](cfg), mesh = buildMesh(pr, cfg.elem, cfg.distort || 0, cfg.seed || 1);
-    var D = Dmat(cfg.nu), nn = mesh.nn, ndof = 2 * nn, type = mesh.type, npe = mesh.npe, ne = mesh.ne;
+    // cfg.pr and cfg.mesh let other tools solve their own geometry (e.g. NURBS-mapped nodes) with these elements
+    var pr = cfg.pr || PROBLEMS[cfg.problem](cfg), mesh = cfg.mesh || buildMesh(pr, cfg.elem, cfg.distort || 0, cfg.seed || 1);
+    var D = Dmat(cfg.nu, pr.E), nn = mesh.nn, ndof = 2 * nn, type = mesh.type, npe = mesh.npe, ne = mesh.ne;
     var X = mesh.X, Y = mesh.Y, C = mesh.C, e, a, b;
 
     // essential boundary conditions → equation numbers
@@ -392,6 +393,8 @@
         for (var c = 0; c < 2; c++) if (v[c] !== null && v[c] !== undefined) { fixed[2 * nd + c] = 1; ubar[2 * nd + c] = v[c]; }
       });
     });
+    // optional point supports: pr.nodeBC(mesh) → [{ n, d (0 = x, 1 = y), v }]
+    if (pr.nodeBC) pr.nodeBC(mesh).forEach(function (c) { fixed[2 * c.n + c.d] = 1; ubar[2 * c.n + c.d] = c.v; });
     var eq = new Int32Array(ndof), neq = 0;
     for (a = 0; a < ndof; a++) eq[a] = fixed[a] ? -1 : neq++;
 

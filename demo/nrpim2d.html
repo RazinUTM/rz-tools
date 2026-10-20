@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2D N-RPIM Explorer · rz-tools</title>
+<meta name="description" content="Interactive 2D N-RPIM solver: exact NURBS geometry with radial point interpolation (MQ or TPS), the parameter space beside the physical domain, and a comparison with finite elements.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* UTM maroon/gold tokens, shared with people.utm.my/arazin */
+:root {
+  --bg: #F4F6FA; --surface: #FFFFFF; --fg: #0F1624; --fg2: #5D6B85; --border: #DDE3EF;
+  --accent: #7B1535; --gold: #C8A020; --tag-bg: #F8EEF0;
+  --font-body: 'Poppins', system-ui, -apple-system, sans-serif; --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0B1020; --surface: #131D35; --fg: #E4EAF6; --fg2: #8A9BBC; --border: #22324F;
+  --accent: #D4607A; --gold: #D4A830; --tag-bg: #2A1520; color-scheme: dark; }
+  :root:not([data-theme="light"]) .rzt.rzt-on { --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414; } }
+:root[data-theme="dark"] {
+  --bg: #0B1020; --surface: #131D35; --fg: #E4EAF6; --fg2: #8A9BBC; --border: #22324F;
+  --accent: #D4607A; --gold: #D4A830; --tag-bg: #2A1520; color-scheme: dark; }
+:root[data-theme="dark"] .rzt.rzt-on { --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); }
+a { color: var(--accent); }
+.page { max-width: 1180px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-right, 0px)) 48px max(16px, env(safe-area-inset-left, 0px)); }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; border-bottom: 1px solid var(--border); }
+.brand { font-weight: 600; font-size: 15px; color: var(--fg); text-decoration: none; }
+.brand em { font-style: normal; color: var(--accent); } .brand span { color: var(--fg2); font-weight: 400; }
+.sw { display: flex; gap: 8px; }
+.seg { display: flex; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.seg button { font: 500 12px var(--font-mono); letter-spacing: .05em; padding: 5px 10px; border: 0; background: var(--surface); color: var(--fg2); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.intro { padding-block: 28px 22px; max-width: 760px; }
+.eyebrow { margin: 0 0 8px; font: 500 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+h1 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 36px); font-weight: 700; letter-spacing: -.01em; line-height: 1.15; text-wrap: balance; }
+.lead { margin: 0; font-size: 16px; line-height: 1.65; color: var(--fg2); }
+.rzt-doc { margin-top: 22px; max-width: 900px; }
+.foot { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--fg2); }
+body[data-rzlang="en"] [lang="ms"], body[data-rzlang="ms"] [lang="en"] { display: none !important; }
+</style>
+</head>
+<body data-rzlang="en">
+<div class="page">
+  <header class="top">
+    <a class="brand" href="https://people.utm.my/arazin/">A R <em>Zainal Abidin</em> <span>&middot; UTM</span></a>
+    <div class="sw">
+      <div class="seg" role="group" aria-label="Language" data-sw="lang"><button type="button" data-v="en" aria-pressed="true">EN</button><button type="button" data-v="ms" aria-pressed="false">BM</button></div>
+      <div class="seg" role="group" aria-label="Theme" data-sw="theme"><button type="button" data-v="light" aria-pressed="false">Light</button><button type="button" data-v="dark" aria-pressed="false">Dark</button></div>
+    </div>
+  </header>
+  <div class="intro">
+    <p class="eyebrow"><span lang="en">Interactive tool &middot; Meshfree methods · NURBS</span><span lang="ms">Alatan interaktif &middot; Meshfree methods · NURBS</span></p>
+    <h1>2D N-RPIM Explorer</h1>
+    <p class="lead" lang="en">NURBS describe the geometry exactly; radial point interpolation, built in the NURBS parameter space, approximates the displacements. Follow a point from the parameter space to the physical domain, change the radial basis function and the support, and compare the accuracy with finite elements on the same nodes.</p>
+    <p class="lead" lang="ms">NURBS memerihalkan geometri secara exact; radial point interpolation, yang dibina dalam ruang parameter NURBS, menganggarkan sesaran. Jejaki satu titik dari ruang parameter ke domain fizikal, ubah radial basis function dan support, dan bandingkan ketepatannya dengan finite element pada nod yang sama.</p>
+  </div>
+
+  <div data-rz-tool="nrpim2d"><p>Loading the interactive tool&hellip; (JavaScript required)</p></div>
+
+  <div class="rzt-doc">
+<div lang="en">
+<details open><summary>How N-RPIM works</summary><div>
+<p>N-RPIM (Mokhtaram et al., 2022) keeps two jobs apart. <b>NURBS describe the geometry</b>, exactly as a CAD model does, and <b>radial point interpolation approximates the displacements</b>. The physical domain is the image of a unit square, the parameter space, under the NURBS map:</p>
+<div class="rzt-eq">S(&xi;, &eta;) = &Sigma;<sub>i</sub> &Sigma;<sub>j</sub> R<sub>ij</sub>(&xi;, &eta;) B<sub>ij</sub> &nbsp;&nbsp;&nbsp; R<sub>ij</sub> = N<sub>i,p</sub>(&xi;) M<sub>j,q</sub>(&eta;) w<sub>ij</sub> / &Sigma;<sub>k</sub> &Sigma;<sub>l</sub> N<sub>k,p</sub>(&xi;) M<sub>l,q</sub>(&eta;) w<sub>kl</sub></div>
+<p>The B-spline functions N<sub>i,p</sub> and M<sub>j,q</sub> come from the knot vectors &Xi; and H by the Cox&ndash;de Boor recursion. The weights w<sub>ij</sub> make conics exact: a quarter circle needs a corner control point with weight cos&nbsp;45&deg; = 0.7071, so the hole edge is a true circle at every refinement. Turn on the control net and the knot lines to see the data behind each shape.</p>
+<p>The nodes are laid out in the parameter space: every knot span is divided into equal cells and a node sits at each cell corner. RPIM builds the shape functions there, from the nodes inside a support of radius d = &alpha;h, where h is the node spacing:</p>
+<div class="rzt-eq">u(x) = &Sigma;<sub>i</sub> R<sub>i</sub>(r) a<sub>i</sub> + &Sigma;<sub>j</sub> p<sub>j</sub>(x) b<sub>j</sub> &nbsp;&nbsp;&nbsp; [R<sub>n</sub>&nbsp; P<sub>m</sub>; P<sub>m</sub><sup>T</sup>&nbsp; 0] {a; b} = {u<sub>s</sub>; 0} &nbsp;&nbsp;&nbsp; &Phi;(x) = [R<sup>T</sup>(x)&nbsp; p<sup>T</sup>(x)] G<sup>&minus;1</sup></div>
+<p>As in the paper, the radial basis function is a multiquadric, R = (r&sup2; + (&alpha;<sub>c</sub>d<sub>c</sub>)&sup2;)<sup>q</sup> with q = 2.1 and &alpha;<sub>c</sub> = 0.1, or a thin plate spline, R = r<sup>&eta;</sup> with &eta; = 4.0001. The polynomial terms p (none, linear or quadratic) let the interpolation reproduce constant and linear fields. Because the interpolation passes through the nodal values, &phi;<sub>I</sub>(x<sub>J</sub>) = &delta;<sub>IJ</sub>: the shape functions have the Kronecker delta property, so supports are applied straight to the nodal displacements, as in FEM.</p>
+<ul>
+<li><b>Integration.</b> The Galerkin weak form gives K = &int; B<sup>T</sup> D B d&Omega;, integrated with Gauss points on the cells of the lattice. A Gauss point in the parent square [&minus;1, 1]&sup2; maps to its cell in the parameter space by an affine map (J&#771;), then to the physical space through the NURBS (&Jcirc;): B = &Jcirc;<sup>&minus;1</sup> J&#771;<sup>&minus;1</sup> B&#771; and d&Omega; = |&Jcirc;| |J&#771;| d&xi;&#771; d&eta;&#771;.</li>
+<li><b>Knot lines.</b> A repeated knot leaves the map only C&#8304;: the dash-dot lines drawn bold. Across such a line a smooth physical field has a kink in the parameter space, so the supports stop there, just as the knot spans of the paper are treated separately. In the plate with a hole the two spans meet at the corner (b, b), which keeps the map regular there.</li>
+<li><b>Supports.</b> This tool gives each integration cell one support: the nodes within d of the cell centre. The shape functions are then smooth inside a cell but jump slightly across cell edges (never at the nodes). That is why N-RPIM misses the patch test by a small amount that more Gauss points do not remove.</li>
+</ul>
+<p>The comparison solves bilinear Q4 elements on the same nodes. Their edges are straight, so a curved boundary becomes a polygon: the finite element model has to refine the geometry and the field together, while N-RPIM only refines the field.</p>
+</div></details>
+<details><summary>Things to try</summary><div>
+<ol>
+<li>Hover the parameter space and follow the ring in the physical view. Near the hole, equal steps in &xi; and &eta; cover very different distances, and |J| in the readout tells you by how much.</li>
+<li>Choose the shape function field and tap a node: &phi; is exactly 1 at its own node and 0 at every other node. Compare with the EFG explorer, where an MLS shape function is about 0.3 at its own node.</li>
+<li>Open the cellular beam unit cell from the paper. At refinement 4, v<sub>A</sub> is already within about 0.6% of the paper&rsquo;s COMSOL value, while Q4 on the same nodes is about 8% low. Run the comparison to see the gap widen.</li>
+<li>Set the polynomial terms to None. On the cantilever the energy-norm error jumps from about 2% to more than 80%: these radial functions cannot even represent a rigid-body translation on their own.</li>
+<li>Open the patch test and change the Gauss points per cell from 2 &times; 2 to 5 &times; 5. The error hardly moves (about 3.5% with the default irregular nodes), because it comes from the jumps between cells, not from the quadrature.</li>
+<li>On the plate with a hole, move the support radius from 2 to 4 and watch the nodes per support (about 11 to 32), the error and the time.</li>
+<li>Show the support and tap a node on the bold diagonal knot line of the plate, then one beside it. The first support spans both knot spans; the second stops at the line.</li>
+</ol>
+</div></details>
+</div>
+
+<div lang="ms">
+<details open><summary>Bagaimana N-RPIM berfungsi</summary><div>
+<p>N-RPIM (Mokhtaram et al., 2022) mengasingkan dua tugas. <b>NURBS memerihalkan geometri</b>, tepat seperti model CAD, dan <b>radial point interpolation menganggarkan sesaran</b>. Domain fizikal ialah imej segi empat unit, iaitu ruang parameter, di bawah pemetaan NURBS:</p>
+<div class="rzt-eq">S(&xi;, &eta;) = &Sigma;<sub>i</sub> &Sigma;<sub>j</sub> R<sub>ij</sub>(&xi;, &eta;) B<sub>ij</sub> &nbsp;&nbsp;&nbsp; R<sub>ij</sub> = N<sub>i,p</sub>(&xi;) M<sub>j,q</sub>(&eta;) w<sub>ij</sub> / &Sigma;<sub>k</sub> &Sigma;<sub>l</sub> N<sub>k,p</sub>(&xi;) M<sub>l,q</sub>(&eta;) w<sub>kl</sub></div>
+<p>Fungsi B-spline N<sub>i,p</sub> dan M<sub>j,q</sub> diperoleh daripada knot vectors &Xi; dan H melalui rekursi Cox&ndash;de Boor. Weights w<sub>ij</sub> menjadikan bentuk konik exact: suku bulatan memerlukan control point sudut dengan weight cos&nbsp;45&deg; = 0.7071, jadi sisi lubang ialah bulatan sebenar pada setiap tahap refinement. Hidupkan control net dan knot lines untuk melihat data di sebalik setiap bentuk.</p>
+<p>Nod disusun dalam ruang parameter: setiap knot span dibahagi kepada cell yang sama saiz dan satu nod diletakkan pada setiap bucu cell. RPIM membina shape functions di situ, daripada nod di dalam support berjejari d = &alpha;h, dengan h ialah jarak antara nod:</p>
+<div class="rzt-eq">u(x) = &Sigma;<sub>i</sub> R<sub>i</sub>(r) a<sub>i</sub> + &Sigma;<sub>j</sub> p<sub>j</sub>(x) b<sub>j</sub> &nbsp;&nbsp;&nbsp; [R<sub>n</sub>&nbsp; P<sub>m</sub>; P<sub>m</sub><sup>T</sup>&nbsp; 0] {a; b} = {u<sub>s</sub>; 0} &nbsp;&nbsp;&nbsp; &Phi;(x) = [R<sup>T</sup>(x)&nbsp; p<sup>T</sup>(x)] G<sup>&minus;1</sup></div>
+<p>Seperti dalam paper, radial basis function ialah multiquadric, R = (r&sup2; + (&alpha;<sub>c</sub>d<sub>c</sub>)&sup2;)<sup>q</sup> dengan q = 2.1 dan &alpha;<sub>c</sub> = 0.1, atau thin plate spline, R = r<sup>&eta;</sup> dengan &eta; = 4.0001. Sebutan polinomial p (tiada, linear atau kuadratik) membolehkan interpolasi menghasilkan semula medan malar dan linear. Oleh kerana interpolasi melalui nilai nodal, &phi;<sub>I</sub>(x<sub>J</sub>) = &delta;<sub>IJ</sub>: shape functions mempunyai sifat Kronecker delta, jadi support dikenakan terus pada sesaran nodal, sama seperti FEM.</p>
+<ul>
+<li><b>Kamiran.</b> Weak form Galerkin memberi K = &int; B<sup>T</sup> D B d&Omega;, dikamir dengan Gauss points pada cell kekisi. Satu Gauss point dalam segi empat parent [&minus;1, 1]&sup2; dipetakan ke cell-nya dalam ruang parameter melalui pemetaan affine (J&#771;), kemudian ke ruang fizikal melalui NURBS (&Jcirc;): B = &Jcirc;<sup>&minus;1</sup> J&#771;<sup>&minus;1</sup> B&#771; dan d&Omega; = |&Jcirc;| |J&#771;| d&xi;&#771; d&eta;&#771;.</li>
+<li><b>Knot lines.</b> Knot berulang menjadikan pemetaan hanya C&#8304;: garis titik-sempang yang dilukis tebal. Merentas garis ini, medan fizikal yang licin mempunyai kink dalam ruang parameter, jadi support berhenti di situ, sama seperti knot spans dalam paper dirawat secara berasingan. Dalam plat berlubang, dua span bertemu di sudut (b, b), dan ini mengekalkan pemetaan yang regular di situ.</li>
+<li><b>Support.</b> Tool ini memberi setiap integration cell satu support: nod dalam jarak d dari pusat cell. Shape functions kemudiannya licin di dalam cell tetapi melompat sedikit merentas sisi cell (tidak sekali-kali pada nod). Sebab itu N-RPIM terlepas patch test dengan jumlah kecil yang tidak hilang walaupun Gauss points ditambah.</li>
+</ul>
+<p>Perbandingan menyelesaikan element bilinear Q4 pada nod yang sama. Sisinya lurus, jadi sempadan melengkung menjadi poligon: model finite element perlu memperhalus geometri dan medan serentak, manakala N-RPIM hanya memperhalus medan.</p>
+</div></details>
+<details><summary>Cubaan untuk anda</summary><div>
+<ol>
+<li>Halakan tetikus pada ruang parameter dan ikuti cincin dalam paparan fizikal. Berhampiran lubang, langkah yang sama dalam &xi; dan &eta; meliputi jarak yang sangat berbeza, dan |J| dalam bacaan menunjukkan sebanyak mana.</li>
+<li>Pilih medan shape function dan ketik satu nod: &phi; tepat 1 pada nodnya sendiri dan 0 pada setiap nod lain. Bandingkan dengan EFG Explorer, di mana shape function MLS bernilai kira-kira 0.3 pada nodnya sendiri.</li>
+<li>Buka unit cell cellular beam daripada paper. Pada refinement 4, v<sub>A</sub> sudah berada dalam lingkungan 0.6% daripada nilai COMSOL paper, manakala Q4 pada nod yang sama kira-kira 8% lebih rendah. Jalankan perbandingan untuk melihat jurang ini melebar.</li>
+<li>Tetapkan sebutan polinomial kepada Tiada. Pada cantilever, ralat energy norm melonjak daripada kira-kira 2% kepada lebih 80%: radial functions ini sendiri tidak dapat mewakili translasi rigid body pun.</li>
+<li>Buka patch test dan ubah Gauss points setiap cell dari 2 &times; 2 ke 5 &times; 5. Ralat hampir tidak berubah (kira-kira 3.5% dengan nod tidak sekata lalai), kerana puncanya ialah lompatan antara cell, bukan quadrature.</li>
+<li>Pada plat berlubang, gerakkan jejari support dari 2 ke 4 dan perhatikan nod setiap support (kira-kira 11 hingga 32), ralat dan masa.</li>
+<li>Paparkan support dan ketik satu nod pada knot line pepenjuru yang tebal pada plat, kemudian satu nod di sebelahnya. Support yang pertama merentasi kedua-dua knot span; yang kedua berhenti pada garis itu.</li>
+</ol>
+</div></details>
+</div>
+
+  </div>
+  <p class="foot">rz-tools v1.3.0 &middot; Faculty of Civil Engineering, Universiti Teknologi Malaysia &middot; <a href="https://people.utm.my/arazin/">people.utm.my/arazin</a> &middot; <a href="https://github.com/RazinUTM/rz-tools">source</a></p>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  if (!document.body.getAttribute('data-rzlang')) document.body.setAttribute('data-rzlang', 'en');
+  function press(g, v) { document.querySelectorAll('[data-sw="' + g + '"] button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === v)); }); }
+  var dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+  press('theme', dark ? 'dark' : 'light');
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-sw] button'); if (!b) return;
+    var g = b.parentNode.getAttribute('data-sw'), v = b.getAttribute('data-v');
+    if (g === 'lang') document.body.setAttribute('data-rzlang', v); else root.setAttribute('data-theme', v);
+    press(g, v);
+  });
+})();
+</script>
+<script src="../dist/rz-tools.js"></script>
+</body>
+</html>

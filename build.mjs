@@ -18,6 +18,8 @@ const TOOLS = [
   { name: 'fem2d', files: ['src/fem/core.js', 'src/fem/ui.js'] },
   { name: 'bar1d', files: ['src/bar/core.js', 'src/bar/ui.js'] },
   { name: 'efg2d', files: ['src/efg/core.js', 'src/efg/ui.js'] },
+  { name: 'nrpim2d', files: ['src/nurbs/core.js', 'src/nurbs/view.js', 'src/nrpim/core.js', 'src/nrpim/ui.js'] },
+  { name: 'ndm2d', files: ['src/ndm/core.js', 'src/ndm/ui.js'] },
 ];
 
 const css = read('./src/base.css');
@@ -62,6 +64,14 @@ const DEMOS = {
     desc: 'Interactive 2D Element-Free Galerkin solver with MLS shape functions, penalty and Nitsche boundary conditions, and a comparison with finite elements on exact benchmarks.',
     en: 'Solve the same plane stress benchmarks with the Element-Free Galerkin method: nodes only, no elements. Change the basis, the dilation parameter, the integration and the treatment of the boundary conditions, and compare the accuracy with finite elements on the same nodes.',
     ms: 'Selesaikan benchmark plane stress yang sama dengan Element-Free Galerkin method: nod sahaja, tanpa element. Ubah basis, dilation parameter, kamiran dan rawatan syarat sempadan, dan bandingkan ketepatannya dengan finite element pada nod yang sama.' },
+  nrpim2d: { title: '2D N-RPIM Explorer', eyebrow: 'Meshfree methods · NURBS', doc: 'src/nrpim/doc.html',
+    desc: 'Interactive 2D N-RPIM solver: exact NURBS geometry with radial point interpolation (MQ or TPS), the parameter space beside the physical domain, and a comparison with finite elements.',
+    en: 'NURBS describe the geometry exactly; radial point interpolation, built in the NURBS parameter space, approximates the displacements. Follow a point from the parameter space to the physical domain, change the radial basis function and the support, and compare the accuracy with finite elements on the same nodes.',
+    ms: 'NURBS memerihalkan geometri secara exact; radial point interpolation, yang dibina dalam ruang parameter NURBS, menganggarkan sesaran. Jejaki satu titik dari ruang parameter ke domain fizikal, ubah radial basis function dan support, dan bandingkan ketepatannya dengan finite element pada nod yang sama.' },
+  ndm2d: { title: '2D NDM Explorer', eyebrow: 'Meshfree methods · NURBS', doc: 'src/ndm/doc.html',
+    desc: 'Interactive NURBS-Divergence-Meshless (NDM) solver for steady heat conduction: cell equations from the divergence theorem in the NURBS parameter space, MLS or RBF approximation, direct Dirichlet conditions, and a comparison with finite elements.',
+    en: 'The divergence theorem turns the heat equation over each cell into four line integrals, and NURBS make every cell a rectangle in the parameter space, so each normal is simply (0, ±1) or (±1, 0). Inspect the equation of any cell, switch between MLS and RBF, let the cells overlap, and compare the accuracy with finite elements.',
+    ms: 'Teorem divergence menukar persamaan haba bagi setiap cell kepada empat line integral, dan NURBS menjadikan setiap cell segi empat tepat dalam ruang parameter, jadi setiap normal hanyalah (0, ±1) atau (±1, 0). Teliti persamaan mana-mana cell, tukar antara MLS dan RBF, biarkan cell bertindih, dan bandingkan ketepatannya dengan finite element.' },
 };
 const tpl = read('./demo/template.html');
 for (const [name, d] of Object.entries(DEMOS)) {

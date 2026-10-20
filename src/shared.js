@@ -142,7 +142,9 @@
     };
   };
   U.colorbar = function (el, cols, lev, unit) {
-    var W = el.clientWidth || 300, nb = cols.length, stride = Math.max(1, Math.ceil(56 / (W / nb)));
+    // spacing between tick labels from the widest label (about 7 px per character at 11 px)
+    var wide = 0; for (var w0 = 0; w0 < lev.length; w0++) wide = Math.max(wide, U.fmt(lev[w0]).length);
+    var W = el.clientWidth || 300, nb = cols.length, stride = Math.max(1, Math.ceil(Math.max(56, wide * 7 + 10) / (W / nb)));
     var sw = cols.map(function (c) { return '<i style="background:' + c + '"></i>'; }).join(''), show = [];
     for (var i = 0; i <= nb; i += stride) show.push(i);
     if (show[show.length - 1] !== nb) { if (nb - show[show.length - 1] < stride) show.pop(); show.push(nb); }
@@ -200,15 +202,18 @@
       g.beginPath(); g.arc(cx, cy, 2.6, 0, Math.PI * 2); g.stroke();
       g.beginPath(); g.moveTo(cx + o[0] * 3 - o[1] * 4, cy - o[1] * 3 - o[0] * 4); g.lineTo(cx + o[0] * 3 + o[1] * 4, cy - o[1] * 3 + o[0] * 4); g.stroke();
     });
-    // load arrows on traction edges
-    var loaded = mesh.bedges.filter(function (be) { return be.tag === 's1'; }), tr = [], tmax = 0;
-    var every = Math.max(1, Math.ceil(loaded.length / 14));
-    loaded.forEach(function (be, i) {
-      if (i % every) return;
+    // load arrows on traction edges (o.loadTags, default the s1 edges)
+    var ltags = o.loadTags || ['s1'], tr = [], tmax = 0, loaded = [];
+    // thin the arrows on each loaded edge separately (about 14 per edge)
+    ltags.forEach(function (tg) {
+      var es = mesh.bedges.filter(function (be) { return be.tag === tg; }), every = Math.max(1, Math.ceil(es.length / 14));
+      es.forEach(function (be, i) { if (!(i % every)) loaded.push(be); });
+    });
+    loaded.forEach(function (be) {
       var nA = be.n[0], nB = be.n[be.n.length - 1], mid = be.n.length === 3 ? be.n[1] : -1;
       var x = mid >= 0 ? mesh.X[mid] : (mesh.X[nA] + mesh.X[nB]) / 2, y = mid >= 0 ? mesh.Y[mid] : (mesh.Y[nA] + mesh.Y[nB]) / 2;
       var dx = mid >= 0 ? px[mid] - mesh.X[mid] : (px[nA] + px[nB] - mesh.X[nA] - mesh.X[nB]) / 2, dy = mid >= 0 ? py[mid] - mesh.Y[mid] : (py[nA] + py[nB] - mesh.Y[nA] - mesh.Y[nB]) / 2;
-      var tv = pr.traction('s1', x, y); if (!tv) return;
+      var tv = pr.traction(be.tag, x, y); if (!tv) return;
       var mag = Math.hypot(tv[0], tv[1]); tmax = Math.max(tmax, mag);
       tr.push({ x: x + dx, y: y + dy, t: tv, mag: mag, o: outward(be) });
     });

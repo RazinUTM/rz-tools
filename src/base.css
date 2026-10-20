@@ -156,3 +156,21 @@ body.razin-dark .rzt.rzt-on, .rzt.rzt-on.is-dark {
 .rzt-doc sub, .rzt.rzt-on sub { bottom: -0.25em; }
 .rzt-doc sup, .rzt.rzt-on sup { top: -0.5em; }
 @media (prefers-reduced-motion: reduce) { .rzt.rzt-on * { transition: none !important; } }
+
+/* NURBS explorers: parameter-space panel with an info list */
+.rzt.rzt-on .rzt-ps { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 720px) { .rzt.rzt-on .rzt-ps { grid-template-columns: minmax(0, 1fr); } }
+.rzt.rzt-on .rzt-cv-ps { height: 300px; cursor: crosshair; }
+.rzt.rzt-on .rzt-info { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 12px; margin: 4px 0 0; font-size: 12.5px; line-height: 1.45; }
+.rzt.rzt-on .rzt-info dt { margin: 0; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--fg2, #5D6B85); padding-top: 1px; }
+.rzt.rzt-on .rzt-info dd { margin: 0; color: var(--fg, #0F1624); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.rzt.rzt-on .rzt-info dd [data-out="hover"] { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11.5px; }
+.rzt.rzt-on .rzt-eq { margin: 0 0 12px; font-size: 13px; line-height: 1.5; color: var(--fg, #0F1624); }
+.rzt.rzt-on .rzt-eq p { margin: 0 0 6px; }
+.rzt.rzt-on .rzt-eq .rzt-eq-h { font-weight: 600; font-size: 13.5px; }
+.rzt.rzt-on .rzt-eq .rzt-eq-n { margin-top: 6px; font-size: 12px; color: var(--fg2, #5D6B85); }
+.rzt.rzt-on .rzt-eq-t td { padding: 4px 6px; font-size: 12.5px; white-space: normal; }
+.rzt.rzt-on .rzt-eq-t td:last-child { text-align: right; white-space: nowrap; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; }
+.rzt.rzt-on .rzt-eq-t .rzt-eq-f { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11.5px; color: var(--fg2, #5D6B85); }
+.rzt.rzt-on .rzt-eq-t .rzt-eq-f em { font-family: 'Poppins', system-ui, sans-serif; font-style: normal; font-size: 11px; color: var(--gold, #C8A020); }
+.rzt.rzt-on .rzt-eq-t .rzt-eq-s td { font-weight: 600; border-top: 1px solid var(--fg2, #5D6B85); }

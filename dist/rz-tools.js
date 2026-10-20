@@ -1,5 +1,5 @@
-/*! rz-tools v1.2.0 | A. R. Zainal Abidin, Universiti Teknologi Malaysia | https://github.com/RazinUTM/rz-tools */
-(function(){if(document.getElementById('rzt-css'))return;var s=document.createElement('style');s.id='rzt-css';s.textContent="/* ═══════════════════════════════════════════════════════════════\n   Shared styles for interactive tools (.rzt). Every selector starts with\n   .rzt.rzt-on so it outranks theme rules like `body.x .entry-content p`.\n   Colours come from the host tokens with UTM fallbacks.\n   ═══════════════════════════════════════════════════════════════ */\n.rzt.rzt-on {\n  --rzt-ok: #2A6B2A; --rzt-ok-bg: #EAF5EA; --rzt-warn: #8B5E00; --rzt-warn-bg: #FFF4E0; --rzt-bad: #A52A2A; --rzt-bad-bg: #FBECEC;\n  font-family: 'Poppins', system-ui, -apple-system, sans-serif; font-size: 15px; line-height: 1.5;\n  color: var(--fg, #0F1624); text-align: left;\n}\nbody.razin-dark .rzt.rzt-on, .rzt.rzt-on.is-dark {\n  --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414;\n}\n.rzt.rzt-on *, .rzt.rzt-on *::before, .rzt.rzt-on *::after { box-sizing: border-box; }\n.rzt.rzt-on .rzt-body { display: grid; grid-template-columns: 272px minmax(0, 1fr); gap: 20px; align-items: start; }\n@media (max-width: 880px) { .rzt.rzt-on .rzt-body { grid-template-columns: minmax(0, 1fr); } }\n\n/* controls */\n.rzt.rzt-on .rzt-ctrl {\n  display: flex; flex-direction: column; gap: 16px; padding: 18px;\n  background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); border-radius: 6px;\n  position: sticky; top: calc(var(--rz-nav-h, 0px) + 14px);\n}\n@media (max-width: 880px) { .rzt.rzt-on .rzt-ctrl { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px 12px; padding: 14px; } }\n.rzt.rzt-on .rzt-nt { text-transform: none; }\n.rzt.rzt-on .rzt-field { display: flex; flex-direction: column; gap: 7px; margin: 0; padding: 0; min-width: 0; }\n.rzt.rzt-on .rzt-lab {\n  display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0;\n  font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; font-weight: 500;\n  letter-spacing: .07em; text-transform: uppercase; color: var(--fg2, #5D6B85);\n}\n.rzt.rzt-on .rzt-lab output { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--accent, #7B1535); font-variant-numeric: tabular-nums; }\n.rzt.rzt-on .rzt-sel {\n  width: 100%; margin: 0; padding: 8px 10px; font: inherit; font-size: 14px; line-height: 1.3;\n  color: var(--fg, #0F1624); background: var(--bg, #F4F6FA); border: 1px solid var(--border, #DDE3EF); border-radius: 4px; height: auto;\n}\n.rzt.rzt-on .rzt-sel:focus-visible, .rzt.rzt-on .rzt-rng:focus-visible, .rzt.rzt-on button:focus-visible { outline: 2px solid var(--accent, #7B1535); outline-offset: 2px; }\n.rzt.rzt-on .rzt-rng { width: 100%; margin: 4px 0 0; padding: 0; accent-color: var(--accent, #7B1535); background: transparent; border: 0; height: 22px; }\n.rzt.rzt-on .rzt-seg { display: flex; margin: 0; border: 1px solid var(--border, #DDE3EF); border-radius: 4px; overflow: hidden; }\n.rzt.rzt-on .rzt-seg button {\n  flex: 1; margin: 0; padding: 7px 6px; font: inherit; font-size: 13px; line-height: 1.2; cursor: pointer;\n  color: var(--fg2, #5D6B85); background: var(--surface, #fff); border: 0; border-radius: 0; box-shadow: none;\n}\n.rzt.rzt-on .rzt-seg button + button { border-left: 1px solid var(--border, #DDE3EF); }\n.rzt.rzt-on .rzt-seg button[aria-pressed=\"true\"] { background: var(--accent, #7B1535); color: #fff; }\n.rzt.rzt-on .rzt-btn {\n  margin: 0; padding: 6px 12px; font: inherit; font-size: 13px; line-height: 1.2; cursor: pointer; align-self: flex-start;\n  color: var(--fg2, #5D6B85); background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); border-radius: 4px; box-shadow: none;\n}\n.rzt.rzt-on .rzt-btn:hover { border-color: var(--accent, #7B1535); color: var(--accent, #7B1535); }\n.rzt.rzt-on .rzt-stepper { display: flex; align-items: center; gap: 8px; }\n.rzt.rzt-on .rzt-stepper output { flex: 1; text-align: center; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: var(--fg, #0F1624); font-variant-numeric: tabular-nums; }\n.rzt.rzt-on .rzt-stepper .rzt-btn { padding: 4px 12px; font-size: 16px; }\n.rzt.rzt-on .rzt-reset { align-self: stretch; text-align: center; }\n\n/* metrics */\n.rzt.rzt-on .rzt-main { display: flex; flex-direction: column; gap: 14px; min-width: 0; }\n.rzt.rzt-on .rzt-metrics {\n  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin: 0;\n  background: var(--border, #DDE3EF); border: 1px solid var(--border, #DDE3EF); border-radius: 6px; overflow: hidden;\n}\n@media (max-width: 560px) { .rzt.rzt-on .rzt-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }\n.rzt.rzt-on .rzt-m { display: flex; flex-direction: column; gap: 3px; padding: 11px 14px; background: var(--surface, #fff); min-width: 0; }\n.rzt.rzt-on .rzt-mv { font-size: 19px; font-weight: 600; line-height: 1.15; color: var(--fg, #0F1624); font-variant-numeric: tabular-nums; white-space: nowrap; }\n.rzt.rzt-on .rzt-ml { font-size: 12px; line-height: 1.35; color: var(--fg2, #5D6B85); }\n.rzt.rzt-on .rzt-chip { display: inline-block; margin-left: 2px; padding: 0 6px; border-radius: 3px; font-size: 11px; font-weight: 600; white-space: nowrap; }\n.rzt.rzt-on .rzt-chip.is-good { background: var(--rzt-ok-bg); color: var(--rzt-ok); }\n.rzt.rzt-on .rzt-chip.is-ok { background: var(--rzt-warn-bg); color: var(--rzt-warn); }\n.rzt.rzt-on .rzt-chip.is-bad { background: var(--rzt-bad-bg); color: var(--rzt-bad); }\n.rzt.rzt-on .rzt-note { margin: 0; padding: 10px 14px; font-size: 13.5px; line-height: 1.5; border-radius: 0 4px 4px 0; color: var(--fg, #0F1624); }\n.rzt.rzt-on .rzt-warn { background: var(--rzt-warn-bg); border-left: 3px solid var(--rzt-warn); }\n.rzt.rzt-on .rzt-ok { background: var(--rzt-ok-bg); border-left: 3px solid var(--rzt-ok); }\n\n/* plots */\n.rzt.rzt-on .rzt-plot { position: relative; margin: 0; padding: 14px 14px 8px; background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); border-radius: 6px; }\n.rzt.rzt-on .rzt-ph { display: flex; flex-direction: column; gap: 3px; margin: 0 0 8px; }\n.rzt.rzt-on .rzt-h { font-size: 15px; font-weight: 600; line-height: 1.3; color: var(--fg, #0F1624); }\n.rzt.rzt-on .rzt-sub { font-size: 12.5px; line-height: 1.45; color: var(--fg2, #5D6B85); max-width: 68ch; }\n.rzt.rzt-on .rzt-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 4px; font-size: 12px; color: var(--fg2, #5D6B85); }\n.rzt.rzt-on .rzt-legend span { display: inline-flex; align-items: center; gap: 6px; }\n.rzt.rzt-on .rzt-sw { display: inline-block; flex-shrink: 0; }\n.rzt.rzt-on .rzt-sw.line { width: 18px; height: 0; border-top: 2.5px solid; }\n.rzt.rzt-on .rzt-sw.dash { width: 18px; height: 0; border-top: 2px dashed; }\n.rzt.rzt-on .rzt-sw.dot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid; }\n.rzt.rzt-on .rzt-sw.band { width: 14px; height: 10px; border-radius: 2px; }\n.rzt.rzt-on .rzt-cv { display: block; width: 100%; height: 210px; margin: 0; cursor: pointer; touch-action: manipulation; }\n.rzt.rzt-on .rzt-cv-main { height: 270px; }\n@media (max-width: 560px) { .rzt.rzt-on .rzt-cv { height: 180px; } .rzt.rzt-on .rzt-cv-main { height: 220px; } }\n.rzt.rzt-on .rzt-read { position: absolute; right: 16px; top: 14px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: var(--fg, #0F1624); font-variant-numeric: tabular-nums; }\n\n/* shared additions: groups, size line, overlays, colour bar, markers */\n@media (min-width: 881px) { .rzt.rzt-on .rzt-ctrl { max-height: calc(100vh - var(--rz-nav-h, 0px) - 28px); overflow-y: auto; } }\n.rzt.rzt-on .rzt-grp { grid-column: 1 / -1; margin: 2px 0 -6px; padding: 12px 0 0; border-top: 1px solid var(--border, #DDE3EF); font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent, #7B1535); }\n.rzt.rzt-on .rzt-grp:first-child { border-top: 0; padding-top: 0; }\n.rzt.rzt-on .rzt-wide { grid-column: 1 / -1; }\n.rzt.rzt-on .rzt-field[hidden] { display: none; }\n.rzt.rzt-on .rzt-field.is-off { opacity: .45; }\n.rzt.rzt-on .rzt-size { font-size: 11.5px; line-height: 1.35; color: var(--fg2, #5D6B85); font-variant-numeric: tabular-nums; }\n.rzt.rzt-on .rzt-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; margin-top: 8px; }\n.rzt.rzt-on .rzt-primary { background: var(--accent, #7B1535); border-color: var(--accent, #7B1535); color: #fff; }\n.rzt.rzt-on .rzt-primary:hover { color: #fff; opacity: .9; }\n.rzt.rzt-on .rzt-btn:disabled { opacity: .5; cursor: default; }\n.rzt.rzt-on .rzt-sel-inline { width: auto; max-width: 100%; margin: 2px 0 0; padding: 6px 8px; font-size: 13px; }\n.rzt.rzt-on .rzt-cvwrap { position: relative; }\n.rzt.rzt-on .rzt-cv-fem { height: 320px; cursor: crosshair; }\n.rzt.rzt-on .rzt-ov { position: absolute; left: 0; top: 0; width: 100%; height: 100%; cursor: crosshair; touch-action: manipulation; }\n.rzt.rzt-on .rzt-cbar { position: relative; margin: 6px 0 0; padding-right: 40px; }\n.rzt.rzt-on .rzt-cb-sw { display: flex; height: 12px; border-radius: 2px; overflow: hidden; }\n.rzt.rzt-on .rzt-cb-sw i { flex: 1; }\n.rzt.rzt-on .rzt-cb-tk { position: relative; height: 20px; }\n.rzt.rzt-on .rzt-cb-tk b, .rzt.rzt-on .rzt-cb-u { position: absolute; top: 4px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; line-height: 1.2; color: var(--fg2, #5D6B85); white-space: nowrap; font-variant-numeric: tabular-nums; }\n.rzt.rzt-on .rzt-cb-u { top: -1px; right: 0; color: var(--fg, #0F1624); }\n.rzt.rzt-on .rzt-read-b, .rzt.rzt-on .rzt-plot .rzt-read[data-read=\"2\"], .rzt.rzt-on .rzt-plot .rzt-read[data-read=\"3\"] { position: static; display: block; min-height: 18px; margin-top: 4px; }\n.rzt.rzt-on .rzt-sw.mk { width: 10px; height: 10px; }\n.rzt.rzt-on .rzt-sw.mk-circle { border-radius: 50%; }\n.rzt.rzt-on .rzt-sw.mk-square { border-radius: 1px; }\n.rzt.rzt-on .rzt-sw.mk-tri { clip-path: polygon(50% 0, 100% 100%, 0 100%); }\n.rzt.rzt-on .rzt-sw.mk-diamond { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }\n\n/* 1D bar: number inputs, paired plots, tables, code */\n.rzt.rzt-on .rzt-num { -moz-appearance: textfield; font-variant-numeric: tabular-nums; }\n.rzt.rzt-on .rzt-cv-bar { height: 170px; cursor: default; }\n.rzt.rzt-on .rzt-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }\n@media (max-width: 1100px) { .rzt.rzt-on .rzt-pair { grid-template-columns: minmax(0, 1fr); } }\n.rzt.rzt-on details.rzt-acc { margin: 0; background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); border-radius: 6px; }\n.rzt.rzt-on details.rzt-acc > summary { cursor: pointer; padding: 12px 16px; font-size: 14.5px; font-weight: 600; color: var(--fg, #0F1624); list-style: none; display: flex; justify-content: space-between; }\n.rzt.rzt-on details.rzt-acc > summary::-webkit-details-marker { display: none; }\n.rzt.rzt-on details.rzt-acc > summary::after { content: '+'; font-family: 'IBM Plex Mono', ui-monospace, monospace; color: var(--accent, #7B1535); }\n.rzt.rzt-on details.rzt-acc[open] > summary::after { content: '\\2212'; }\n.rzt.rzt-on .rzt-tblwrap { overflow-x: auto; padding: 0 16px 14px; }\n.rzt.rzt-on .rzt-tbl { width: 100%; margin: 0; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }\n.rzt.rzt-on .rzt-tbl th, .rzt.rzt-on .rzt-tbl td { padding: 6px 10px; border: 0; border-bottom: 1px solid var(--border, #DDE3EF); text-align: right; white-space: nowrap; color: var(--fg, #0F1624); background: transparent; }\n.rzt.rzt-on .rzt-tbl th { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11.5px; font-weight: 500; color: var(--fg2, #5D6B85); }\n.rzt.rzt-on .rzt-tbl th:first-child, .rzt.rzt-on .rzt-tbl td:first-child, .rzt.rzt-on .rzt-tbl td:last-child, .rzt.rzt-on .rzt-tbl th:last-child { text-align: left; }\n.rzt.rzt-on .rzt-code { position: relative; padding: 0 16px 14px; }\n.rzt.rzt-on .rzt-code .rzt-btn { position: absolute; right: 24px; top: 8px; }\n.rzt.rzt-on .rzt-code pre { margin: 0; padding: 14px 16px; overflow-x: auto; background: var(--bg, #F4F6FA); border: 1px solid var(--border, #DDE3EF); border-radius: 4px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12.5px; line-height: 1.55; color: var(--fg, #0F1624); white-space: pre; }\n.rzt.rzt-on .rzt-code code { font: inherit; color: inherit; background: none; padding: 0; }\n\n/* toggle chips (EFG overlays) */\n.rzt.rzt-on .rzt-chips { display: flex; flex-wrap: wrap; gap: 6px; }\n.rzt.rzt-on .rzt-chips button { margin: 0; padding: 5px 10px; font: inherit; font-size: 12.5px; line-height: 1.2; cursor: pointer; border-radius: 999px;\n  color: var(--fg2, #5D6B85); background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); box-shadow: none; }\n.rzt.rzt-on .rzt-chips button[aria-pressed=\"true\"] { color: var(--accent, #7B1535); border-color: var(--accent, #7B1535); background: var(--tag-bg, #F8EEF0); }\n\n/* explanation blocks (rendered by the host page, styled here) */\n.rzt-doc details { margin: 0 0 10px; background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); border-radius: 6px; }\n.rzt-doc summary { cursor: pointer; padding: 13px 16px; font-weight: 600; color: var(--fg, #0F1624); }\n.rzt-doc details > div { padding: 0 18px 14px; color: var(--fg2, #5D6B85); font-size: 14.5px; line-height: 1.65; }\n.rzt-doc .rzt-eq { margin: 10px 0; padding: 10px 14px; overflow-x: auto; white-space: nowrap; background: var(--bg, #F4F6FA); border-radius: 4px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13.5px; color: var(--fg, #0F1624); }\n.rzt-doc ul, .rzt-doc ol { margin: 8px 0; padding-left: 1.3em; }\n.rzt-doc li { margin-bottom: 6px; }\n.rzt-doc b { color: var(--fg, #0F1624); }\n/* themes such as Divi reset sub/sup to the baseline; restore them without disturbing line height */\n.rzt-doc sub, .rzt-doc sup, .rzt.rzt-on sub, .rzt.rzt-on sup { position: relative; font-size: 75%; line-height: 0; vertical-align: baseline; }\n.rzt-doc sub, .rzt.rzt-on sub { bottom: -0.25em; }\n.rzt-doc sup, .rzt.rzt-on sup { top: -0.5em; }\n@media (prefers-reduced-motion: reduce) { .rzt.rzt-on * { transition: none !important; } }\n";(document.head||document.documentElement).appendChild(s);})();
+/*! rz-tools v1.3.0 | A. R. Zainal Abidin, Universiti Teknologi Malaysia | https://github.com/RazinUTM/rz-tools */
+(function(){if(document.getElementById('rzt-css'))return;var s=document.createElement('style');s.id='rzt-css';s.textContent="/* ═══════════════════════════════════════════════════════════════\n   Shared styles for interactive tools (.rzt). Every selector starts with\n   .rzt.rzt-on so it outranks theme rules like `body.x .entry-content p`.\n   Colours come from the host tokens with UTM fallbacks.\n   ═══════════════════════════════════════════════════════════════ */\n.rzt.rzt-on {\n  --rzt-ok: #2A6B2A; --rzt-ok-bg: #EAF5EA; --rzt-warn: #8B5E00; --rzt-warn-bg: #FFF4E0; --rzt-bad: #A52A2A; --rzt-bad-bg: #FBECEC;\n  font-family: 'Poppins', system-ui, -apple-system, sans-serif; font-size: 15px; line-height: 1.5;\n  color: var(--fg, #0F1624); text-align: left;\n}\nbody.razin-dark .rzt.rzt-on, .rzt.rzt-on.is-dark {\n  --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414;\n}\n.rzt.rzt-on *, .rzt.rzt-on *::before, .rzt.rzt-on *::after { box-sizing: border-box; }\n.rzt.rzt-on .rzt-body { display: grid; grid-template-columns: 272px minmax(0, 1fr); gap: 20px; align-items: start; }\n@media (max-width: 880px) { .rzt.rzt-on .rzt-body { grid-template-columns: minmax(0, 1fr); } }\n\n/* controls */\n.rzt.rzt-on .rzt-ctrl {\n  display: flex; flex-direction: column; gap: 16px; padding: 18px;\n  background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); border-radius: 6px;\n  position: sticky; top: calc(var(--rz-nav-h, 0px) + 14px);\n}\n@media (max-width: 880px) { .rzt.rzt-on .rzt-ctrl { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px 12px; padding: 14px; } }\n.rzt.rzt-on .rzt-nt { text-transform: none; }\n.rzt.rzt-on .rzt-field { display: flex; flex-direction: column; gap: 7px; margin: 0; padding: 0; min-width: 0; }\n.rzt.rzt-on .rzt-lab {\n  display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0;\n  font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; font-weight: 500;\n  letter-spacing: .07em; text-transform: uppercase; color: var(--fg2, #5D6B85);\n}\n.rzt.rzt-on .rzt-lab output { font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--accent, #7B1535); font-variant-numeric: tabular-nums; }\n.rzt.rzt-on .rzt-sel {\n  width: 100%; margin: 0; padding: 8px 10px; font: inherit; font-size: 14px; line-height: 1.3;\n  color: var(--fg, #0F1624); background: var(--bg, #F4F6FA); border: 1px solid var(--border, #DDE3EF); border-radius: 4px; height: auto;\n}\n.rzt.rzt-on .rzt-sel:focus-visible, .rzt.rzt-on .rzt-rng:focus-visible, .rzt.rzt-on button:focus-visible { outline: 2px solid var(--accent, #7B1535); outline-offset: 2px; }\n.rzt.rzt-on .rzt-rng { width: 100%; margin: 4px 0 0; padding: 0; accent-color: var(--accent, #7B1535); background: transparent; border: 0; height: 22px; }\n.rzt.rzt-on .rzt-seg { display: flex; margin: 0; border: 1px solid var(--border, #DDE3EF); border-radius: 4px; overflow: hidden; }\n.rzt.rzt-on .rzt-seg button {\n  flex: 1; margin: 0; padding: 7px 6px; font: inherit; font-size: 13px; line-height: 1.2; cursor: pointer;\n  color: var(--fg2, #5D6B85); background: var(--surface, #fff); border: 0; border-radius: 0; box-shadow: none;\n}\n.rzt.rzt-on .rzt-seg button + button { border-left: 1px solid var(--border, #DDE3EF); }\n.rzt.rzt-on .rzt-seg button[aria-pressed=\"true\"] { background: var(--accent, #7B1535); color: #fff; }\n.rzt.rzt-on .rzt-btn {\n  margin: 0; padding: 6px 12px; font: inherit; font-size: 13px; line-height: 1.2; cursor: pointer; align-self: flex-start;\n  color: var(--fg2, #5D6B85); background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); border-radius: 4px; box-shadow: none;\n}\n.rzt.rzt-on .rzt-btn:hover { border-color: var(--accent, #7B1535); color: var(--accent, #7B1535); }\n.rzt.rzt-on .rzt-stepper { display: flex; align-items: center; gap: 8px; }\n.rzt.rzt-on .rzt-stepper output { flex: 1; text-align: center; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: var(--fg, #0F1624); font-variant-numeric: tabular-nums; }\n.rzt.rzt-on .rzt-stepper .rzt-btn { padding: 4px 12px; font-size: 16px; }\n.rzt.rzt-on .rzt-reset { align-self: stretch; text-align: center; }\n\n/* metrics */\n.rzt.rzt-on .rzt-main { display: flex; flex-direction: column; gap: 14px; min-width: 0; }\n.rzt.rzt-on .rzt-metrics {\n  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin: 0;\n  background: var(--border, #DDE3EF); border: 1px solid var(--border, #DDE3EF); border-radius: 6px; overflow: hidden;\n}\n@media (max-width: 560px) { .rzt.rzt-on .rzt-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }\n.rzt.rzt-on .rzt-m { display: flex; flex-direction: column; gap: 3px; padding: 11px 14px; background: var(--surface, #fff); min-width: 0; }\n.rzt.rzt-on .rzt-mv { font-size: 19px; font-weight: 600; line-height: 1.15; color: var(--fg, #0F1624); font-variant-numeric: tabular-nums; white-space: nowrap; }\n.rzt.rzt-on .rzt-ml { font-size: 12px; line-height: 1.35; color: var(--fg2, #5D6B85); }\n.rzt.rzt-on .rzt-chip { display: inline-block; margin-left: 2px; padding: 0 6px; border-radius: 3px; font-size: 11px; font-weight: 600; white-space: nowrap; }\n.rzt.rzt-on .rzt-chip.is-good { background: var(--rzt-ok-bg); color: var(--rzt-ok); }\n.rzt.rzt-on .rzt-chip.is-ok { background: var(--rzt-warn-bg); color: var(--rzt-warn); }\n.rzt.rzt-on .rzt-chip.is-bad { background: var(--rzt-bad-bg); color: var(--rzt-bad); }\n.rzt.rzt-on .rzt-note { margin: 0; padding: 10px 14px; font-size: 13.5px; line-height: 1.5; border-radius: 0 4px 4px 0; color: var(--fg, #0F1624); }\n.rzt.rzt-on .rzt-warn { background: var(--rzt-warn-bg); border-left: 3px solid var(--rzt-warn); }\n.rzt.rzt-on .rzt-ok { background: var(--rzt-ok-bg); border-left: 3px solid var(--rzt-ok); }\n\n/* plots */\n.rzt.rzt-on .rzt-plot { position: relative; margin: 0; padding: 14px 14px 8px; background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); border-radius: 6px; }\n.rzt.rzt-on .rzt-ph { display: flex; flex-direction: column; gap: 3px; margin: 0 0 8px; }\n.rzt.rzt-on .rzt-h { font-size: 15px; font-weight: 600; line-height: 1.3; color: var(--fg, #0F1624); }\n.rzt.rzt-on .rzt-sub { font-size: 12.5px; line-height: 1.45; color: var(--fg2, #5D6B85); max-width: 68ch; }\n.rzt.rzt-on .rzt-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 4px; font-size: 12px; color: var(--fg2, #5D6B85); }\n.rzt.rzt-on .rzt-legend span { display: inline-flex; align-items: center; gap: 6px; }\n.rzt.rzt-on .rzt-sw { display: inline-block; flex-shrink: 0; }\n.rzt.rzt-on .rzt-sw.line { width: 18px; height: 0; border-top: 2.5px solid; }\n.rzt.rzt-on .rzt-sw.dash { width: 18px; height: 0; border-top: 2px dashed; }\n.rzt.rzt-on .rzt-sw.dot { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid; }\n.rzt.rzt-on .rzt-sw.band { width: 14px; height: 10px; border-radius: 2px; }\n.rzt.rzt-on .rzt-cv { display: block; width: 100%; height: 210px; margin: 0; cursor: pointer; touch-action: manipulation; }\n.rzt.rzt-on .rzt-cv-main { height: 270px; }\n@media (max-width: 560px) { .rzt.rzt-on .rzt-cv { height: 180px; } .rzt.rzt-on .rzt-cv-main { height: 220px; } }\n.rzt.rzt-on .rzt-read { position: absolute; right: 16px; top: 14px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; color: var(--fg, #0F1624); font-variant-numeric: tabular-nums; }\n\n/* shared additions: groups, size line, overlays, colour bar, markers */\n@media (min-width: 881px) { .rzt.rzt-on .rzt-ctrl { max-height: calc(100vh - var(--rz-nav-h, 0px) - 28px); overflow-y: auto; } }\n.rzt.rzt-on .rzt-grp { grid-column: 1 / -1; margin: 2px 0 -6px; padding: 12px 0 0; border-top: 1px solid var(--border, #DDE3EF); font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent, #7B1535); }\n.rzt.rzt-on .rzt-grp:first-child { border-top: 0; padding-top: 0; }\n.rzt.rzt-on .rzt-wide { grid-column: 1 / -1; }\n.rzt.rzt-on .rzt-field[hidden] { display: none; }\n.rzt.rzt-on .rzt-field.is-off { opacity: .45; }\n.rzt.rzt-on .rzt-size { font-size: 11.5px; line-height: 1.35; color: var(--fg2, #5D6B85); font-variant-numeric: tabular-nums; }\n.rzt.rzt-on .rzt-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; margin-top: 8px; }\n.rzt.rzt-on .rzt-primary { background: var(--accent, #7B1535); border-color: var(--accent, #7B1535); color: #fff; }\n.rzt.rzt-on .rzt-primary:hover { color: #fff; opacity: .9; }\n.rzt.rzt-on .rzt-btn:disabled { opacity: .5; cursor: default; }\n.rzt.rzt-on .rzt-sel-inline { width: auto; max-width: 100%; margin: 2px 0 0; padding: 6px 8px; font-size: 13px; }\n.rzt.rzt-on .rzt-cvwrap { position: relative; }\n.rzt.rzt-on .rzt-cv-fem { height: 320px; cursor: crosshair; }\n.rzt.rzt-on .rzt-ov { position: absolute; left: 0; top: 0; width: 100%; height: 100%; cursor: crosshair; touch-action: manipulation; }\n.rzt.rzt-on .rzt-cbar { position: relative; margin: 6px 0 0; padding-right: 40px; }\n.rzt.rzt-on .rzt-cb-sw { display: flex; height: 12px; border-radius: 2px; overflow: hidden; }\n.rzt.rzt-on .rzt-cb-sw i { flex: 1; }\n.rzt.rzt-on .rzt-cb-tk { position: relative; height: 20px; }\n.rzt.rzt-on .rzt-cb-tk b, .rzt.rzt-on .rzt-cb-u { position: absolute; top: 4px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; line-height: 1.2; color: var(--fg2, #5D6B85); white-space: nowrap; font-variant-numeric: tabular-nums; }\n.rzt.rzt-on .rzt-cb-u { top: -1px; right: 0; color: var(--fg, #0F1624); }\n.rzt.rzt-on .rzt-read-b, .rzt.rzt-on .rzt-plot .rzt-read[data-read=\"2\"], .rzt.rzt-on .rzt-plot .rzt-read[data-read=\"3\"] { position: static; display: block; min-height: 18px; margin-top: 4px; }\n.rzt.rzt-on .rzt-sw.mk { width: 10px; height: 10px; }\n.rzt.rzt-on .rzt-sw.mk-circle { border-radius: 50%; }\n.rzt.rzt-on .rzt-sw.mk-square { border-radius: 1px; }\n.rzt.rzt-on .rzt-sw.mk-tri { clip-path: polygon(50% 0, 100% 100%, 0 100%); }\n.rzt.rzt-on .rzt-sw.mk-diamond { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }\n\n/* 1D bar: number inputs, paired plots, tables, code */\n.rzt.rzt-on .rzt-num { -moz-appearance: textfield; font-variant-numeric: tabular-nums; }\n.rzt.rzt-on .rzt-cv-bar { height: 170px; cursor: default; }\n.rzt.rzt-on .rzt-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }\n@media (max-width: 1100px) { .rzt.rzt-on .rzt-pair { grid-template-columns: minmax(0, 1fr); } }\n.rzt.rzt-on details.rzt-acc { margin: 0; background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); border-radius: 6px; }\n.rzt.rzt-on details.rzt-acc > summary { cursor: pointer; padding: 12px 16px; font-size: 14.5px; font-weight: 600; color: var(--fg, #0F1624); list-style: none; display: flex; justify-content: space-between; }\n.rzt.rzt-on details.rzt-acc > summary::-webkit-details-marker { display: none; }\n.rzt.rzt-on details.rzt-acc > summary::after { content: '+'; font-family: 'IBM Plex Mono', ui-monospace, monospace; color: var(--accent, #7B1535); }\n.rzt.rzt-on details.rzt-acc[open] > summary::after { content: '\\2212'; }\n.rzt.rzt-on .rzt-tblwrap { overflow-x: auto; padding: 0 16px 14px; }\n.rzt.rzt-on .rzt-tbl { width: 100%; margin: 0; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }\n.rzt.rzt-on .rzt-tbl th, .rzt.rzt-on .rzt-tbl td { padding: 6px 10px; border: 0; border-bottom: 1px solid var(--border, #DDE3EF); text-align: right; white-space: nowrap; color: var(--fg, #0F1624); background: transparent; }\n.rzt.rzt-on .rzt-tbl th { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11.5px; font-weight: 500; color: var(--fg2, #5D6B85); }\n.rzt.rzt-on .rzt-tbl th:first-child, .rzt.rzt-on .rzt-tbl td:first-child, .rzt.rzt-on .rzt-tbl td:last-child, .rzt.rzt-on .rzt-tbl th:last-child { text-align: left; }\n.rzt.rzt-on .rzt-code { position: relative; padding: 0 16px 14px; }\n.rzt.rzt-on .rzt-code .rzt-btn { position: absolute; right: 24px; top: 8px; }\n.rzt.rzt-on .rzt-code pre { margin: 0; padding: 14px 16px; overflow-x: auto; background: var(--bg, #F4F6FA); border: 1px solid var(--border, #DDE3EF); border-radius: 4px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12.5px; line-height: 1.55; color: var(--fg, #0F1624); white-space: pre; }\n.rzt.rzt-on .rzt-code code { font: inherit; color: inherit; background: none; padding: 0; }\n\n/* toggle chips (EFG overlays) */\n.rzt.rzt-on .rzt-chips { display: flex; flex-wrap: wrap; gap: 6px; }\n.rzt.rzt-on .rzt-chips button { margin: 0; padding: 5px 10px; font: inherit; font-size: 12.5px; line-height: 1.2; cursor: pointer; border-radius: 999px;\n  color: var(--fg2, #5D6B85); background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); box-shadow: none; }\n.rzt.rzt-on .rzt-chips button[aria-pressed=\"true\"] { color: var(--accent, #7B1535); border-color: var(--accent, #7B1535); background: var(--tag-bg, #F8EEF0); }\n\n/* explanation blocks (rendered by the host page, styled here) */\n.rzt-doc details { margin: 0 0 10px; background: var(--surface, #fff); border: 1px solid var(--border, #DDE3EF); border-radius: 6px; }\n.rzt-doc summary { cursor: pointer; padding: 13px 16px; font-weight: 600; color: var(--fg, #0F1624); }\n.rzt-doc details > div { padding: 0 18px 14px; color: var(--fg2, #5D6B85); font-size: 14.5px; line-height: 1.65; }\n.rzt-doc .rzt-eq { margin: 10px 0; padding: 10px 14px; overflow-x: auto; white-space: nowrap; background: var(--bg, #F4F6FA); border-radius: 4px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13.5px; color: var(--fg, #0F1624); }\n.rzt-doc ul, .rzt-doc ol { margin: 8px 0; padding-left: 1.3em; }\n.rzt-doc li { margin-bottom: 6px; }\n.rzt-doc b { color: var(--fg, #0F1624); }\n/* themes such as Divi reset sub/sup to the baseline; restore them without disturbing line height */\n.rzt-doc sub, .rzt-doc sup, .rzt.rzt-on sub, .rzt.rzt-on sup { position: relative; font-size: 75%; line-height: 0; vertical-align: baseline; }\n.rzt-doc sub, .rzt.rzt-on sub { bottom: -0.25em; }\n.rzt-doc sup, .rzt.rzt-on sup { top: -0.5em; }\n@media (prefers-reduced-motion: reduce) { .rzt.rzt-on * { transition: none !important; } }\n\n/* NURBS explorers: parameter-space panel with an info list */\n.rzt.rzt-on .rzt-ps { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; align-items: start; }\n@media (max-width: 720px) { .rzt.rzt-on .rzt-ps { grid-template-columns: minmax(0, 1fr); } }\n.rzt.rzt-on .rzt-cv-ps { height: 300px; cursor: crosshair; }\n.rzt.rzt-on .rzt-info { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 12px; margin: 4px 0 0; font-size: 12.5px; line-height: 1.45; }\n.rzt.rzt-on .rzt-info dt { margin: 0; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--fg2, #5D6B85); padding-top: 1px; }\n.rzt.rzt-on .rzt-info dd { margin: 0; color: var(--fg, #0F1624); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }\n.rzt.rzt-on .rzt-info dd [data-out=\"hover\"] { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11.5px; }\n.rzt.rzt-on .rzt-eq { margin: 0 0 12px; font-size: 13px; line-height: 1.5; color: var(--fg, #0F1624); }\n.rzt.rzt-on .rzt-eq p { margin: 0 0 6px; }\n.rzt.rzt-on .rzt-eq .rzt-eq-h { font-weight: 600; font-size: 13.5px; }\n.rzt.rzt-on .rzt-eq .rzt-eq-n { margin-top: 6px; font-size: 12px; color: var(--fg2, #5D6B85); }\n.rzt.rzt-on .rzt-eq-t td { padding: 4px 6px; font-size: 12.5px; white-space: normal; }\n.rzt.rzt-on .rzt-eq-t td:last-child { text-align: right; white-space: nowrap; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; }\n.rzt.rzt-on .rzt-eq-t .rzt-eq-f { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 11.5px; color: var(--fg2, #5D6B85); }\n.rzt.rzt-on .rzt-eq-t .rzt-eq-f em { font-family: 'Poppins', system-ui, sans-serif; font-style: normal; font-size: 11px; color: var(--gold, #C8A020); }\n.rzt.rzt-on .rzt-eq-t .rzt-eq-s td { font-weight: 600; border-top: 1px solid var(--fg2, #5D6B85); }\n";(document.head||document.documentElement).appendChild(s);})();
 /* ═══════════════════════════════════════════════════════════════
    Tool registry. Each tool calls RZTools.register(name, mountFn).
    Any element <div data-rz-tool="name"></div> on the page is mounted
@@ -178,7 +178,9 @@
     };
   };
   U.colorbar = function (el, cols, lev, unit) {
-    var W = el.clientWidth || 300, nb = cols.length, stride = Math.max(1, Math.ceil(56 / (W / nb)));
+    // spacing between tick labels from the widest label (about 7 px per character at 11 px)
+    var wide = 0; for (var w0 = 0; w0 < lev.length; w0++) wide = Math.max(wide, U.fmt(lev[w0]).length);
+    var W = el.clientWidth || 300, nb = cols.length, stride = Math.max(1, Math.ceil(Math.max(56, wide * 7 + 10) / (W / nb)));
     var sw = cols.map(function (c) { return '<i style="background:' + c + '"></i>'; }).join(''), show = [];
     for (var i = 0; i <= nb; i += stride) show.push(i);
     if (show[show.length - 1] !== nb) { if (nb - show[show.length - 1] < stride) show.pop(); show.push(nb); }
@@ -236,15 +238,18 @@
       g.beginPath(); g.arc(cx, cy, 2.6, 0, Math.PI * 2); g.stroke();
       g.beginPath(); g.moveTo(cx + o[0] * 3 - o[1] * 4, cy - o[1] * 3 - o[0] * 4); g.lineTo(cx + o[0] * 3 + o[1] * 4, cy - o[1] * 3 + o[0] * 4); g.stroke();
     });
-    // load arrows on traction edges
-    var loaded = mesh.bedges.filter(function (be) { return be.tag === 's1'; }), tr = [], tmax = 0;
-    var every = Math.max(1, Math.ceil(loaded.length / 14));
-    loaded.forEach(function (be, i) {
-      if (i % every) return;
+    // load arrows on traction edges (o.loadTags, default the s1 edges)
+    var ltags = o.loadTags || ['s1'], tr = [], tmax = 0, loaded = [];
+    // thin the arrows on each loaded edge separately (about 14 per edge)
+    ltags.forEach(function (tg) {
+      var es = mesh.bedges.filter(function (be) { return be.tag === tg; }), every = Math.max(1, Math.ceil(es.length / 14));
+      es.forEach(function (be, i) { if (!(i % every)) loaded.push(be); });
+    });
+    loaded.forEach(function (be) {
       var nA = be.n[0], nB = be.n[be.n.length - 1], mid = be.n.length === 3 ? be.n[1] : -1;
       var x = mid >= 0 ? mesh.X[mid] : (mesh.X[nA] + mesh.X[nB]) / 2, y = mid >= 0 ? mesh.Y[mid] : (mesh.Y[nA] + mesh.Y[nB]) / 2;
       var dx = mid >= 0 ? px[mid] - mesh.X[mid] : (px[nA] + px[nB] - mesh.X[nA] - mesh.X[nB]) / 2, dy = mid >= 0 ? py[mid] - mesh.Y[mid] : (py[nA] + py[nB] - mesh.Y[nA] - mesh.Y[nB]) / 2;
-      var tv = pr.traction('s1', x, y); if (!tv) return;
+      var tv = pr.traction(be.tag, x, y); if (!tv) return;
       var mag = Math.hypot(tv[0], tv[1]); tmax = Math.max(tmax, mag);
       tr.push({ x: x + dx, y: y + dy, t: tv, mag: mag, o: outward(be) });
     });
@@ -897,8 +902,8 @@
     return [[1 / 3, 1 / 3, 0.225], [a1, b1, w1], [b1, a1, w1], [b1, b1, w1], [a2, b2, w2], [b2, a2, w2], [b2, b2, w2]];
   })();
 
-  function Dmat(nu) {
-    var c = E / (1 - nu * nu);
+  function Dmat(nu, Ey) {
+    var c = (Ey || E) / (1 - nu * nu);
     return [c, c * nu, 0, c * nu, c, 0, 0, 0, c * (1 - nu) / 2];
   }
 
@@ -1250,8 +1255,9 @@
   // cfg: { problem, elem, n, distort, seed, nu, ld, ar, support, outer }
   function run(cfg) {
     var t0 = now();
-    var pr = PROBLEMS[cfg.problem](cfg), mesh = buildMesh(pr, cfg.elem, cfg.distort || 0, cfg.seed || 1);
-    var D = Dmat(cfg.nu), nn = mesh.nn, ndof = 2 * nn, type = mesh.type, npe = mesh.npe, ne = mesh.ne;
+    // cfg.pr and cfg.mesh let other tools solve their own geometry (e.g. NURBS-mapped nodes) with these elements
+    var pr = cfg.pr || PROBLEMS[cfg.problem](cfg), mesh = cfg.mesh || buildMesh(pr, cfg.elem, cfg.distort || 0, cfg.seed || 1);
+    var D = Dmat(cfg.nu, pr.E), nn = mesh.nn, ndof = 2 * nn, type = mesh.type, npe = mesh.npe, ne = mesh.ne;
     var X = mesh.X, Y = mesh.Y, C = mesh.C, e, a, b;
 
     // essential boundary conditions → equation numbers
@@ -1262,6 +1268,8 @@
         for (var c = 0; c < 2; c++) if (v[c] !== null && v[c] !== undefined) { fixed[2 * nd + c] = 1; ubar[2 * nd + c] = v[c]; }
       });
     });
+    // optional point supports: pr.nodeBC(mesh) → [{ n, d (0 = x, 1 = y), v }]
+    if (pr.nodeBC) pr.nodeBC(mesh).forEach(function (c) { fixed[2 * c.n + c.d] = 1; ubar[2 * c.n + c.d] = c.v; });
     var eq = new Int32Array(ndof), neq = 0;
     for (a = 0; a < ndof; a++) eq[a] = fixed[a] ? -1 : neq++;
 
@@ -3493,5 +3501,2717 @@
   });
 })();
 
-window.RZTools.version='1.2.0';
+/* ═══════════════════════════════════════════════════════════════
+   NURBS geometry and parameter-space meshfree approximation — window.RZNURBS
+   Shared by the N-RPIM and NDM explorers.
+   · B-spline and NURBS basis functions (Cox–de Boor) and NURBS surface patches
+     with first derivatives; the patches used in the papers and benchmarks.
+   · An index space for the nodes: each knot span is divided into equal intervals,
+     so nodes sit on a lattice with unit spacing and every knot line is a node line.
+     Shape functions are built in this space (the "parent space" of the papers),
+     then mapped to the NURBS parameter space and on to the physical space.
+   · RPIM (radial basis functions with optional polynomial terms) and MLS shape
+     functions with first derivatives; dense and banded LU solvers.
+   ═══════════════════════════════════════════════════════════════ */
+(function (root) {
+  'use strict';
+
+  /* ── Gauss–Legendre rules on [−1, 1] ───────────────────────── */
+  var GL = {
+    1: { p: [0], w: [2] },
+    2: { p: [-0.5773502691896257, 0.5773502691896257], w: [1, 1] },
+    3: { p: [-0.7745966692414834, 0, 0.7745966692414834], w: [5 / 9, 8 / 9, 5 / 9] },
+    4: { p: [-0.8611363115940526, -0.3399810435848563, 0.3399810435848563, 0.8611363115940526],
+         w: [0.3478548451374538, 0.6521451548625461, 0.6521451548625461, 0.3478548451374538] },
+    5: { p: [-0.9061798459386640, -0.5384693101056831, 0, 0.5384693101056831, 0.9061798459386640],
+         w: [0.2369268850561891, 0.4786286704993665, 0.5688888888888889, 0.4786286704993665, 0.2369268850561891] },
+    6: { p: [-0.9324695142031521, -0.6612093864662645, -0.2386191860831969, 0.2386191860831969, 0.6612093864662645, 0.9324695142031521],
+         w: [0.1713244923791704, 0.3607615730481386, 0.4679139345726910, 0.4679139345726910, 0.3607615730481386, 0.1713244923791704] }
+  };
+
+  /* ── B-spline basis ─────────────────────────────────────────── */
+  // knot span index i with U[i] ≤ u < U[i+1] (the last non-empty span for u = U[end]); nb = number of basis functions
+  function findSpan(nb, p, u, U) {
+    var n = nb - 1;
+    if (u >= U[n + 1]) return n;
+    if (u <= U[p]) return p;
+    var lo = p, hi = n + 1, mid = (lo + hi) >> 1;
+    while (u < U[mid] || u >= U[mid + 1]) { if (u < U[mid]) hi = mid; else lo = mid; mid = (lo + hi) >> 1; }
+    return mid;
+  }
+  // span for a parameter that sits on an interior knot, taking the side: side < 0 gives the left limit
+  function spanSide(nb, p, u, U, side) {
+    var i = findSpan(nb, p, u, U);
+    if (side < 0 && u > U[p] && u === U[i]) { while (i > p && U[i - 1] === u) i--; i--; }
+    return i;
+  }
+  // N[j] = N_{i−p+j, p}(u) and D[j] = its derivative, j = 0..p (Cox–de Boor; 0/0 taken as 0)
+  function basis(i, u, p, U, N, D) {
+    var T = [[1]], j, k;
+    for (k = 1; k <= p; k++) {
+      var row = new Array(k + 1);
+      for (j = 0; j <= k; j++) {
+        var a = i - k + j, v = 0, d1 = U[a + k] - U[a], d2 = U[a + k + 1] - U[a + 1];
+        if (j >= 1 && d1 > 0) v += (u - U[a]) / d1 * T[k - 1][j - 1];
+        if (j <= k - 1 && d2 > 0) v += (U[a + k + 1] - u) / d2 * T[k - 1][j];
+        row[j] = v;
+      }
+      T[k] = row;
+    }
+    for (j = 0; j <= p; j++) {
+      N[j] = T[p][j];
+      if (!D) continue;
+      var b = i - p + j, dv = 0;
+      if (p > 0) {
+        var e1 = U[b + p] - U[b], e2 = U[b + p + 1] - U[b + 1];
+        if (j >= 1 && e1 > 0) dv += p / e1 * T[p - 1][j - 1];
+        if (j <= p - 1 && e2 > 0) dv -= p / e2 * T[p - 1][j];
+      }
+      D[j] = dv;
+    }
+  }
+  function distinct(U) {
+    var out = [];
+    for (var i = 0; i < U.length; i++) if (!out.length || U[i] > out[out.length - 1] + 1e-14) out.push(U[i]);
+    return out;
+  }
+  // interior knot values with their multiplicity (for continuity labels)
+  function interiorKnots(U, p) {
+    var d = distinct(U), out = [];
+    for (var k = 1; k < d.length - 1; k++) {
+      var m = 0; for (var i = 0; i < U.length; i++) if (Math.abs(U[i] - d[k]) < 1e-14) m++;
+      out.push({ v: d[k], mult: m, cont: p - m });
+    }
+    return out;
+  }
+
+  /* ── NURBS surface patch ────────────────────────────────────── */
+  // def: { p, q, U, V, cp: [[x, y, w], ...] } with control point (i, j) at index i·nv + j,
+  // i along ξ (knot vector U), j along η (knot vector V)
+  function Patch(def) {
+    this.p = def.p; this.q = def.q; this.U = def.U; this.V = def.V;
+    this.nu = def.U.length - def.p - 1; this.nv = def.V.length - def.q - 1;
+    if (def.cp.length !== this.nu * this.nv) throw new Error('control net size');
+    var cp = new Float64Array(3 * def.cp.length);
+    def.cp.forEach(function (c, k) { cp[3 * k] = c[0]; cp[3 * k + 1] = c[1]; cp[3 * k + 2] = c.length > 2 ? c[2] : 1; });
+    this.cp = cp;
+    this.Nu = new Float64Array(this.p + 1); this.Du = new Float64Array(this.p + 1);
+    this.Nv = new Float64Array(this.q + 1); this.Dv = new Float64Array(this.q + 1);
+    this.ku = distinct(this.U); this.kv = distinct(this.V);
+    // interior knots where the geometry is only C⁰ (multiplicity ≥ degree): the map has a kink there
+    this.c0u = interiorKnots(this.U, this.p).filter(function (k) { return k.cont <= 0; }).map(function (k) { return k.v; });
+    this.c0v = interiorKnots(this.V, this.q).filter(function (k) { return k.cont <= 0; }).map(function (k) { return k.v; });
+  }
+  // out = [x, y, x_ξ, y_ξ, x_η, y_η]; su, sv < 0 take the left limit on a knot
+  Patch.prototype.eval = function (u, v, out, su, sv) {
+    var p = this.p, q = this.q, nv = this.nv, cp = this.cp, a, b;
+    var iu = spanSide(this.nu, p, u, this.U, su), iv = spanSide(nv, q, v, this.V, sv);
+    basis(iu, u, p, this.U, this.Nu, this.Du); basis(iv, v, q, this.V, this.Nv, this.Dv);
+    var W = 0, Wu = 0, Wv = 0, X = 0, Xu = 0, Xv = 0, Y = 0, Yu = 0, Yv = 0;
+    for (a = 0; a <= p; a++) {
+      var na = this.Nu[a], da = this.Du[a], base = (iu - p + a) * nv + iv - q;
+      for (b = 0; b <= q; b++) {
+        var k = 3 * (base + b), w = cp[k + 2], x = cp[k], y = cp[k + 1];
+        var n0 = na * this.Nv[b] * w, nu = da * this.Nv[b] * w, nw = na * this.Dv[b] * w;
+        W += n0; Wu += nu; Wv += nw; X += n0 * x; Xu += nu * x; Xv += nw * x; Y += n0 * y; Yu += nu * y; Yv += nw * y;
+      }
+    }
+    out = out || new Float64Array(6);
+    var x0 = X / W, y0 = Y / W;
+    out[0] = x0; out[1] = y0;
+    out[2] = (Xu - Wu * x0) / W; out[3] = (Yu - Wu * y0) / W;
+    out[4] = (Xv - Wv * x0) / W; out[5] = (Yv - Wv * y0) / W;
+    return out;
+  };
+  Patch.prototype.point = function (u, v) { var o = this.eval(u, v); return [o[0], o[1]]; };
+  Patch.prototype.ctrl = function (i, j) { var k = 3 * (i * this.nv + j); return [this.cp[k], this.cp[k + 1], this.cp[k + 2]]; };
+  // smallest Jacobian determinant on an n×n sample of every knot span (geometry check)
+  Patch.prototype.minDet = function (n) {
+    var mn = Infinity, o = new Float64Array(6), ku = this.ku, kv = this.kv;
+    for (var su = 0; su < ku.length - 1; su++) for (var sv = 0; sv < kv.length - 1; sv++)
+      for (var i = 0; i <= n; i++) for (var j = 0; j <= n; j++) {
+        var u = ku[su] + (ku[su + 1] - ku[su]) * (0.001 + 0.998 * i / n), v = kv[sv] + (kv[sv + 1] - kv[sv]) * (0.001 + 0.998 * j / n);
+        this.eval(u, v, o); mn = Math.min(mn, o[2] * o[5] - o[4] * o[3]);
+      }
+    return mn;
+  };
+
+  /* ── geometry library ───────────────────────────────────────── */
+  var S2 = Math.SQRT2, WQ = (1 + 1 / S2) / 2;      // quarter circle in two quadratic spans: weight of the inner control points
+  var GEOM = {
+    // rectangle, bilinear (affine map)
+    rect: function (x0, x1, y0, y1) {
+      return new Patch({ p: 1, q: 1, U: [0, 0, 1, 1], V: [0, 0, 1, 1], cp: [[x0, y0], [x0, y1], [x1, y0], [x1, y1]] });
+    },
+    // square [0,1]² with a curved (non-affine) parametrization: straight edges, interior control point moved
+    squareCurved: function (s) {
+      var cp = [];
+      for (var i = 0; i < 3; i++) for (var j = 0; j < 3; j++) {
+        var x = i / 2, y = j / 2;
+        if (i === 1 && j === 1) { x += s; y += s; }
+        cp.push([x, y]);
+      }
+      return new Patch({ p: 2, q: 2, U: [0, 0, 0, 1, 1, 1], V: [0, 0, 0, 1, 1, 1], cp: cp });
+    },
+    // quarter of a square plate [0, b]² with a circular hole of radius a at the origin. ξ radial (hole → outer edges),
+    // η angular (θ = 0 → 90°). Two quadratic spans, each a 45° arc of the hole joined to one straight outer edge; the
+    // repeated knot η = 0.5 puts a C⁰ line on the diagonal, so the corner (b, b) is a regular point of the map.
+    // (A single C¹ pair of spans, as in Hughes et al. 2005, collapses the corner: det J = 0 there.)
+    plateHole: function (a, b) {
+      var c8 = Math.cos(Math.PI / 8), t8 = Math.tan(Math.PI / 8), s4 = Math.SQRT1_2, cp = [];
+      var hole = [[a, 0, 1], [a, a * t8, c8], [a * s4, a * s4, 1], [a * t8, a, c8], [0, a, 1]];
+      var out = [[b, 0, 1], [b, b / 2, 1], [b, b, 1], [b / 2, b, 1], [0, b, 1]];
+      var rows = [hole, hole.map(function (h, k) { return [(h[0] + out[k][0]) / 2, (h[1] + out[k][1]) / 2, 1]; }), out];
+      rows.forEach(function (r) { r.forEach(function (c) { cp.push(c); }); });
+      return new Patch({ p: 2, q: 2, U: [0, 0, 0, 1, 1, 1], V: [0, 0, 0, 0.5, 0.5, 1, 1, 1], cp: cp });
+    },
+    // quarter-annular disc, inner radius ri, outer ro (Rasin et al. 2025, Table 3: ri = 0.3, ro = 0.6)
+    annulus: function (ri, ro) {
+      var cp = [];
+      [ri, (ri + ro) / 2, ro].forEach(function (r) {
+        cp.push([r, 0, 1], [r, r * (S2 - 1), WQ], [r * (S2 - 1), r, WQ], [0, r, 1]);
+      });
+      return new Patch({ p: 2, q: 2, U: [0, 0, 0, 1, 1, 1], V: [0, 0, 0, 0.5, 1, 1, 1], cp: cp });
+    },
+    // fan blade (Rasin et al. 2025, Table 1, from Luo et al. 2023). ξ runs from the hub arc to the tip
+    // (five control points, C⁰ at ξ = 0.5), η across the blade (three control points).
+    fanBlade: function () {
+      var R = [
+        [[0.0515, 0.0037, 1], [0.0937, 0.0014, 0.9821], [0.1320, -0.0163, 1], [0.1868, -0.0417, 0.4984], [0.1799, 0.0271, 1]],
+        [[0.0470, 0.0651, 0.6421], [0.0883, 0.1015, 0.6796], [0.1296, 0.1378, 0.7170], [0.1466, 0.1300, 0.8157], [0.1636, 0.1222, 0.9143]],
+        [[-0.0127, 0.0500, 1], [-0.0207, 0.0956, 0.9882], [-0.0085, 0.1478, 1], [0.0305, 0.2048, 0.6698], [0.0939, 0.1661, 1]]
+      ], cp = [];
+      for (var i = 0; i < 5; i++) for (var j = 0; j < 3; j++) cp.push(R[j][i]);
+      return new Patch({ p: 2, q: 2, U: [0, 0, 0, 0.5, 0.5, 1, 1, 1], V: [0, 0, 0, 1, 1, 1], cp: cp });
+    },
+    // web post of a cellular beam between two half openings (Mokhtaram et al. 2022, Table 1):
+    // width s, depth d, opening radius r; ξ along x, η along y (C⁰ at η = 0.2, 0.5, 0.8)
+    unitCell: function (s, d, r) {
+      var h = 1 / S2, rows = [
+        [[0, 0], [s / 2, 0], [s, 0]],
+        [[0, d / 4 - r / 2], [s / 2, d / 20], [s, d / 4 - r / 2]],
+        [[0, d / 2 - r], [s / 2, d / 10], [s, d / 2 - r]],
+        [[r, d / 2 - r, h], [s / 2, d / 2.5], [s - r, d / 2 - r, h]],
+        [[r, d / 2], [s / 2, d / 2], [s - r, d / 2]],
+        [[r, d / 2 + r, h], [s / 2, d - d / 2.5], [s - r, d / 2 + r, h]],
+        [[0, d / 2 + r], [s / 2, d - d / 10], [s, d / 2 + r]],
+        [[0, 3 * d / 4 + r / 2], [s / 2, d - d / 20], [s, 3 * d / 4 + r / 2]],
+        [[0, d], [s / 2, d], [s, d]]
+      ], cp = [];
+      for (var i = 0; i < 3; i++) for (var j = 0; j < 9; j++) cp.push(rows[j][i]);
+      return new Patch({ p: 2, q: 2, U: [0, 0, 0, 1, 1, 1], V: [0, 0, 0, 0.2, 0.2, 0.5, 0.5, 0.8, 0.8, 1, 1, 1], cp: cp });
+    }
+  };
+
+  /* ── index space ────────────────────────────────────────────── */
+  // knots: distinct knot values κ₀ < … < κ_S; m: intervals per span (number or array).
+  // Index coordinate a ∈ [0, M] maps linearly onto each span; nodes of the regular lattice sit at integers.
+  // c0: knot values where the geometry is only C⁰; the approximation does not reach across them
+  function Axis(knots, m, c0) {
+    var S = knots.length - 1, A = [0], ms = [];
+    for (var s = 0; s < S; s++) { var k = Math.max(1, Math.round(Array.isArray(m) ? m[s] : m)); ms.push(k); A.push(A[s] + k); }
+    this.knots = knots; this.m = ms; this.A = A; this.M = A[S]; this.S = S;
+    this.c0 = [];
+    for (s = 1; s < S; s++) if ((c0 || []).some(function (v) { return Math.abs(v - knots[s]) < 1e-12; })) this.c0.push(A[s]);
+  }
+  // index range [lo, hi] of the C⁰-bounded segment containing a (side < 0: the segment on the left of a break)
+  Axis.prototype.segOf = function (a, side) {
+    var lo = 0, hi = this.M, c = this.c0;
+    for (var k = 0; k < c.length; k++) {
+      if (a < c[k] - 1e-9 || (Math.abs(a - c[k]) <= 1e-9 && side < 0)) { hi = c[k]; break; }
+      lo = c[k];
+    }
+    return [lo, hi];
+  };
+  Axis.prototype.isBreak = function (i) { return this.c0.indexOf(i) >= 0; };
+  // span containing index a; side > 0 prefers the span on the right at a span boundary, side < 0 the left
+  Axis.prototype.span = function (a, side) {
+    var A = this.A, S = this.S;
+    for (var s = 0; s < S; s++) {
+      if (a < A[s + 1] - 1e-12) return s;
+      if (Math.abs(a - A[s + 1]) <= 1e-12) return (side > 0 && s < S - 1) ? s + 1 : s;
+    }
+    return S - 1;
+  };
+  Axis.prototype.param = function (a, side) {
+    var s = this.span(a, side);
+    return this.knots[s] + (a - this.A[s]) / this.m[s] * (this.knots[s + 1] - this.knots[s]);
+  };
+  Axis.prototype.dparam = function (a, side) { var s = this.span(a, side); return (this.knots[s + 1] - this.knots[s]) / this.m[s]; };
+  Axis.prototype.index = function (u) {
+    var K = this.knots, S = this.S;
+    for (var s = 0; s < S; s++) if (u <= K[s + 1] + 1e-14 || s === S - 1) return this.A[s] + (u - K[s]) / (K[s + 1] - K[s]) * this.m[s];
+    return this.M;
+  };
+  // index positions of the knot lines (span boundaries), interior only
+  Axis.prototype.knotIdx = function () { return this.A.slice(1, -1); };
+
+  /* ── deterministic random numbers ───────────────────────────── */
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  /* ── nodes on the index lattice ─────────────────────────────── */
+  // opt: { distort (≤ 0.45), seed, keep(i, j) → true to leave a node unperturbed }
+  // Interior nodes are moved randomly by up to ±distort in each index direction; boundary nodes stay on the lattice.
+  function Lattice(ax, ay, opt) {
+    opt = opt || {};
+    var Mu = ax.M, Mv = ay.M, I = Mu + 1, J = Mv + 1, nn = I * J, rnd = mulberry32(opt.seed || 1), dist = opt.distort || 0, i, j;
+    var id = new Int32Array(nn), A = new Float64Array(nn), B = new Float64Array(nn), LI = new Int32Array(nn), LJ = new Int32Array(nn), n = 0;
+    var jFast = J <= I;            // number fastest along the shorter direction: narrower band
+    function put(ii, jj) { id[ii * J + jj] = n; LI[n] = ii; LJ[n] = jj; n++; }
+    if (jFast) { for (i = 0; i < I; i++) for (j = 0; j < J; j++) put(i, j); }
+    else { for (j = 0; j < J; j++) for (i = 0; i < I; i++) put(i, j); }
+    for (i = 0; i < I; i++) for (j = 0; j < J; j++) {
+      var k = id[i * J + j], a = i, b = j;
+      if (dist > 0 && i > 0 && i < Mu && j > 0 && j < Mv && !(opt.keep && opt.keep(i, j))) {
+        var da = (2 * rnd() - 1) * dist, db = (2 * rnd() - 1) * dist;
+        // nodes on a C⁰ knot line stay on it (they are shared by the segments on both sides)
+        if (!ax.isBreak(i)) a += da; if (!ay.isBreak(j)) b += db;
+      }
+      A[k] = a; B[k] = b;
+    }
+    this.ax = ax; this.ay = ay; this.Mu = Mu; this.Mv = Mv; this.I = I; this.J = J; this.nn = nn; this.dist = dist;
+    this.id = id; this.A = A; this.B = B; this.LI = LI; this.LJ = LJ;
+  }
+  Lattice.prototype.node = function (i, j) { return this.id[i * this.J + j]; };
+  // boundary flags: which lattice edge a node lies on ('s0' ξ = 0, 's1' ξ = 1, 't0' η = 0, 't1' η = 1)
+  Lattice.prototype.edges = function (k) {
+    var out = [], i = this.LI[k], j = this.LJ[k];
+    if (i === 0) out.push('s0'); if (i === this.Mu) out.push('s1'); if (j === 0) out.push('t0'); if (j === this.Mv) out.push('t1');
+    return out;
+  };
+
+  /* ── geometry map: index (a, b) → parameter (ξ, η) → physical (x, y) ── */
+  function Map(patch, ax, ay) { this.patch = patch; this.ax = ax; this.ay = ay; this.g = new Float64Array(6); }
+  // out: [x, y, x_a, y_a, x_b, y_b, det ∂(x,y)/∂(a,b), ξ, η, dξ/da, dη/db, det ∂(x,y)/∂(ξ,η)]
+  Map.prototype.at = function (a, b, out, sa, sb) {
+    var ax = this.ax, ay = this.ay, u = ax.param(a, sa), v = ay.param(b, sb), du = ax.dparam(a, sa), dv = ay.dparam(b, sb), g = this.g;
+    this.patch.eval(u, v, g, sa, sb);
+    out = out || new Float64Array(12);
+    out[0] = g[0]; out[1] = g[1];
+    out[2] = g[2] * du; out[3] = g[3] * du; out[4] = g[4] * dv; out[5] = g[5] * dv;
+    out[6] = out[2] * out[5] - out[4] * out[3];
+    out[7] = u; out[8] = v; out[9] = du; out[10] = dv; out[11] = g[2] * g[5] - g[4] * g[3];
+    return out;
+  };
+
+  /* ── dense LU with partial pivoting (row-major n×n, in place) ── */
+  function luFactor(M, n, piv) {
+    var i, j, k, amax = 0;
+    for (i = 0; i < n * n; i++) { var v0 = Math.abs(M[i]); if (v0 > amax) amax = v0; }
+    for (k = 0; k < n; k++) {
+      var p = k, best = Math.abs(M[k * n + k]);
+      for (i = k + 1; i < n; i++) { var v = Math.abs(M[i * n + k]); if (v > best) { best = v; p = i; } }
+      if (!(best > 1e-13 * amax)) return false;
+      piv[k] = p;
+      if (p !== k) for (j = 0; j < n; j++) { var t = M[k * n + j]; M[k * n + j] = M[p * n + j]; M[p * n + j] = t; }
+      var d = M[k * n + k];
+      for (i = k + 1; i < n; i++) {
+        var f = M[i * n + k] / d; if (!f) { M[i * n + k] = 0; continue; }
+        M[i * n + k] = f;
+        for (j = k + 1; j < n; j++) M[i * n + j] -= f * M[k * n + j];
+      }
+    }
+    return true;
+  }
+  function luSolve(M, n, piv, b) {      // b overwritten with the solution
+    var i, j;
+    for (i = 0; i < n; i++) { var p = piv[i]; if (p !== i) { var t = b[i]; b[i] = b[p]; b[p] = t; } }
+    for (i = 1; i < n; i++) { var s = b[i]; for (j = 0; j < i; j++) s -= M[i * n + j] * b[j]; b[i] = s; }
+    for (i = n - 1; i >= 0; i--) { var s2 = b[i]; for (j = i + 1; j < n; j++) s2 -= M[i * n + j] * b[j]; b[i] = s2 / M[i * n + i]; }
+    return b;
+  }
+  // Cholesky of a small SPD matrix (row-major); false if not positive definite
+  function chol(A, m, L) {
+    var scale = 0, i, j, k;
+    for (i = 0; i < m; i++) scale = Math.max(scale, A[i * m + i]);
+    for (j = 0; j < m; j++) {
+      var s = A[j * m + j];
+      for (k = 0; k < j; k++) s -= L[j * m + k] * L[j * m + k];
+      if (!(s > 1e-12 * scale)) return false;
+      L[j * m + j] = Math.sqrt(s);
+      for (i = j + 1; i < m; i++) { var v = A[i * m + j]; for (k = 0; k < j; k++) v -= L[i * m + k] * L[j * m + k]; L[i * m + j] = v / L[j * m + j]; }
+    }
+    return true;
+  }
+  function cholSolve(L, m, b, y) {
+    var i, k;
+    for (i = 0; i < m; i++) { var s = b[i]; for (k = 0; k < i; k++) s -= L[i * m + k] * y[k]; y[i] = s / L[i * m + i]; }
+    for (i = m - 1; i >= 0; i--) { var s2 = y[i]; for (k = i + 1; k < m; k++) s2 -= L[k * m + i] * y[k]; y[i] = s2 / L[i * m + i]; }
+    return y;
+  }
+
+  /* ── banded LU with partial pivoting (non-symmetric systems) ── */
+  // LAPACK band storage: entry (i, j) at a[kv + i − j + j·ld], kv = kl + ku, ld = 2kl + ku + 1
+  function Band(n, kl, ku) {
+    this.n = n; this.kl = kl; this.ku = ku; this.kv = kl + ku; this.ld = 2 * kl + ku + 1;
+    this.a = new Float64Array(this.ld * n); this.piv = new Int32Array(n);
+  }
+  Band.prototype.add = function (i, j, v) { this.a[this.kv + i - j + j * this.ld] += v; };
+  Band.prototype.get = function (i, j) { var d = i - j; return (d > this.kl || d < -this.ku) ? 0 : this.a[this.kv + d + j * this.ld]; };
+  Band.prototype.factor = function () {          // −1 on success, else the failing column
+    var n = this.n, kl = this.kl, ku = this.ku, kv = this.kv, ld = this.ld, a = this.a, piv = this.piv, ju = 0, j, t, c, amax = 0;
+    for (t = 0; t < a.length; t++) { var v0 = Math.abs(a[t]); if (v0 > amax) amax = v0; }
+    for (j = 0; j < n; j++) {
+      var km = Math.min(kl, n - 1 - j), cj = kv + j * ld, jp = 0, best = Math.abs(a[cj]);
+      for (t = 1; t <= km; t++) { var v = Math.abs(a[cj + t]); if (v > best) { best = v; jp = t; } }
+      piv[j] = j + jp;
+      if (!(best > 1e-14 * amax)) return j;
+      ju = Math.max(ju, Math.min(j + ku + jp, n - 1));
+      if (jp) for (c = j; c <= ju; c++) { var p1 = kv + j - c + c * ld, tmp = a[p1]; a[p1] = a[p1 + jp]; a[p1 + jp] = tmp; }
+      var d = a[cj];
+      for (t = 1; t <= km; t++) a[cj + t] /= d;
+      for (c = j + 1; c <= ju; c++) {
+        var base = kv + j - c + c * ld, f = a[base]; if (f === 0) continue;
+        for (t = 1; t <= km; t++) a[base + t] -= a[cj + t] * f;
+      }
+    }
+    return -1;
+  };
+  Band.prototype.solve = function (b) {
+    var n = this.n, kl = this.kl, kv = this.kv, ld = this.ld, a = this.a, piv = this.piv, x = Float64Array.from(b), j, t, i;
+    for (j = 0; j < n; j++) {
+      var p = piv[j]; if (p !== j) { var tmp = x[j]; x[j] = x[p]; x[p] = tmp; }
+      var km = Math.min(kl, n - 1 - j), xj = x[j], cj = kv + j * ld;
+      if (xj) for (t = 1; t <= km; t++) x[j + t] -= a[cj + t] * xj;
+    }
+    for (j = n - 1; j >= 0; j--) {
+      x[j] /= a[kv + j * ld];
+      var xk = x[j]; if (!xk) continue;
+      for (i = Math.max(0, j - kv); i < j; i++) x[i] -= a[kv + i - j + j * ld] * xk;
+    }
+    return x;
+  };
+
+  /* ── meshfree shape functions in the index space ─────────────── */
+  // opt: { kind: 'rpim' | 'mls', rbf: 'mq' | 'tps' | 'exp', m: 0 | 3 | 6 (polynomial terms), d: support radius
+  //        (index units = nodal spacings), mq: {q, ac}, tps: {eta}, exp: {ac, dc}, c: MLS weight shape (r/d units) }
+  // Defaults follow the papers: MQ q = 2.1, αc = 0.1, dc = 1; TPS η = 4.0001; Gaussian αc = 0.8, dc = 2; MLS weight exp(−(r/c)²).
+  var NMAX = 400;
+  function Approx(lat, opt) {
+    this.lat = lat; this.kind = opt.kind || 'rpim'; this.rbf = opt.rbf || 'mq'; this.m = opt.m == null ? 3 : opt.m; this.d = opt.d || 2.5;
+    this.mq = opt.mq || { q: 2.1, ac: 0.1 }; this.tps = opt.tps || { eta: 4.0001 }; this.exp = opt.exp || { ac: 0.8, dc: 2 };
+    this.c = opt.c || 0.3;
+    var N = NMAX, M = N + 6;
+    this.idx = new Int32Array(N); this.phi = new Float64Array(N); this.da = new Float64Array(N); this.db = new Float64Array(N);
+    this.ra = new Float64Array(N); this.rb = new Float64Array(N); this.w = new Float64Array(N); this.wa = new Float64Array(N); this.wb = new Float64Array(N);
+    this.G = new Float64Array(M * M); this.piv = new Int32Array(M); this.r0 = new Float64Array(M); this.r1 = new Float64Array(M); this.r2 = new Float64Array(M);
+    this.P = new Float64Array(N * 6); this.A = new Float64Array(36); this.Aa = new Float64Array(36); this.Ab = new Float64Array(36); this.L = new Float64Array(36);
+    this.g0 = new Float64Array(6); this.g1 = new Float64Array(6); this.g2 = new Float64Array(6); this.t0 = new Float64Array(6);
+    this.cidx = new Int32Array(N); this.cpa = new Float64Array(N); this.cpb = new Float64Array(N); this.pk = new Float64Array(6); this.tmp2 = [0, 0];
+    this.cKey = null; this.cn = -1; this.n = 0; this.fail = null;
+  }
+  // nodes within the support of (a, b); returns their count
+  // supports never cross a C⁰ knot line: sa, sb choose the segment for a point that lies on one
+  Approx.prototype.gather = function (a, b, d, sa, sb) {
+    var lat = this.lat, pad = d + lat.dist + 1e-9, su = lat.ax.segOf(a, sa), sv = lat.ay.segOf(b, sb);
+    var i0 = Math.max(su[0], Math.ceil(a - pad)), i1 = Math.min(su[1], Math.floor(a + pad));
+    var j0 = Math.max(sv[0], Math.ceil(b - pad)), j1 = Math.min(sv[1], Math.floor(b + pad)), n = 0, d2 = d * d, J = lat.J;
+    for (var i = i0; i <= i1; i++) for (var j = j0; j <= j1; j++) {
+      var k = lat.id[i * J + j], ra = lat.A[k] - a, rb = lat.B[k] - b;
+      if (ra * ra + rb * rb >= d2) continue;
+      if (n >= NMAX) return -1;
+      this.idx[n] = k; this.ra[n] = ra; this.rb[n] = rb; n++;
+    }
+    return n;
+  };
+  // R(r) and g = R'(r)/r as functions of r²
+  Approx.prototype.rbfAt = function (r2, out) {
+    if (this.rbf === 'mq') { var c2 = this.mq.ac * this.mq.ac, q = this.mq.q, s = r2 + c2, sq = Math.pow(s, q - 1); out[0] = sq * s; out[1] = 2 * q * sq; }
+    else if (this.rbf === 'tps') { var e = this.tps.eta; if (r2 <= 0) { out[0] = 0; out[1] = 0; } else { var pw = Math.pow(r2, e / 2 - 1); out[0] = pw * r2; out[1] = e * pw; } }
+    else { var k = this.exp.ac / (this.exp.dc * this.exp.dc), v = Math.exp(-k * r2); out[0] = v; out[1] = -2 * k * v; }
+  };
+  // Shape functions at index point (a, b). Fills idx, phi (and da, db = ∂φ/∂a, ∂φ/∂b when deriv). Returns n, or −1 on failure.
+  Approx.prototype.at = function (a, b, deriv, sa, sb) {
+    var n = this.gather(a, b, this.d, sa, sb);
+    this.n = n; this.fail = null;
+    if (n < 0) { this.fail = 'many'; return -1; }
+    return this.kind === 'mls' ? this.mls(n, deriv) : this.rpim(n, deriv);
+  };
+  Approx.prototype.rpim = function (n, deriv) {
+    var m = this.m, M = n + m, G = this.G, ra = this.ra, rb = this.rb, k, l, tmp = [0, 0];
+    if (n < Math.max(1, m)) { this.fail = 'few'; return -1; }
+    for (k = 0; k < n; k++) {
+      for (l = k; l < n; l++) {
+        var dx = ra[k] - ra[l], dy = rb[k] - rb[l]; this.rbfAt(dx * dx + dy * dy, tmp);
+        G[k * M + l] = tmp[0]; G[l * M + k] = tmp[0];
+      }
+      // polynomial terms centred at the evaluation point: [1, Δa, Δb, Δa², ΔaΔb, Δb²]
+      if (m) {
+        var pk = [1, ra[k], rb[k], ra[k] * ra[k], ra[k] * rb[k], rb[k] * rb[k]];
+        for (l = 0; l < m; l++) { G[k * M + n + l] = pk[l]; G[(n + l) * M + k] = pk[l]; }
+      }
+    }
+    for (k = n; k < M; k++) for (l = n; l < M; l++) G[k * M + l] = 0;
+    if (!luFactor(G, M, this.piv)) { this.fail = 'singular'; return -1; }
+    var r0 = this.r0, r1 = this.r1, r2 = this.r2;
+    for (k = 0; k < n; k++) {
+      this.rbfAt(ra[k] * ra[k] + rb[k] * rb[k], tmp);
+      r0[k] = tmp[0];
+      // ∂R_k/∂a at the evaluation point x: R'(r)(a_x − a_k)/r = −g·Δa
+      if (deriv) { r1[k] = -tmp[1] * ra[k]; r2[k] = -tmp[1] * rb[k]; }
+    }
+    for (l = 0; l < m; l++) { r0[n + l] = l === 0 ? 1 : 0; if (deriv) { r1[n + l] = l === 1 ? 1 : 0; r2[n + l] = l === 2 ? 1 : 0; } }
+    luSolve(G, M, this.piv, r0);
+    if (deriv) { luSolve(G, M, this.piv, r1); luSolve(G, M, this.piv, r2); }
+    for (k = 0; k < n; k++) { this.phi[k] = r0[k]; if (deriv) { this.da[k] = r1[k]; this.db[k] = r2[k]; } }
+    return n;
+  };
+  Approx.prototype.mls = function (n, deriv) {
+    var m = this.m || 6, P = this.P, A = this.A, Aa = this.Aa, Ab = this.Ab, ra = this.ra, rb = this.rb, k, i, j;
+    if (n < m) { this.fail = 'few'; return -1; }
+    var cd = this.c * this.d, s2 = 1 / (cd * cd);
+    A.fill(0); if (deriv) { Aa.fill(0); Ab.fill(0); }
+    for (k = 0; k < n; k++) {
+      var r2 = ra[k] * ra[k] + rb[k] * rb[k], w = Math.exp(-r2 * s2);
+      this.w[k] = w;
+      // ∂w/∂a at the evaluation point: w·(−2 s2)(a_x − a_k) = 2 s2 w Δa
+      this.wa[k] = 2 * s2 * w * ra[k]; this.wb[k] = 2 * s2 * w * rb[k];
+      var o = k * 6;
+      P[o] = 1; P[o + 1] = ra[k]; P[o + 2] = rb[k]; P[o + 3] = ra[k] * ra[k]; P[o + 4] = ra[k] * rb[k]; P[o + 5] = rb[k] * rb[k];
+      for (i = 0; i < m; i++) for (j = i; j < m; j++) {
+        var pp = P[o + i] * P[o + j];
+        A[i * m + j] += w * pp; if (deriv) { Aa[i * m + j] += this.wa[k] * pp; Ab[i * m + j] += this.wb[k] * pp; }
+      }
+    }
+    for (i = 0; i < m; i++) for (j = 0; j < i; j++) { A[i * m + j] = A[j * m + i]; Aa[i * m + j] = Aa[j * m + i]; Ab[i * m + j] = Ab[j * m + i]; }
+    if (!chol(A, m, this.L)) { this.fail = 'singular'; return -1; }
+    var e = this.t0; e.fill(0); e[0] = 1;
+    var g = cholSolve(this.L, m, e, this.g0), ga = null, gb = null;
+    if (deriv) {
+      var ta = new Float64Array(m), tb = new Float64Array(m);
+      ta[1] = 1; tb[2] = 1;
+      for (i = 0; i < m; i++) for (j = 0; j < m; j++) { ta[i] -= Aa[i * m + j] * g[j]; tb[i] -= Ab[i * m + j] * g[j]; }
+      ga = cholSolve(this.L, m, ta, this.g1); gb = cholSolve(this.L, m, tb, this.g2);
+    }
+    for (k = 0; k < n; k++) {
+      var o2 = k * 6, gp = 0, gap = 0, gbp = 0;
+      for (i = 0; i < m; i++) { var pv = P[o2 + i]; gp += g[i] * pv; if (deriv) { gap += ga[i] * pv; gbp += gb[i] * pv; } }
+      this.phi[k] = this.w[k] * gp;
+      if (deriv) { this.da[k] = this.wa[k] * gp + this.w[k] * gap; this.db[k] = this.wb[k] * gp + this.w[k] * gbp; }
+    }
+    return n;
+  };
+  // RPIM with one support per integration cell: the moment matrix G is built and factorised once for the
+  // cell (nodes within d of the cell centre); inCell() then evaluates the shape functions anywhere in that cell.
+  // Within a cell the shape functions are smooth; they can jump across cell edges (but not at the nodes).
+  Approx.prototype.cell = function (ca, cb) {
+    if (this.cKey === ca + ',' + cb) return this.cn;
+    this.cKey = ca + ',' + cb; this.fail = null;
+    var n = this.gather(ca, cb, this.d), m = this.m, M = n + m, G = this.G, ra = this.ra, rb = this.rb, k, l, tmp = this.tmp2;
+    this.cn = n; this.cA = ca; this.cB = cb;
+    if (n < 0) { this.fail = 'many'; return (this.cn = -1); }
+    if (n < Math.max(1, m)) { this.fail = 'few'; return (this.cn = -1); }
+    for (k = 0; k < n; k++) { this.cidx[k] = this.idx[k]; this.cpa[k] = ra[k]; this.cpb[k] = rb[k]; }
+    for (k = 0; k < n; k++) {
+      for (l = k; l < n; l++) {
+        var dx = ra[k] - ra[l], dy = rb[k] - rb[l]; this.rbfAt(dx * dx + dy * dy, tmp);
+        G[k * M + l] = tmp[0]; G[l * M + k] = tmp[0];
+      }
+      if (m) {
+        var x = ra[k], y = rb[k], pk = this.pk; pk[0] = 1; pk[1] = x; pk[2] = y; pk[3] = x * x; pk[4] = x * y; pk[5] = y * y;
+        for (l = 0; l < m; l++) { G[k * M + n + l] = pk[l]; G[(n + l) * M + k] = pk[l]; }
+      }
+    }
+    for (k = n; k < M; k++) for (l = n; l < M; l++) G[k * M + l] = 0;
+    if (!luFactor(G, M, this.piv)) { this.fail = 'singular'; return (this.cn = -1); }
+    return n;
+  };
+  Approx.prototype.inCell = function (a, b, deriv) {
+    var n = this.cn, m = this.m, M = n + m, k, tmp = this.tmp2, r0 = this.r0, r1 = this.r1, r2 = this.r2;
+    if (n < 0) return -1;
+    var da = a - this.cA, db = b - this.cB;      // offset of the point from the cell centre (polynomial origin)
+    for (k = 0; k < n; k++) {
+      var dx = this.cpa[k] - da, dy = this.cpb[k] - db;   // node − point
+      this.rbfAt(dx * dx + dy * dy, tmp);
+      r0[k] = tmp[0]; if (deriv) { r1[k] = -tmp[1] * dx; r2[k] = -tmp[1] * dy; }
+    }
+    if (m) {
+      r0[n] = 1; r0[n + 1] = da; r0[n + 2] = db;
+      if (m > 3) { r0[n + 3] = da * da; r0[n + 4] = da * db; r0[n + 5] = db * db; }
+      if (deriv) {
+        r1[n] = 0; r1[n + 1] = 1; r1[n + 2] = 0; r2[n] = 0; r2[n + 1] = 0; r2[n + 2] = 1;
+        if (m > 3) { r1[n + 3] = 2 * da; r1[n + 4] = db; r1[n + 5] = 0; r2[n + 3] = 0; r2[n + 4] = da; r2[n + 5] = 2 * db; }
+      }
+    }
+    luSolve(this.G, M, this.piv, r0);
+    if (deriv) { luSolve(this.G, M, this.piv, r1); luSolve(this.G, M, this.piv, r2); }
+    for (k = 0; k < n; k++) { this.idx[k] = this.cidx[k]; this.phi[k] = r0[k]; if (deriv) { this.da[k] = r1[k]; this.db[k] = r2[k]; } }
+    this.n = n;
+    return n;
+  };
+  // value of φ_I at (a, b): 0 outside its support, NaN where the approximation fails
+  Approx.prototype.phiOf = function (I, a, b, sa, sb) {
+    var n = this.at(a, b, false, sa, sb); if (n < 0) return NaN;
+    for (var k = 0; k < n; k++) if (this.idx[k] === I) return this.phi[k];
+    return 0;
+  };
+
+  function now() { return (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now(); }
+
+  root.RZNURBS = {
+    GL: GL, findSpan: findSpan, basis: basis, distinct: distinct, interiorKnots: interiorKnots, Patch: Patch, GEOM: GEOM,
+    Axis: Axis, Lattice: Lattice, Map: Map, Approx: Approx, Band: Band, luFactor: luFactor, luSolve: luSolve,
+    chol: chol, cholSolve: cholSolve, mulberry32: mulberry32, now: now
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+/* ═══════════════════════════════════════════════════════════════
+   Drawing helpers shared by the N-RPIM and NDM explorers — RZNURBS.view
+   Sample grids over the integration cells, the physical and parameter-space
+   frames, knot lines, the control net and outlines.
+   ═══════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var N = window.RZNURBS, V = N.view = {};
+
+  // (SUB+1)² samples in every lattice cell, in index coordinates, with the side hints that keep
+  // points on a C⁰ knot line inside their own cell. Returns { n, np, A, B, SA, SB, CI, CJ, U, W, X, Y, J }.
+  V.samples = function (md, SUB) {
+    var lat = md.lat, Mu = lat.Mu, Mv = lat.Mv, S1 = SUB + 1, np = S1 * S1, n = Mu * Mv * np, o = new Float64Array(12);
+    var A = new Float64Array(n), B = new Float64Array(n), SA = new Int8Array(n), SB = new Int8Array(n), CI = new Int32Array(n), CJ = new Int32Array(n);
+    var U = new Float64Array(n), W = new Float64Array(n), X = new Float64Array(n), Y = new Float64Array(n), J = new Float64Array(n);
+    for (var i = 0; i < Mu; i++) for (var j = 0; j < Mv; j++) {
+      var base = (i * Mv + j) * np;
+      for (var q = 0; q < S1; q++) for (var p = 0; p < S1; p++) {
+        var k = base + q * S1 + p;
+        A[k] = i + p / SUB; B[k] = j + q / SUB; SA[k] = p === 0 ? 1 : p === SUB ? -1 : 0; SB[k] = q === 0 ? 1 : q === SUB ? -1 : 0;
+        CI[k] = i; CJ[k] = j;
+        md.map.at(A[k], B[k], o, SA[k], SB[k]);
+        X[k] = o[0]; Y[k] = o[1]; U[k] = o[7]; W[k] = o[8]; J[k] = o[11];
+      }
+    }
+    return { n: n, np: np, SUB: SUB, A: A, B: B, SA: SA, SB: SB, CI: CI, CJ: CJ, U: U, W: W, X: X, Y: Y, J: J, Mu: Mu, Mv: Mv };
+  };
+
+  // fit a bounding box into a canvas of width W: returns { H, k, SX, SY, inv }
+  V.fit = function (W, x0, x1, y0, y1, M, hmin, hmax) {
+    var avail = W - 2 * M, asp = (y1 - y0) / ((x1 - x0) || 1), H = Math.round(Math.min(hmax, Math.max(hmin, avail * asp + 2 * M)));
+    var k = Math.min(avail / ((x1 - x0) || 1), (H - 2 * M) / ((y1 - y0) || 1)), ox = (W - k * (x1 - x0)) / 2, oy = (H - k * (y1 - y0)) / 2;
+    return { H: H, k: k, SX: function (x) { return ox + (x - x0) * k; }, SY: function (y) { return H - oy - (y - y0) * k; },
+             IX: function (px) { return x0 + (px - ox) / k; }, IY: function (py) { return y0 + (H - oy - py) / k; } };
+  };
+
+  // banded contour over the sample cells: px, py = screen coordinates of the samples, vals = values
+  V.contour = function (bp, sm, px, py, vals) {
+    var S1 = sm.SUB + 1, nc = sm.Mu * sm.Mv;
+    for (var c = 0; c < nc; c++) {
+      var base = c * sm.np;
+      for (var q = 0; q < sm.SUB; q++) for (var p = 0; p < sm.SUB; p++) {
+        var k0 = base + q * S1 + p, k1 = k0 + 1, k2 = k0 + S1 + 1, k3 = k0 + S1;
+        var A = [px[k0], py[k0], vals[k0]], B = [px[k1], py[k1], vals[k1]], C = [px[k2], py[k2], vals[k2]], D = [px[k3], py[k3], vals[k3]];
+        bp.tri([A, B, C]); bp.tri([A, C, D]);
+      }
+    }
+  };
+  // outline of lattice cell c (i·Mv + j) through its samples, as screen points
+  V.cellRim = function (sm, c, px, py) {
+    var S1 = sm.SUB + 1, base = c * sm.np, out = [], a;
+    for (a = 0; a <= sm.SUB; a++) out.push([px[base + a], py[base + a]]);
+    for (a = 1; a <= sm.SUB; a++) out.push([px[base + a * S1 + sm.SUB], py[base + a * S1 + sm.SUB]]);
+    for (a = sm.SUB - 1; a >= 0; a--) out.push([px[base + sm.SUB * S1 + a], py[base + sm.SUB * S1 + a]]);
+    for (a = sm.SUB - 1; a > 0; a--) out.push([px[base + a * S1], py[base + a * S1]]);
+    return out;
+  };
+  // polyline of an index-space path mapped to the physical space: f(t) → [a, b, sa, sb], t ∈ [0, 1]
+  V.path = function (md, f, n, SX, SY) {
+    var o = new Float64Array(12), out = [];
+    for (var i = 0; i <= n; i++) { var q = f(i / n); md.map.at(q[0], q[1], o, q[2], q[3]); out.push([SX(o[0]), SY(o[1])]); }
+    return out;
+  };
+  V.stroke = function (g, pts, close) {
+    if (!pts.length) return;
+    g.beginPath(); g.moveTo(pts[0][0], pts[0][1]);
+    for (var i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]);
+    if (close) g.closePath();
+  };
+  // knot lines (interior knots, both directions) in the physical space; C⁰ lines drawn heavier
+  V.knotLines = function (g, md, SX, SY, C) {
+    var P = md.patch, ax = md.ax, ay = md.ay;
+    g.save(); g.setLineDash([7, 3, 2, 3]);
+    ax.A.slice(1, -1).forEach(function (a) {
+      var c0 = ax.c0.indexOf(a) >= 0;
+      g.strokeStyle = c0 ? C.fg : U().rgba(C.fg, 0.55); g.lineWidth = c0 ? 1.4 : 1;
+      V.stroke(g, V.path(md, function (t) { return [a, t * md.lat.Mv, 1, 0]; }, 60, SX, SY)); g.stroke();
+    });
+    ay.A.slice(1, -1).forEach(function (b) {
+      var c0 = ay.c0.indexOf(b) >= 0;
+      g.strokeStyle = c0 ? C.fg : U().rgba(C.fg, 0.55); g.lineWidth = c0 ? 1.4 : 1;
+      V.stroke(g, V.path(md, function (t) { return [t * md.lat.Mu, b, 0, 1]; }, 60, SX, SY)); g.stroke();
+    });
+    g.restore();
+    return P;
+  };
+  // control net: polygon lines and points (squares), weights ≠ 1 drawn hollow
+  V.controlNet = function (g, P, SX, SY, C) {
+    var i, j, c;
+    g.save(); g.strokeStyle = U().rgba(C.gold, 0.9); g.lineWidth = 1; g.setLineDash([3, 3]);
+    for (i = 0; i < P.nu; i++) { g.beginPath(); for (j = 0; j < P.nv; j++) { c = P.ctrl(i, j); if (j) g.lineTo(SX(c[0]), SY(c[1])); else g.moveTo(SX(c[0]), SY(c[1])); } g.stroke(); }
+    for (j = 0; j < P.nv; j++) { g.beginPath(); for (i = 0; i < P.nu; i++) { c = P.ctrl(i, j); if (i) g.lineTo(SX(c[0]), SY(c[1])); else g.moveTo(SX(c[0]), SY(c[1])); } g.stroke(); }
+    g.setLineDash([]);
+    for (i = 0; i < P.nu; i++) for (j = 0; j < P.nv; j++) {
+      c = P.ctrl(i, j); var x = SX(c[0]), y = SY(c[1]);
+      g.beginPath(); g.rect(x - 3.5, y - 3.5, 7, 7);
+      if (Math.abs(c[2] - 1) < 1e-9) { g.fillStyle = C.gold; g.fill(); } else { g.fillStyle = C.surface; g.fill(); g.lineWidth = 1.6; g.strokeStyle = C.gold; g.stroke(); }
+    }
+    g.restore();
+  };
+  // knot vector as text, e.g. {0, 0, 0, 0.5, 1, 1, 1}
+  V.knotText = function (Uk) { return '{' + Uk.map(function (v) { return +v.toFixed(3); }).join(', ') + '}'; };
+  function U() { return window.RZTools.util; }
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   2D N-RPIM core (NURBS geometry + radial point interpolation) — window.RZNRPIM
+   Mokhtaram, Mohd Noor, Jamil Abd Nazir, Zainal Abidin and Mohd Yassin,
+   Eng. Anal. Bound. Elem. 138 (2022) 266–279.
+   · The domain is a NURBS patch, so curved edges are exact.
+   · Nodes live in the parameter space; RPIM shape functions (MQ or TPS radial
+     basis functions plus polynomial terms) are built there and carry the
+     Kronecker delta property, so essential conditions are imposed directly.
+   · Galerkin weak form integrated on cells that subdivide the knot spans:
+     parent (Gauss) → parameter (affine) → physical (NURBS); B = Ĵ⁻¹ J̃⁻¹ B̃.
+   Also solves Q4 finite elements on the same nodes (straight-sided elements).
+   ═══════════════════════════════════════════════════════════════ */
+(function (root) {
+  'use strict';
+  var N = root.RZNURBS, F = root.RZFEM, T = F.T, E0 = F.E;
+
+  /* ── problems ─────────────────────────────────────────────────── */
+  // Each returns { key, patch, mu, mv (intervals per knot span in ξ and η), E, nu, dirichlet(tag, x, y),
+  // traction(tag, x, y), points [{u, v, ux, uy}], exact {u, s} | null, ref, bbox, keep(i, j) }
+  function problem(cfg) {
+    var G = N.GEOM, n = Math.max(1, Math.round(cfg.n || 4)), pr, base;
+    if (cfg.problem === 'cantilever') {
+      base = F.PROBLEMS.cantilever(cfg);
+      pr = { patch: G.rect(0, base.L, -base.D / 2, base.D / 2), mu: Math.max(1, Math.round(n * cfg.ld)), mv: n };
+    } else if (cfg.problem === 'hole') {
+      base = F.PROBLEMS.hole(cfg);
+      pr = { patch: G.plateHole(base.a, base.b), mu: n, mv: n };
+    } else if (cfg.problem === 'patch') {
+      base = F.PROBLEMS.patch(cfg);
+      pr = { patch: cfg.param === 'curved' ? G.squareCurved(0.15) : G.rect(0, 1, 0, 1), mu: n, mv: n };
+    } else return cell(cfg, n);
+    for (var k in base) if (!(k in pr)) pr[k] = base[k];
+    pr.E = E0; pr.nu = cfg.nu; pr.points = [];
+    return pr;
+  }
+  // Web post of a cellular beam (paper, section 6): E = 210 GPa, ν = 0.25, 1 kN/m on a 1 mm web = 1 MPa.
+  // References are the paper's converged COMSOL values.
+  function cell(cfg, n) {
+    var s = 0.8, d = 1.0, r = 0.3, q = 1e6, shear = cfg.load === 'shear', tol = 1e-9;
+    var pts = shear ? [] : [{ u: 0, v: 0.5, ux: null, uy: 0 }, { u: 1, v: 0.5, ux: null, uy: 0 }, { u: 0.5, v: 0.5, ux: 0, uy: null }];
+    return {
+      key: 'cell', load: shear ? 'shear' : 'comp', patch: N.GEOM.unitCell(s, d, r), mu: 2 * n, mv: n, E: 210e9, nu: 0.25, s: s, d: d, r: r, q: q,
+      dirichlet: function (tag, x) {
+        if (!shear) return null;
+        if (tag === 's0' && Math.abs(x) < tol) return [0, 0];          // clamped on the left edges
+        if (tag === 's1' && Math.abs(x - s) < tol) return [0, null];   // horizontally restrained on the right edges
+        return null;
+      },
+      traction: function (tag, x) {
+        if (shear) return tag === 's1' && Math.abs(x - s) < tol ? [0, -q] : null;
+        return tag === 't0' ? [0, q] : tag === 't1' ? [0, -q] : null;
+      },
+      points: pts, exact: null,
+      // shear reference: the paper prints −17.332 × 10⁻⁵ m; its digits match −1.7332 × 10⁻⁵ m, the value this
+      // tool's N-RPIM and FEM converge to (see README), so the exponent is taken as 10⁻⁶ on the printed 17.332
+      ref: shear ? { pts: [{ name: 'B', u: 1, v: 1, f: 'uy', val: -1.7332e-5 }] }
+                 : { pts: [{ name: 'A', u: 1, v: 0.2, f: 'ux', val: -2.6204e-7 }, { name: 'A', u: 1, v: 0.2, f: 'uy', val: 9.8366e-6 }] },
+      bbox: [0, s, 0, d]
+    };
+  }
+
+  /* ── set-up: index axes, nodes, map, shape functions ──────────── */
+  function setup(cfg) {
+    var pr = problem(cfg), P = pr.patch, ax = new N.Axis(P.ku, pr.mu, P.c0u), ay = new N.Axis(P.kv, pr.mv, P.c0v);
+    // nodes that carry point supports are not moved by the distortion
+    var keepSet = {};
+    pr.points.forEach(function (p) { keepSet[Math.round(ax.index(p.u)) + ',' + Math.round(ay.index(p.v))] = 1; });
+    var lat = new N.Lattice(ax, ay, { distort: cfg.distort || 0, seed: cfg.seed || 1, keep: function (i, j) { return !!keepSet[i + ',' + j]; } });
+    var map = new N.Map(P, ax, ay), nn = lat.nn, X = new Float64Array(nn), Y = new Float64Array(nn), o = new Float64Array(12);
+    for (var k = 0; k < nn; k++) { map.at(lat.A[k], lat.B[k], o); X[k] = o[0]; Y[k] = o[1]; }
+    var approx = new N.Approx(lat, { kind: 'rpim', rbf: cfg.rbf || 'mq', m: cfg.m == null ? 3 : +cfg.m, d: cfg.alpha || 2.5 });
+    var nu = pr.nu, Ey = pr.E;
+    return { cfg: cfg, pr: pr, patch: P, ax: ax, ay: ay, lat: lat, map: map, X: X, Y: Y, nn: nn, S: approx, D: F.Dmat(nu, Ey), E: Ey, nu: nu,
+             perPoint: cfg.supp === 'point' };
+  }
+
+  // shape functions at index point (a, b) inside cell (ci, cj): one support per cell (default) or per point
+  function shapeAt(md, a, b, deriv, ci, cj, sa, sb) {
+    var S = md.S;
+    if (md.perPoint) return S.at(a, b, deriv, sa, sb);
+    if (ci == null) {
+      ci = Math.floor(a); cj = Math.floor(b);
+      if (sa < 0 && ci === a) ci--; if (sb < 0 && cj === b) cj--;
+      ci = Math.min(md.lat.Mu - 1, Math.max(0, ci)); cj = Math.min(md.lat.Mv - 1, Math.max(0, cj));
+    }
+    if (S.cell(ci + 0.5, cj + 0.5) < 0) return -1;
+    return S.inCell(a, b, deriv);
+  }
+  // physical derivatives from index derivatives; g = map output
+  function toXY(g, da, db, out) {
+    var det = g[6];
+    out[0] = (g[5] * da - g[3] * db) / det; out[1] = (-g[4] * da + g[2] * db) / det;
+  }
+
+  /* ── solve ────────────────────────────────────────────────────── */
+  // cfg: { problem, n, ld, support, ar, outer, nu, param, load, distort, seed, rbf, m, alpha, ng }
+  function run(cfg) {
+    var t0 = now(), md = setup(cfg), pr = md.pr, lat = md.lat, nn = md.nn, ndof = 2 * nn, D = md.D, S = md.S, map = md.map;
+    var Mu = lat.Mu, Mv = lat.Mv, ng = cfg.ng || 4, g = N.GL[ng], o = new Float64Array(12), xy = [0, 0], k, a, b, i, j;
+
+    // essential conditions at the nodes (Kronecker delta → direct imposition)
+    var fixed = new Uint8Array(ndof), ubar = new Float64Array(ndof);
+    function fix(nd, v) { for (var c = 0; c < 2; c++) if (v[c] !== null && v[c] !== undefined) { fixed[2 * nd + c] = 1; ubar[2 * nd + c] = v[c]; } }
+    for (k = 0; k < nn; k++) lat.edges(k).forEach(function (tag) { var v = pr.dirichlet(tag, md.X[k], md.Y[k]); if (v) fix(k, v); });
+    pr.points.forEach(function (p) { fix(lat.node(Math.round(md.ax.index(p.u)), Math.round(md.ay.index(p.v))), [p.ux, p.uy]); });
+    var eq = new Int32Array(ndof), neq = 0;
+    for (a = 0; a < ndof; a++) eq[a] = fixed[a] ? -1 : neq++;
+
+    // Gauss points of every cell: shape functions and their physical derivatives
+    var gx = [], gy = [], gw = [], gc = [], start = [0], idxL = [], phL = [], dxL = [], dyL = [], bad = 0;
+    for (i = 0; i < Mu; i++) for (j = 0; j < Mv; j++) for (var p = 0; p < ng; p++) for (var q = 0; q < ng; q++) {
+      var ga = i + (1 + g.p[p]) / 2, gb = j + (1 + g.p[q]) / 2;
+      map.at(ga, gb, o);
+      var n = shapeAt(md, ga, gb, true, i, j);
+      if (n < 0) { bad++; continue; }
+      gx.push(o[0]); gy.push(o[1]); gw.push(g.w[p] * g.w[q] * 0.25 * o[6] * T); gc.push(i * Mv + j);
+      for (k = 0; k < n; k++) { toXY(o, S.da[k], S.db[k], xy); idxL.push(S.idx[k]); phL.push(S.phi[k]); dxL.push(xy[0]); dyL.push(xy[1]); }
+      start.push(idxL.length);
+    }
+    if (bad) return { error: 'support', bad: bad, md: md, why: S.fail };
+    var ngp = gw.length, IDX = Int32Array.from(idxL), PH = Float64Array.from(phL), DX = Float64Array.from(dxL), DY = Float64Array.from(dyL), ST = Int32Array.from(start);
+
+    // traction loads on the boundary segments between lattice nodes
+    var f = new Float64Array(ndof), g4 = N.GL[4];
+    [['s0', 0, null], ['s1', Mu, null], ['t0', null, 0], ['t1', null, Mv]].forEach(function (E) {
+      var tag = E[0], along = E[1] === null, segs = along ? Mu : Mv;
+      for (var sgi = 0; sgi < segs; sgi++) for (var qq = 0; qq < 4; qq++) {
+        var tt = sgi + (1 + g4.p[qq]) / 2, aa = along ? tt : E[1], bb = along ? E[2] : tt;
+        map.at(aa, bb, o);
+        var tr = pr.traction(tag, o[0], o[1]); if (!tr) continue;
+        var ds = (along ? Math.hypot(o[2], o[3]) : Math.hypot(o[4], o[5])) * 0.5 * g4.w[qq] * T;
+        var ci = along ? sgi : (E[1] === 0 ? 0 : Mu - 1), cj = along ? (E[2] === 0 ? 0 : Mv - 1) : sgi;
+        var nb = shapeAt(md, aa, bb, false, ci, cj); if (nb < 0) continue;
+        for (k = 0; k < nb; k++) { f[2 * S.idx[k]] += S.phi[k] * tr[0] * ds; f[2 * S.idx[k] + 1] += S.phi[k] * tr[1] * ds; }
+      }
+    });
+
+    // skyline profile and assembly of Bᵀ D B on the free equations
+    var top = new Int32Array(neq); for (a = 0; a < neq; a++) top[a] = a;
+    for (i = 0; i < ngp; i++) {
+      var mn = Infinity;
+      for (k = ST[i]; k < ST[i + 1]; k++) for (var c = 0; c < 2; c++) { var e = eq[2 * IDX[k] + c]; if (e >= 0 && e < mn) mn = e; }
+      for (k = ST[i]; k < ST[i + 1]; k++) for (c = 0; c < 2; c++) { e = eq[2 * IDX[k] + c]; if (e >= 0 && mn < top[e]) top[e] = mn; }
+    }
+    var K = new F.Skyline(top), rhs = new Float64Array(neq);
+    for (a = 0; a < ndof; a++) if (eq[a] >= 0) rhs[eq[a]] += f[a];
+    var blk = [0, 0, 0, 0];
+    for (i = 0; i < ngp; i++) {
+      var w = gw[i], s0 = ST[i], s1 = ST[i + 1];
+      for (a = s0; a < s1; a++) {
+        var ax_ = DX[a], ay_ = DY[a], ra = 2 * IDX[a];
+        for (b = s0; b < s1; b++) {
+          var bx = DX[b], by = DY[b], rb = 2 * IDX[b];
+          blk[0] = w * (ax_ * D[0] * bx + ay_ * D[8] * by); blk[1] = w * (ax_ * D[1] * by + ay_ * D[8] * bx);
+          blk[2] = w * (ay_ * D[3] * bx + ax_ * D[8] * by); blk[3] = w * (ay_ * D[4] * by + ax_ * D[8] * bx);
+          for (var r = 0; r < 2; r++) {
+            var er = eq[ra + r]; if (er < 0) continue;
+            for (c = 0; c < 2; c++) {
+              var ec = eq[rb + c], kv = blk[2 * r + c];
+              if (ec < 0) rhs[er] -= kv * ubar[rb + c];
+              else if (er <= ec) K.add(er, ec, kv);
+            }
+          }
+        }
+      }
+    }
+    var t1 = now();
+    var piv = K.factor();
+    if (piv >= 0) return { error: 'singular', md: md, pivot: piv };
+    var x = K.solve(rhs), u = new Float64Array(ndof);
+    for (a = 0; a < ndof; a++) u[a] = eq[a] >= 0 ? x[eq[a]] : ubar[a];
+    var t2 = now();
+    return { cfg: cfg, md: md, pr: pr, u: u, f: f, fixed: fixed, ndof: ndof, neq: neq, nn: nn, ngp: ngp, gx: gx, gy: gy, gw: gw, gc: gc,
+             start: ST, IDX: IDX, PH: PH, DX: DX, DY: DY, profile: K.a.length, time: { assemble: t1 - t0, solve: t2 - t1 } };
+  }
+
+  /* ── evaluation ───────────────────────────────────────────────── */
+  // [ux, uy, σxx, σyy, τxy] at index point (a, b); sa, sb pick the knot span on a C⁰ line. null if the support fails.
+  function evalAt(model, a, b, sa, sb, out, ci, cj) {
+    var md = model.md, S = md.S, D = md.D, u = model.u, o = model._o || (model._o = new Float64Array(12)), xy = [0, 0];
+    md.map.at(a, b, o, sa, sb);
+    if (!(Math.abs(o[6]) > 1e-10 * (Math.abs(o[2] * o[5]) + Math.abs(o[3] * o[4]) + 1e-300))) {
+      // degenerate point of the parametrization (a collapsed corner): step slightly inside
+      a += a > md.lat.Mu / 2 ? -1e-4 : 1e-4; b += b > md.lat.Mv / 2 ? -1e-4 : 1e-4; md.map.at(a, b, o, sa, sb);
+    }
+    var n = shapeAt(md, a, b, true, ci, cj, sa, sb); if (n < 0) return null;
+    var ux = 0, uy = 0, exx = 0, eyy = 0, gxy = 0;
+    for (var k = 0; k < n; k++) {
+      var I = S.idx[k], p = u[2 * I], q = u[2 * I + 1];
+      toXY(o, S.da[k], S.db[k], xy);
+      ux += S.phi[k] * p; uy += S.phi[k] * q; exx += xy[0] * p; eyy += xy[1] * q; gxy += xy[1] * p + xy[0] * q;
+    }
+    out = out || new Float64Array(5);
+    out[0] = ux; out[1] = uy; out[2] = D[0] * exx + D[1] * eyy; out[3] = D[3] * exx + D[4] * eyy; out[4] = D[8] * gxy;
+    return out;
+  }
+  // value at a point given in the NURBS parameter space (ξ, η)
+  function evalParam(model, u, v, out) { var md = model.md; return evalAt(model, md.ax.index(u), md.ay.index(v), 0, 0, out); }
+  function phiAt(model, I, a, b, ci, cj) {
+    var md = model.md, n = shapeAt(md, a, b, false, ci, cj); if (n < 0) return NaN;
+    for (var k = 0; k < n; k++) if (md.S.idx[k] === I) return md.S.phi[k];
+    return 0;
+  }
+
+  function energyError(model) {
+    var ex = model.pr.exact; if (!ex) return null;
+    var nu = model.md.nu, Ey = model.md.E, D = model.md.D, u = model.u, num = 0, den = 0;
+    function cE(a, b, c) { return (a * a - 2 * nu * a * b + b * b + 2 * (1 + nu) * c * c) / Ey; }
+    for (var i = 0; i < model.ngp; i++) {
+      var exx = 0, eyy = 0, g = 0;
+      for (var k = model.start[i]; k < model.start[i + 1]; k++) {
+        var I = model.IDX[k], a = u[2 * I], b = u[2 * I + 1];
+        exx += model.DX[k] * a; eyy += model.DY[k] * b; g += model.DY[k] * a + model.DX[k] * b;
+      }
+      var sx = D[0] * exx + D[1] * eyy, sy = D[3] * exx + D[4] * eyy, txy = D[8] * g, se = ex.s(model.gx[i], model.gy[i]), w = model.gw[i];
+      num += w * cE(se[0] - sx, se[1] - sy, se[2] - txy); den += w * cE(se[0], se[1], se[2]);
+    }
+    return Math.sqrt(num / den);
+  }
+  function supportStats(model) {
+    var mn = Infinity, mx = 0, sum = 0;
+    for (var i = 0; i < model.ngp; i++) { var c = model.start[i + 1] - model.start[i]; mn = Math.min(mn, c); mx = Math.max(mx, c); sum += c; }
+    return { min: mn, mean: sum / model.ngp, max: mx };
+  }
+
+  /* ── Q4 finite elements on the same nodes ─────────────────────── */
+  // Straight-sided bilinear elements through the NURBS-mapped nodes, solved by RZFEM.
+  function femRun(cfg) {
+    var md = setup(cfg), pr = md.pr, lat = md.lat, Mu = lat.Mu, Mv = lat.Mv, C = [], bedges = [], i, j;
+    function nd(ii, jj) { return lat.node(ii, jj); }
+    for (i = 0; i < Mu; i++) for (j = 0; j < Mv; j++) {
+      var n00 = nd(i, j), n10 = nd(i + 1, j), n11 = nd(i + 1, j + 1), n01 = nd(i, j + 1);
+      C.push(n00, n10, n11, n01);
+      if (i === 0) bedges.push({ tag: 's0', n: [n01, n00] });
+      if (i === Mu - 1) bedges.push({ tag: 's1', n: [n10, n11] });
+      if (j === 0) bedges.push({ tag: 't0', n: [n00, n10] });
+      if (j === Mv - 1) bedges.push({ tag: 't1', n: [n11, n01] });
+    }
+    var mesh = { type: 'Q4', npe: 4, nn: md.nn, ne: C.length / 4, X: md.X, Y: md.Y, C: new Int32Array(C), bedges: bedges, nx: Mu, ny: Mv };
+    var fpr = {};
+    for (var k in pr) fpr[k] = pr[k];
+    fpr.nodeBC = function () {
+      var out = [];
+      pr.points.forEach(function (p) {
+        var n = lat.node(Math.round(md.ax.index(p.u)), Math.round(md.ay.index(p.v)));
+        if (p.ux !== null && p.ux !== undefined) out.push({ n: n, d: 0, v: p.ux });
+        if (p.uy !== null && p.uy !== undefined) out.push({ n: n, d: 1, v: p.uy });
+      });
+      return out;
+    };
+    var m = F.run({ nu: md.nu, elem: 'Q4', pr: fpr, mesh: mesh });
+    m.md = md;
+    return m;
+  }
+  // FEM nodal value at a lattice node given by parameter values
+  function femNode(fm, u, v) { var md = fm.md; return md.lat.node(Math.round(md.ax.index(u)), Math.round(md.ay.index(v))); }
+
+  function size(cfg) {
+    var pr = problem(cfg), P = pr.patch, ax = new N.Axis(P.ku, pr.mu, P.c0u), ay = new N.Axis(P.kv, pr.mv, P.c0v), ng = cfg.ng || 4, nodes = (ax.M + 1) * (ay.M + 1);
+    return { nodes: nodes, dof: 2 * nodes, cells: ax.M * ay.M, gauss: ax.M * ay.M * ng * ng, Mu: ax.M, Mv: ay.M };
+  }
+  function now() { return N.now(); }
+
+  root.RZNRPIM = { problem: problem, setup: setup, run: run, evalAt: evalAt, evalParam: evalParam, phiAt: phiAt, energyError: energyError,
+                   supportStats: supportStats, femRun: femRun, femNode: femNode, size: size, toXY: toXY };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+/* ═══════════════════════════════════════════════════════════════
+   2D N-RPIM Explorer — UI
+   Registered as RZTools tool 'nrpim2d'; mount with <div data-rz-tool="nrpim2d"></div>
+   ═══════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var R = window.RZNRPIM, NB = window.RZNURBS, V = NB.view, F = window.RZFEM, RZT = window.RZTools, U = RZT.util, fmt = U.fmt, FIELD = U.FIELD, SYM = U.FSYM;
+  var SHAPES = ['circle', 'square', 'tri', 'diamond'];
+
+  var T = {
+    en: {
+      gModel: 'Model', gApprox: 'RPIM approximation', gNodes: 'Nodes', gView: 'View',
+      problem: 'Problem', phole: 'Plate with a hole (Kirsch)', pcantilever: 'Cantilever (Timoshenko)', pcell: 'Cellular beam unit cell (paper)', ppatch: 'Patch test',
+      ld: 'Span / depth `L/D`', support: 'Left support', supExact: 'Exact', supClamp: 'Clamped', ar: 'Hole radius `a / b`', outer: 'Outer edges',
+      outKirsch: 'Kirsch', outUniform: 'Uniform', nu: 'Poisson’s ratio ν', load: 'Load case', lcomp: 'Compression', lshear: 'Shear',
+      rbf: 'Radial basis function', mq: 'MQ', tps: 'TPS', m: 'Polynomial terms', m0: 'None', m3: 'Linear', m6: 'Quadratic',
+      alpha: 'Support radius `d = α h`, α', ng: 'Gauss points per cell',
+      n: 'Refinement level', size: '{nodes} nodes · {dof} DOF · {cells} cells', distort: 'Irregular nodes', shuffle: 'New layout',
+      field: 'Contour', fsvm: 'Von Mises stress', fsxx: 'Stress σxx', fsyy: 'Stress σyy', fsxy: 'Shear stress τxy', fumag: 'Displacement |u|', fux: 'Displacement ux', fuy: 'Displacement uy',
+      fphi: 'Shape function φ of the selected node', show: 'Show', oNodes: 'Nodes', oSupport: 'Support', oCells: 'Cells', oKnots: 'Knot lines', oNet: 'Control net', oGauss: 'Gauss points',
+      scale: 'Deformation scale', reset: 'Reset',
+      mDof: 'DOF · {nn} nodes · {gp} Gauss points', mTip: 'Tip deflection v(L, 0) · Timoshenko {v}', mScf: 'SCF = σxx(0, a) / σ₀ · Kirsch 3', mScfU: 'SCF = σxx(0, a) / σ₀ · Kirsch ∞ plate 3',
+      mPatch: 'max |σ − σexact| / σ₀', mRefA: 'v at A (0.8, 0.2) · paper {v}', mRefB: 'v at B (0.8, 1.0) · paper {v}',
+      mErr: 'Relative error, energy norm', mErrNone: 'Energy-norm error · needs an exact solution', mSup: 'nodes per support, mean ({a}–{b})', mTime: 'assemble + solve',
+      mUA: 'u at A · paper {v}',
+      pass: 'passed', notExact: 'not exact',
+      support_: 'The moment matrix G is singular in {n} cells: their support holds too few nodes for the polynomial terms. Increase the support radius or the refinement.',
+      singular: 'The stiffness matrix is singular. Increase the support radius or the refinement.',
+      m0Note: 'Without polynomial terms the MQ and TPS functions used here cannot reproduce a constant or a linear displacement, so the result is poor. RPIM normally adds at least the linear terms.',
+      patchNote: 'N-RPIM does not pass the patch test exactly. Each integration cell uses its own support, so the shape functions jump slightly across cell edges (they still interpolate the nodes). More Gauss points do not remove the error, because it comes from these jumps, not from the quadrature.',
+      clamped: 'Clamped support: every point on x = 0 is fixed, so no error norm is shown, and the stresses at the clamped corners are singular.',
+      uniform: 'Uniform tension on a finite plate: Kirsch’s solution is for an infinite plate, so no error norm is shown.',
+      cellNote: 'Geometry, material (E = 210 GPa, ν = 0.25) and loads (1 kN/m on a 1 mm web) from Mokhtaram et al. (2022). The supports are applied at nodes, as in the paper. The geometry is only C⁰ across the bold knot lines η = 0.2, 0.5 and 0.8, so the supports of the shape functions stop at these lines.',
+      phiNote: 'RPIM shape functions interpolate: φ = {v} at its own node and zero at every other node (the Kronecker delta property). That is why the essential conditions are applied straight to the nodal values, as in FEM.',
+      big: 'Large model: it solves when you release the slider.', solving: 'Solving…', fail2: 'The model could not be solved.',
+      p1s: '{f} in the physical space, on the deformed shape (displacements × {s}). Tap a node to select it; hover to read values.',
+      p1sU: '{f} in the physical space. Tap a node to select it; hover to read values.',
+      p2: 'Parameter space', p2s: 'The same field on the NURBS parameter space (ξ, η). Nodes and integration cells are laid out here, each knot span divided into equal cells; the NURBS map then carries them to the physical domain. Hover either view to follow a point.',
+      iKnots: 'Knot vectors', iCp: 'Control net', iCpV: '{a} × {b} control points · weights {w}', iC0: 'C⁰ lines', iNone: 'none', iLat: 'Lattice', iLatV: '{a} × {b} nodes · {c} cells · {g} Gauss points',
+      iMap: 'Integration', iMapV: 'parent [−1, 1]² → parameter cell (affine) → physical (NURBS): B = Ĵ⁻¹ J̃⁻¹ B̃', iHover: 'Point',
+      readMap: '(ξ, η) = ({u}, {v}) → (x, y) = ({x}, {y}) m · |J| = {j}',
+      p3: 'Along a line', p3s: 'N-RPIM result against the reference solution. Hover to read values.',
+      lcantilever_sxx: 'σxx through the depth at x = L/2', lcantilever_sxy: 'τxy through the depth at x = L/2', lcantilever_uy: 'Deflection along the axis y = 0',
+      lhole_sxx: 'σxx along x = 0, from the hole to the edge', lhole_stt: 'σθθ around the hole, θ = 0° → 90°', lpatch_sxx: 'σxx along y = 0.5', lpatch_ux: 'ux along y = 0.5',
+      lcell_syy: 'σyy across the web post at y = 0.5', lcell_uy: 'uy along the right edge x = 0.8', lcell_sxx: 'σxx along the top edge y = 1',
+      lgFE: 'N-RPIM', lgExact: 'exact', lgKirsch: 'Kirsch (infinite plate)', lgTimo: 'Timoshenko (exact support)', lgFem: 'FEM Q4, same nodes', lgRef: 'paper reference',
+      p4: 'N-RPIM against FEM', p4s: 'Relative energy-norm error against DOF: N-RPIM with MQ and with TPS radial basis functions, and bilinear Q4 finite elements on the same nodes. The Q4 elements have straight sides, so a curved edge becomes a polygon. Polynomial terms, support radius, Gauss points, ν, geometry and node layout follow your settings.',
+      p4sCell: 'Error in the paper’s reference displacement against DOF: N-RPIM with MQ and with TPS, and bilinear Q4 finite elements on the same nodes. Support radius, Gauss points and node layout follow your settings.',
+      run: 'Run comparison', running: 'Solving {i} of {n}…', stale: 'Settings changed since the last run. Run it again.', idle: 'Press “Run comparison” to solve {n} models, from coarse to fine.',
+      noExact: 'The comparison needs an exact solution: choose the exact support or Kirsch tractions.', noPatch: 'Use the plate, the cantilever or the unit cell for the comparison.',
+      sMQ: 'N-RPIM · MQ', sTPS: 'N-RPIM · TPS', sQ4: 'FEM Q4, same nodes', rate: 'rate', cur: 'current model', yErr: 'energy-norm error', yRef: '|error| in {q}',
+      readNode: 'node {i} at ({x}, {y}) m · {f} = {v}', readExact: ' · exact {v}', readLine: '{x} · N-RPIM {fe} · ref {ex} {u}', readConv: '{s} · {dof} DOF · error {e}'
+    },
+    ms: {
+      gModel: 'Model', gApprox: 'Approximation RPIM', gNodes: 'Nod', gView: 'Paparan',
+      problem: 'Masalah', phole: 'Plat berlubang (Kirsch)', pcantilever: 'Cantilever (Timoshenko)', pcell: 'Unit cell cellular beam (paper)', ppatch: 'Patch test',
+      ld: 'Rentang / kedalaman `L/D`', support: 'Support kiri', supExact: 'Exact', supClamp: 'Clamped', ar: 'Jejari lubang `a / b`', outer: 'Sisi luar',
+      outKirsch: 'Kirsch', outUniform: 'Seragam', nu: 'Poisson’s ratio ν', load: 'Kes beban', lcomp: 'Mampatan', lshear: 'Ricih',
+      rbf: 'Radial basis function', mq: 'MQ', tps: 'TPS', m: 'Sebutan polinomial', m0: 'Tiada', m3: 'Linear', m6: 'Kuadratik',
+      alpha: 'Jejari support `d = α h`, α', ng: 'Gauss points setiap cell',
+      n: 'Tahap refinement', size: '{nodes} nod · {dof} DOF · {cells} cell', distort: 'Nod tidak sekata', shuffle: 'Susunan baharu',
+      field: 'Kontur', fsvm: 'Tegasan von Mises', fsxx: 'Tegasan σxx', fsyy: 'Tegasan σyy', fsxy: 'Tegasan ricih τxy', fumag: 'Sesaran |u|', fux: 'Sesaran ux', fuy: 'Sesaran uy',
+      fphi: 'Shape function φ bagi nod terpilih', show: 'Papar', oNodes: 'Nod', oSupport: 'Support', oCells: 'Cell', oKnots: 'Knot lines', oNet: 'Control net', oGauss: 'Gauss points',
+      scale: 'Skala ubah bentuk', reset: 'Set semula',
+      mDof: 'DOF · {nn} nod · {gp} Gauss points', mTip: 'Pesongan hujung v(L, 0) · Timoshenko {v}', mScf: 'SCF = σxx(0, a) / σ₀ · Kirsch 3', mScfU: 'SCF = σxx(0, a) / σ₀ · Kirsch plat ∞ 3',
+      mPatch: 'max |σ − σexact| / σ₀', mRefA: 'v pada A (0.8, 0.2) · paper {v}', mRefB: 'v pada B (0.8, 1.0) · paper {v}',
+      mErr: 'Ralat relatif, energy norm', mErrNone: 'Ralat energy norm · perlukan exact solution', mSup: 'nod setiap support, purata ({a}–{b})', mTime: 'assemble + solve',
+      mUA: 'u pada A · paper {v}',
+      pass: 'lulus', notExact: 'tidak exact',
+      support_: 'Moment matrix G singular dalam {n} cell: support-nya mengandungi terlalu sedikit nod untuk sebutan polinomial. Naikkan jejari support atau refinement.',
+      singular: 'Stiffness matrix singular. Naikkan jejari support atau refinement.',
+      m0Note: 'Tanpa sebutan polinomial, fungsi MQ dan TPS di sini tidak dapat menghasilkan semula sesaran malar atau linear, jadi keputusannya lemah. RPIM biasanya menambah sekurang-kurangnya sebutan linear.',
+      patchNote: 'N-RPIM tidak lulus patch test secara exact. Setiap integration cell menggunakan support sendiri, jadi shape functions melompat sedikit merentas sisi cell (ia tetap menginterpolasi nod). Tambahan Gauss points tidak menghapuskan ralat ini kerana puncanya ialah lompatan tersebut, bukan quadrature.',
+      clamped: 'Support clamped: setiap titik pada x = 0 ditetapkan, jadi energy norm tidak dipaparkan, dan tegasan di sudut clamped adalah singular.',
+      uniform: 'Tegangan seragam pada plat terhingga: penyelesaian Kirsch adalah untuk plat tak terhingga, jadi energy norm tidak dipaparkan.',
+      cellNote: 'Geometri, bahan (E = 210 GPa, ν = 0.25) dan beban (1 kN/m pada web 1 mm) daripada Mokhtaram et al. (2022). Support dikenakan pada nod seperti dalam paper. Geometri hanya C⁰ merentas knot lines tebal η = 0.2, 0.5 dan 0.8, jadi support bagi shape functions berhenti pada garis ini.',
+      phiNote: 'Shape functions RPIM menginterpolasi: φ = {v} pada nodnya sendiri dan sifar pada semua nod lain (sifat Kronecker delta). Sebab itu essential conditions dikenakan terus pada nilai nodal, sama seperti FEM.',
+      big: 'Model besar: ia diselesaikan apabila anda melepaskan slider.', solving: 'Menyelesaikan…', fail2: 'Model tidak dapat diselesaikan.',
+      p1s: '{f} dalam ruang fizikal, pada bentuk terubah (sesaran × {s}). Ketik nod untuk memilihnya; halakan untuk membaca nilai.',
+      p1sU: '{f} dalam ruang fizikal. Ketik nod untuk memilihnya; halakan untuk membaca nilai.',
+      p2: 'Ruang parameter', p2s: 'Medan yang sama pada ruang parameter NURBS (ξ, η). Nod dan integration cells disusun di sini, setiap knot span dibahagi kepada cell yang sama saiz; pemetaan NURBS kemudian membawanya ke domain fizikal. Halakan pada mana-mana paparan untuk menjejak satu titik.',
+      iKnots: 'Knot vectors', iCp: 'Control net', iCpV: '{a} × {b} control points · pemberat {w}', iC0: 'Garis C⁰', iNone: 'tiada', iLat: 'Kekisi', iLatV: '{a} × {b} nod · {c} cell · {g} Gauss points',
+      iMap: 'Kamiran', iMapV: 'parent [−1, 1]² → cell parameter (affine) → fizikal (NURBS): B = Ĵ⁻¹ J̃⁻¹ B̃', iHover: 'Titik',
+      readMap: '(ξ, η) = ({u}, {v}) → (x, y) = ({x}, {y}) m · |J| = {j}',
+      p3: 'Sepanjang satu garis', p3s: 'Keputusan N-RPIM berbanding penyelesaian rujukan. Halakan untuk membaca nilai.',
+      lcantilever_sxx: 'σxx merentas kedalaman pada x = L/2', lcantilever_sxy: 'τxy merentas kedalaman pada x = L/2', lcantilever_uy: 'Pesongan sepanjang paksi y = 0',
+      lhole_sxx: 'σxx sepanjang x = 0, dari lubang ke sisi', lhole_stt: 'σθθ sekeliling lubang, θ = 0° → 90°', lpatch_sxx: 'σxx sepanjang y = 0.5', lpatch_ux: 'ux sepanjang y = 0.5',
+      lcell_syy: 'σyy merentas web post pada y = 0.5', lcell_uy: 'uy sepanjang sisi kanan x = 0.8', lcell_sxx: 'σxx sepanjang sisi atas y = 1',
+      lgFE: 'N-RPIM', lgExact: 'exact', lgKirsch: 'Kirsch (plat tak terhingga)', lgTimo: 'Timoshenko (support exact)', lgFem: 'FEM Q4, nod yang sama', lgRef: 'rujukan paper',
+      p4: 'N-RPIM berbanding FEM', p4s: 'Ralat relatif energy norm berbanding DOF: N-RPIM dengan radial basis function MQ dan TPS, dan finite element bilinear Q4 pada nod yang sama. Element Q4 bersisi lurus, jadi sisi melengkung menjadi poligon. Sebutan polinomial, jejari support, Gauss points, ν, geometri dan susunan nod mengikut tetapan anda.',
+      p4sCell: 'Ralat sesaran rujukan paper berbanding DOF: N-RPIM dengan MQ dan TPS, dan finite element bilinear Q4 pada nod yang sama. Jejari support, Gauss points dan susunan nod mengikut tetapan anda.',
+      run: 'Jalankan perbandingan', running: 'Menyelesaikan {i} daripada {n}…', stale: 'Tetapan telah berubah sejak larian terakhir. Jalankan semula.', idle: 'Tekan “Jalankan perbandingan” untuk menyelesaikan {n} model, dari kasar ke halus.',
+      noExact: 'Perbandingan ini perlukan exact solution: pilih support exact atau traction Kirsch.', noPatch: 'Gunakan plat, cantilever atau unit cell untuk perbandingan.',
+      sMQ: 'N-RPIM · MQ', sTPS: 'N-RPIM · TPS', sQ4: 'FEM Q4, nod yang sama', rate: 'kadar', cur: 'model semasa', yErr: 'ralat energy norm', yRef: '|ralat| dalam {q}',
+      readNode: 'nod {i} pada ({x}, {y}) m · {f} = {v}', readExact: ' · exact {v}', readLine: '{x} · N-RPIM {fe} · rujukan {ex} {u}', readConv: '{s} · {dof} DOF · ralat {e}'
+    }
+  };
+
+  var NMAX = { hole: 14, cantilever: 10, cell: 12, patch: 10 };
+  var LINES = { cantilever: ['sxx', 'sxy', 'uy'], hole: ['sxx', 'stt'], patch: ['sxx', 'ux'], cell: ['syy', 'uy', 'sxx'] };
+  var STUDY_N = { cantilever: [2, 3, 4, 6], hole: [2, 4, 6, 8, 12], cell: [2, 3, 4, 6, 8] };
+  var SERIES = [{ k: 'sMQ', rbf: 'mq' }, { k: 'sTPS', rbf: 'tps' }, { k: 'sQ4', fem: true }];
+  var LIVE_COST = 1e6, SUB = 4;
+
+  function seg(name, opts) {
+    return '<div class="rzt-seg" role="group" data-seg="' + name + '">' + opts.map(function (o) {
+      return '<button type="button" data-v="' + o[0] + '"' + (o[1] ? ' data-k="' + o[1] + '"' : '') + '>' + (o[2] || '') + '</button>';
+    }).join('') + '</div>';
+  }
+  function rng(k, min, max, step) { return '<input class="rzt-rng" type="range" min="' + min + '" max="' + max + '" step="' + step + '" data-in="' + k + '">'; }
+  function lab(k, out) { return '<span class="rzt-lab"><span data-k="' + k + '"></span>' + (out ? '<output data-out="' + k + '"></output>' : '') + '</span>'; }
+  function chip(k) { return '<button type="button" data-ov="' + k + '" data-k="o' + k.charAt(0).toUpperCase() + k.slice(1) + '"></button>'; }
+
+  var HTML =
+    '<div class="rzt-body">' +
+      '<div class="rzt-ctrl">' +
+        '<p class="rzt-grp" data-k="gModel"></p>' +
+        '<label class="rzt-field rzt-wide"><span class="rzt-lab" data-k="problem"></span>' +
+          '<select class="rzt-sel" data-in="problem"><option value="hole" data-k="phole"></option><option value="cantilever" data-k="pcantilever"></option><option value="cell" data-k="pcell"></option><option value="patch" data-k="ppatch"></option></select></label>' +
+        '<label class="rzt-field" data-only="cantilever">' + lab('ld', true) + rng('ld', 2, 12, 1) + '</label>' +
+        '<div class="rzt-field" data-only="cantilever"><span class="rzt-lab" data-k="support"></span>' + seg('support', [['exact', 'supExact'], ['clamped', 'supClamp']]) + '</div>' +
+        '<label class="rzt-field" data-only="hole">' + lab('ar', true) + rng('ar', 0.1, 0.5, 0.05) + '</label>' +
+        '<div class="rzt-field" data-only="hole"><span class="rzt-lab" data-k="outer"></span>' + seg('outer', [['kirsch', 'outKirsch'], ['uniform', 'outUniform']]) + '</div>' +
+        '<div class="rzt-field" data-only="cell"><span class="rzt-lab" data-k="load"></span>' + seg('load', [['comp', 'lcomp'], ['shear', 'lshear']]) + '</div>' +
+        '<label class="rzt-field" data-not="cell">' + lab('nu', true) + rng('nu', 0, 0.49, 0.01) + '</label>' +
+        '<p class="rzt-grp" data-k="gApprox"></p>' +
+        '<div class="rzt-field"><span class="rzt-lab" data-k="rbf"></span>' + seg('rbf', [['mq', 'mq'], ['tps', 'tps']]) + '</div>' +
+        '<div class="rzt-field rzt-wide"><span class="rzt-lab" data-k="m"></span>' + seg('m', [['0', 'm0'], ['3', 'm3'], ['6', 'm6']]) + '</div>' +
+        '<label class="rzt-field">' + lab('alpha', true) + rng('alpha', 2, 4, 0.5) + '</label>' +
+        '<div class="rzt-field"><span class="rzt-lab" data-k="ng"></span>' + seg('ng', [['2', '', '2×2'], ['3', '', '3×3'], ['4', '', '4×4'], ['5', '', '5×5']]) + '</div>' +
+        '<p class="rzt-grp" data-k="gNodes"></p>' +
+        '<label class="rzt-field">' + lab('n', true) + rng('n', 2, 10, 1) + '<span class="rzt-size" data-out="size"></span></label>' +
+        '<div class="rzt-field" data-not="cell">' + lab('distort', true) + rng('distort', 0, 0.4, 0.05) + '<button type="button" class="rzt-btn" data-act="shuffle" data-k="shuffle"></button></div>' +
+        '<p class="rzt-grp" data-k="gView"></p>' +
+        '<label class="rzt-field rzt-wide"><span class="rzt-lab" data-k="field"></span>' +
+          '<select class="rzt-sel" data-in="field">' + ['svm', 'sxx', 'syy', 'sxy', 'umag', 'ux', 'uy', 'phi'].map(function (f) { return '<option value="' + f + '" data-k="f' + f + '"></option>'; }).join('') + '</select></label>' +
+        '<div class="rzt-field rzt-wide"><span class="rzt-lab" data-k="show"></span><div class="rzt-chips">' +
+          chip('nodes') + chip('support') + chip('cells') + chip('knots') + chip('net') + chip('gauss') + '</div></div>' +
+        '<label class="rzt-field">' + lab('scale', true) + rng('scale', 0, 3, 0.1) + '</label>' +
+        '<button type="button" class="rzt-btn rzt-reset" data-act="reset" data-k="reset"></button>' +
+      '</div>' +
+      '<div class="rzt-main">' +
+        '<div class="rzt-metrics">' +
+          '<div class="rzt-m"><span class="rzt-mv" data-m="dof"></span><span class="rzt-ml" data-m="dofl"></span></div>' +
+          '<div class="rzt-m"><span class="rzt-mv"><span data-m="q"></span> <span class="rzt-chip" data-m="qc"></span></span><span class="rzt-ml" data-m="ql"></span></div>' +
+          '<div class="rzt-m"><span class="rzt-mv"><span data-m="err"></span> <span class="rzt-chip" data-m="errc"></span></span><span class="rzt-ml" data-m="errl"></span></div>' +
+          '<div class="rzt-m"><span class="rzt-mv" data-m="sup"></span><span class="rzt-ml" data-m="supl"></span></div>' +
+          '<div class="rzt-m"><span class="rzt-mv" data-m="fem"></span><span class="rzt-ml" data-m="feml"></span></div>' +
+          '<div class="rzt-m"><span class="rzt-mv" data-m="time"></span><span class="rzt-ml" data-k="mTime"></span></div>' +
+        '</div>' +
+        '<div class="rzt-note rzt-warn" data-note="warn" hidden></div>' +
+        '<div class="rzt-note rzt-ok" data-note="ok" hidden></div>' +
+        '<div class="rzt-plot"><div class="rzt-ph"><span class="rzt-h" data-h="1"></span><span class="rzt-sub" data-sub="1"></span></div>' +
+          '<div class="rzt-cvwrap"><canvas class="rzt-cv rzt-cv-fem" data-cv="1"></canvas><canvas class="rzt-ov" data-ov="1" aria-hidden="true"></canvas></div>' +
+          '<div class="rzt-cbar" data-cbar></div><span class="rzt-read rzt-read-b" data-read="1"></span></div>' +
+        '<div class="rzt-plot"><div class="rzt-ph"><span class="rzt-h" data-k="p2"></span><span class="rzt-sub" data-k="p2s"></span></div>' +
+          '<div class="rzt-ps"><div class="rzt-cvwrap rzt-psq"><canvas class="rzt-cv rzt-cv-ps" data-cv="p"></canvas><canvas class="rzt-ov" data-ov="p" aria-hidden="true"></canvas></div>' +
+          '<dl class="rzt-info" data-info></dl></div></div>' +
+        '<div class="rzt-plot"><div class="rzt-ph"><span class="rzt-h" data-k="p3"></span>' +
+          '<select class="rzt-sel rzt-sel-inline" data-in="line"></select><span class="rzt-sub" data-k="p3s"></span><div class="rzt-legend" data-lg="2"></div></div>' +
+          '<canvas class="rzt-cv" data-cv="2"></canvas><span class="rzt-read" data-read="2"></span></div>' +
+        '<div class="rzt-plot"><div class="rzt-ph"><span class="rzt-h" data-k="p4"></span><span class="rzt-sub" data-sub="4"></span>' +
+          '<div class="rzt-row"><button type="button" class="rzt-btn rzt-primary" data-act="study" data-k="run"></button><span class="rzt-sub" data-out="study"></span></div>' +
+          '<div class="rzt-legend" data-lg="3"></div></div>' +
+          '<canvas class="rzt-cv" data-cv="3"></canvas><span class="rzt-read" data-read="3"></span></div>' +
+      '</div>' +
+    '</div>';
+
+  var DEFAULTS = { problem: 'hole', ld: 5, support: 'exact', ar: 0.25, outer: 'kirsch', nu: 0.3, load: 'comp', rbf: 'mq', m: '3', alpha: 2.5, ng: '4',
+                   distort: 0, seed: 7, field: 'sxx', scale: 1, line: 'sxx',
+                   n: { hole: 6, cantilever: 4, cell: 4, patch: 4 }, ov: { nodes: true, support: true, cells: false, knots: true, net: true, gauss: false }, sel: null };
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+  RZT.register('nrpim2d', function (root) {
+    root.classList.add('rzt', 'rzt-on');
+    root.innerHTML = HTML;
+    var S = clone(DEFAULTS), C = U.readColors(root), lang = 'en', cur = null, study = null, studyTok = 0, lastW = 0;
+    function q(sel) { return root.querySelector(sel); }
+    function qa(sel) { return Array.prototype.slice.call(root.querySelectorAll(sel)); }
+    function t(k) { return (T[lang] || T.en)[k] || T.en[k] || k; }
+    var cv1 = q('[data-cv="1"]'), ov1 = q('[data-ov="1"]'), cvp = q('[data-cv="p"]'), ovp = q('[data-ov="p"]'), cv2 = q('[data-cv="2"]'), cv3 = q('[data-cv="3"]');
+    var view = null, pview = null, P2 = null, P3 = null, lineData = null, convPts = [], hover = null;
+
+    function cfg(extra) {
+      var c = { problem: S.problem, n: S.n[S.problem], ld: S.ld, support: S.support, ar: S.ar, outer: S.outer, nu: S.nu, load: S.load,
+                distort: S.problem === 'cell' ? 0 : S.distort, seed: S.seed, rbf: S.rbf, m: +S.m, alpha: S.alpha, ng: +S.ng };
+      for (var k in extra) c[k] = extra[k];
+      return c;
+    }
+    // ≈ solve time in units of 0.1 µs: Gauss points × (nodes per support)² (measured in Chromium)
+    function cost(c) { var sz = R.size(c), s = 2.1 * c.alpha * c.alpha + c.m; return sz.gauss * s * s; }
+    function studyKey() { return [S.problem, S.ld, S.support, S.ar, S.outer, S.nu, S.load, S.distort, S.seed, S.m, S.alpha, S.ng].join('|'); }
+
+    /* ── compute ───────────────────────────────────────────────── */
+    function compute() {
+      var key = JSON.stringify(cfg());
+      if (cur && cur.key === key) { computeLine(); return; }
+      var m = R.run(cfg()), r = { model: m, key: key };
+      hover = null;   // indices of the previous model are not valid any more
+      if (!m.error) {
+        var md = m.md, nn = md.nn, i, out = new Float64Array(5), sm = V.samples(md, SUB), ns = sm.n;
+        r.err = R.energyError(m); r.sup = R.supportStats(m); r.sm = sm;
+        r.V = new Float64Array(ns * 5).fill(NaN);
+        for (i = 0; i < ns; i++) { var v = R.evalAt(m, sm.A[i], sm.B[i], sm.SA[i], sm.SB[i], out, sm.CI[i], sm.CJ[i]); if (v) r.V.set(v, i * 5); }
+        r.nodeV = new Float64Array(nn * 5);
+        for (i = 0; i < nn; i++) { var w = R.evalAt(m, md.lat.A[i], md.lat.B[i], 1, 1, out); if (w) r.nodeV.set(w, i * 5); }
+        var umax = 0;
+        for (i = 0; i < ns; i++) { var ux = r.V[i * 5], uy = r.V[i * 5 + 1]; if (isFinite(ux)) umax = Math.max(umax, Math.hypot(ux, uy)); }
+        r.umax = umax;
+        var pr = m.pr;
+        if (pr.key === 'cantilever') { var tp = R.evalParam(m, 1, 0.5); r.q = tp ? tp[1] : NaN; r.qref = pr.ref.tip; }
+        else if (pr.key === 'hole') { var hp = R.evalParam(m, 0, 1); r.q = hp ? hp[2] / pr.s0 : NaN; }
+        else if (pr.key === 'cell') {
+          r.refs = pr.ref.pts.map(function (p) { var vv = R.evalParam(m, p.u, p.v); return vv ? (p.f === 'ux' ? vv[0] : vv[1]) : NaN; });
+          var fm = R.femRun(cfg()); r.fem = fm.error ? null : pr.ref.pts.map(function (p) { var nd = R.femNode(fm, p.u, p.v); return fm.u[2 * nd + (p.f === 'ux' ? 0 : 1)]; });
+        } else { var er = 0; for (i = 0; i < ns; i++) if (isFinite(r.V[i * 5 + 2])) er = Math.max(er, Math.abs(r.V[i * 5 + 2] - pr.s0), Math.abs(r.V[i * 5 + 3]), Math.abs(r.V[i * 5 + 4])); r.q = er / pr.s0; }
+        if (pr.key !== 'cell' && pr.exact) { var fm2 = R.femRun(cfg()); r.femErr = fm2.error ? null : F.energyError(fm2); }
+        // fixed DOFs for the support glyphs; boundary segments of the lattice
+        r.fixed = m.fixed;
+        var lat = md.lat, be = [];
+        for (i = 0; i < lat.Mu; i++) { be.push({ tag: 't0', n: [lat.node(i, 0), lat.node(i + 1, 0)] }); be.push({ tag: 't1', n: [lat.node(i + 1, lat.Mv), lat.node(i, lat.Mv)] }); }
+        for (i = 0; i < lat.Mv; i++) { be.push({ tag: 's0', n: [lat.node(0, i + 1), lat.node(0, i)] }); be.push({ tag: 's1', n: [lat.node(lat.Mu, i), lat.node(lat.Mu, i + 1)] }); }
+        r.bedges = be;
+        r.points = pr.points.map(function (p) { return { n: lat.node(Math.round(md.ax.index(p.u)), Math.round(md.ay.index(p.v))), ux: p.ux, uy: p.uy }; });
+        if (S.sel == null || S.sel >= nn) S.sel = defaultNode(md);
+      }
+      cur = r;
+      computeLine();
+    }
+    function defaultNode(md) {
+      var lat = md.lat, i = Math.round(lat.Mu * (md.pr.key === 'hole' ? 0.3 : 0.5)), j = Math.round(lat.Mv * (md.pr.key === 'cell' ? 0.25 : 0.5));
+      return lat.node(Math.max(0, Math.min(lat.Mu, i)), Math.max(0, Math.min(lat.Mv, j)));
+    }
+
+    // a line in the parameter space: pt(s) → [ξ, η], x-axis value, and a reference
+    function lineDef() {
+      var m = cur.model, pr = m.pr, key = S.line;
+      if (pr.key === 'cantilever') {
+        var L = pr.L, D = pr.D, tm = pr.timo;
+        if (key === 'uy') return { f: 'uy', xr: [0, L], xl: 'x (m)', pt: function (s) { return [s / L, 0.5]; }, ref: function (s) { return tm.u(s, 0)[1]; } };
+        var c = key === 'sxy' ? 2 : 0;
+        return { f: key === 'sxy' ? 'sxy' : 'sxx', xr: [-D / 2, D / 2], xl: 'y (m)', pt: function (s) { return [0.5, (s + D / 2) / D]; }, ref: function (s) { return tm.s(L / 2, s)[c]; } };
+      }
+      if (pr.key === 'hole') {
+        var a = pr.a, b = pr.b, ks = pr.kirschS, P = m.md.patch;
+        if (key === 'stt') return { f: 'stt', xr: [0, 90], xl: 'θ (°)', param: true, pt: function (s) { return [0, s]; }, x: function (u, v) { var p = P.point(u, v); return Math.atan2(p[1], p[0]) * 180 / Math.PI; },
+          ref: function (th) { th *= Math.PI / 180; return stt(ks(a * Math.cos(th), a * Math.sin(th)), th); } };
+        return { f: 'sxx', xr: [a, b], xl: 'y (m)', param: true, pt: function (s) { return [s, 1]; }, x: function (u, v) { return P.point(u, v)[1]; }, ref: function (y) { return ks(0, y)[0]; } };
+      }
+      if (pr.key === 'cell') {
+        if (key === 'uy') return { f: 'uy', xr: [0, 1], xl: 'y (m)', param: true, pt: function (s) { return [1, s]; }, x: function (u, v) { return m.md.patch.point(u, v)[1]; }, ref: null, cellRef: true };
+        if (key === 'sxx') return { f: 'sxx', xr: [0, 0.8], xl: 'x (m)', pt: function (s) { return [s / 0.8, 1]; }, ref: null };
+        return { f: 'syy', xr: [0.3, 0.5], xl: 'x (m)', pt: function (s) { return [(s - 0.3) / 0.2, 0.5]; }, ref: null };
+      }
+      if (key === 'ux') return { f: 'ux', xr: [0, 1], xl: 'x (m)', pt: function (s) { return [s, 0.5]; }, ref: function (s) { return pr.exact.u(s, 0.5)[0]; } };
+      return { f: 'sxx', xr: [0, 1], xl: 'x (m)', pt: function (s) { return [s, 0.5]; }, ref: function () { return pr.s0; } };
+    }
+    function stt(s3, th) { var c = Math.cos(th), s = Math.sin(th); return s3[0] * s * s + s3[1] * c * c - 2 * s3[2] * s * c; }
+    function computeLine() {
+      lineData = null;
+      var m = cur.model; if (m.error) return;
+      var d = lineDef(), Np = 97, xs = [], fe = [], rf = [], out = new Float64Array(5), k = d.f === 'stt' ? 1e-6 : FIELD[d.f].k, md = m.md;
+      for (var i = 0; i < Np; i++) {
+        var s = d.param ? i / (Np - 1) : d.xr[0] + (d.xr[1] - d.xr[0]) * i / (Np - 1), uv = d.pt(s), x = d.param ? d.x(uv[0], uv[1]) : s;
+        // keep points that sit on a C⁰ knot line on one side
+        var a = md.ax.index(uv[0]), b = md.ay.index(uv[1]), v = R.evalAt(m, a, b, 1, 1, out), val = NaN;
+        if (v) val = d.f === 'stt' ? stt([v[2], v[3], v[4]], x * Math.PI / 180) : F.fieldOf(d.f, [v[0], v[1]], [v[2], v[3], v[4]]);
+        xs.push(x); fe.push(val * k); rf.push(d.ref ? d.ref(x) * k : NaN);
+      }
+      lineData = { d: d, xs: xs, fe: fe, rf: rf, unit: d.f === 'stt' || F.isStress(d.f) ? 'MPa' : 'mm', k: k };
+    }
+
+    /* ── language ─────────────────────────────────────────────── */
+    function applyLang() {
+      var b = document.body && document.body.getAttribute('data-rzlang'); lang = b === 'ms' ? 'ms' : 'en';
+      qa('[data-k]').forEach(function (el) {
+        var key = el.getAttribute('data-k'); if (!key) return;
+        var txt = t(key);
+        if (el.tagName !== 'OPTION' && /[`α-ω]/.test(txt)) el.innerHTML = U.labelHtml(txt); else el.textContent = U.plain(txt);
+      });
+      fillLineSelect(); redraw();
+    }
+    function fillLineSelect() {
+      var sel = q('[data-in="line"]');
+      sel.innerHTML = LINES[S.problem].map(function (k) { return '<option value="' + k + '">' + U.esc(t('l' + S.problem + '_' + k)) + '</option>'; }).join('');
+      sel.value = S.line;
+    }
+
+    /* ── controls and metrics ─────────────────────────────────── */
+    function sync(pendingBig) {
+      var sz = R.size(cfg());
+      q('[data-in="problem"]').value = S.problem; q('[data-in="field"]').value = S.field;
+      var ni = q('[data-in="n"]'); ni.max = NMAX[S.problem]; ni.value = S.n[S.problem];
+      ['ld', 'ar', 'nu', 'alpha', 'distort', 'scale'].forEach(function (k) { q('[data-in="' + k + '"]').value = S[k]; });
+      q('[data-out="n"]').textContent = S.n[S.problem]; q('[data-out="ld"]').textContent = S.ld; q('[data-out="ar"]').textContent = S.ar.toFixed(2);
+      q('[data-out="nu"]').textContent = S.nu.toFixed(2); q('[data-out="alpha"]').textContent = S.alpha.toFixed(1); q('[data-out="distort"]').textContent = S.distort.toFixed(2);
+      q('[data-out="scale"]').textContent = cur && !cur.model.error ? '×' + fmt(S.scale * autoScale()) : S.scale.toFixed(1);
+      q('[data-out="size"]').textContent = U.fill(t('size'), { nodes: U.group(sz.nodes), dof: U.group(sz.dof), cells: U.group(sz.cells) }) + (pendingBig ? ' · ' + t('big') : '');
+      ['support', 'outer', 'load', 'rbf', 'm', 'ng'].forEach(function (g) { qa('[data-seg="' + g + '"] button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === String(S[g]))); }); });
+      qa('[data-ov]').forEach(function (b) { if (b.tagName === 'BUTTON') b.setAttribute('aria-pressed', String(!!S.ov[b.getAttribute('data-ov')])); });
+      qa('[data-only]').forEach(function (el) { el.hidden = el.getAttribute('data-only') !== S.problem; });
+      qa('[data-not]').forEach(function (el) { el.hidden = el.getAttribute('data-not') === S.problem; });
+      q('[data-act="shuffle"]').hidden = !(S.distort > 0);
+    }
+    function autoScale() { var bb = cur.model.pr.bbox, L = Math.max(bb[1] - bb[0], bb[3] - bb[2]); return cur.umax > 0 ? 0.08 * L / cur.umax : 0; }
+    function hasExact() { return S.problem === 'cantilever' ? S.support === 'exact' : S.problem === 'hole' ? S.outer === 'kirsch' : true; }
+    function chipPct(el, ratio) {
+      var dv = Math.abs(ratio - 1); el.textContent = (ratio * 100).toFixed(dv < 0.001 ? 2 : 1) + '%';
+      el.classList.add(dv <= 0.01 ? 'is-good' : dv <= 0.05 ? 'is-ok' : 'is-bad');
+    }
+
+    function setMetrics() {
+      function put(k, v) { q('[data-m="' + k + '"]').textContent = v; }
+      var m = cur.model, chp = q('[data-m="qc"]'), chp2 = q('[data-m="errc"]'), warn = q('[data-note="warn"]'), ok = q('[data-note="ok"]'), sz = R.size(cfg());
+      chp.className = 'rzt-chip'; chp.textContent = ''; chp2.className = 'rzt-chip'; chp2.textContent = ''; warn.hidden = true; ok.hidden = true;
+      put('dof', U.group(sz.dof)); put('dofl', U.fill(t('mDof'), { nn: U.group(sz.nodes), gp: U.group(sz.gauss) }));
+      if (m.error) {
+        ['q', 'err', 'sup', 'fem', 'time'].forEach(function (k) { put(k, '—'); }); ['ql', 'errl', 'supl', 'feml'].forEach(function (k) { put(k, ''); });
+        warn.textContent = U.fill(t(m.error === 'support' ? 'support_' : m.error) || t('fail2'), { n: m.bad || 0 }); warn.hidden = false; return;
+      }
+      var pr = m.pr, W = [], O = [];
+      put('fem', '—'); put('feml', '');
+      if (pr.key === 'cantilever') {
+        put('q', fmt(cur.q * 1e3) + ' mm'); put('ql', U.fill(t('mTip'), { v: fmt(cur.qref * 1e3) + ' mm' })); chipPct(chp, cur.q / cur.qref);
+        if (S.support === 'clamped') W.push(t('clamped'));
+      } else if (pr.key === 'hole') {
+        put('q', isFinite(cur.q) ? cur.q.toFixed(3) : '—');
+        if (S.outer === 'kirsch') { put('ql', t('mScf')); chipPct(chp, cur.q / 3); } else { put('ql', t('mScfU')); W.push(t('uniform')); }
+      } else if (pr.key === 'cell') {
+        var iv = pr.ref.pts.length - 1, ref = pr.ref.pts[iv];
+        put('q', fmt(cur.refs[iv] * 1e3) + ' mm'); put('ql', U.fill(t(pr.load === 'shear' ? 'mRefB' : 'mRefA'), { v: fmt(ref.val * 1e3) + ' mm' })); chipPct(chp, cur.refs[iv] / ref.val);
+        O.push(t('cellNote'));
+      } else {
+        put('q', U.sci(cur.q)); put('ql', t('mPatch'));
+        var passed = cur.q < 1e-8; chp.textContent = t(passed ? 'pass' : 'notExact'); chp.classList.add(passed ? 'is-good' : 'is-ok');
+        if (!passed) W.push(t('patchNote'));
+      }
+      if (pr.key === 'cell') {
+        var r0 = pr.ref.pts[0];
+        if (pr.load === 'comp') { put('err', fmt(cur.refs[0] * 1e3) + ' mm'); put('errl', U.fill(t('mUA'), { v: fmt(r0.val * 1e3) + ' mm' })); chipPct(chp2, cur.refs[0] / r0.val); }
+        else { put('err', '—'); put('errl', t('mErrNone')); }
+        if (cur.fem) { var fv = cur.fem[cur.fem.length - 1]; put('fem', fmt(fv * 1e3) + ' mm'); put('feml', t('lgFem') + ' · ' + (fv / ref.val * 100).toFixed(1) + '%'); }
+      } else if (cur.err == null) { put('err', '—'); put('errl', t('mErrNone')); }
+      else {
+        put('err', cur.err >= 1e-4 ? fmt(cur.err * 100) + ' %' : U.sci(cur.err)); put('errl', t('mErr'));
+        if (cur.femErr != null) { put('fem', cur.femErr >= 1e-4 ? fmt(cur.femErr * 100) + ' %' : U.sci(cur.femErr)); put('feml', t('lgFem') + ' · ' + t('mErr').toLowerCase()); }
+      }
+      put('sup', cur.sup.mean.toFixed(1)); put('supl', U.fill(t('mSup'), { a: cur.sup.min, b: cur.sup.max }));
+      put('time', Math.max(1, Math.round(m.time.assemble + m.time.solve)) + ' ms');
+      if (S.m === '0') W.push(t('m0Note'));
+      if (S.field === 'phi' && S.sel != null) O.push(U.fill(t('phiNote'), { v: fmt(R.phiAt(m, S.sel, m.md.lat.A[S.sel], m.md.lat.B[S.sel])) }));
+      if (W.length) { warn.textContent = W.join(' '); warn.hidden = false; }
+      if (O.length) { ok.textContent = O.join(' '); ok.hidden = false; }
+    }
+
+    /* ── field values on the sample grid ──────────────────────── */
+    function sampleValues() {
+      var m = cur.model, sm = cur.sm, fd = FIELD[S.field], vals = new Float64Array(sm.n), lo = Infinity, hi = -Infinity, i;
+      for (i = 0; i < sm.n; i++) {
+        var v;
+        if (S.field === 'phi') v = R.phiAt(m, S.sel, sm.A[i], sm.B[i], sm.CI[i], sm.CJ[i]);
+        else v = isFinite(cur.V[i * 5]) ? F.fieldOf(S.field, [cur.V[i * 5], cur.V[i * 5 + 1]], [cur.V[i * 5 + 2], cur.V[i * 5 + 3], cur.V[i * 5 + 4]]) * fd.k : NaN;
+        vals[i] = v; if (isFinite(v)) { if (v < lo) lo = v; if (v > hi) hi = v; }
+      }
+      return { vals: vals, lo: lo, hi: hi };
+    }
+    function setSize(cvs, W, H) {
+      var dpr = window.devicePixelRatio || 1;
+      cvs.forEach(function (c) { c.style.height = H + 'px'; if (c.width !== Math.round(W * dpr) || c.height !== Math.round(H * dpr)) { c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); } });
+    }
+    // the support of node I: cells whose centre lies within d of the node (one support per cell)
+    function supportCells(md, I) {
+      var lat = md.lat, a = lat.A[I], b = lat.B[I], d = md.S.d, su = lat.ax.segOf(a, 0), sv = lat.ay.segOf(b, 0), out = [];
+      var isA = lat.ax.isBreak(lat.LI[I]), isB = lat.ay.isBreak(lat.LJ[I]);
+      for (var i = 0; i < lat.Mu; i++) for (var j = 0; j < lat.Mv; j++) {
+        var ca = i + 0.5, cb = j + 0.5;
+        // segment of the cell must contain the node (nodes on a C⁰ line belong to both sides)
+        var sa = lat.ax.segOf(ca, 0), sb = lat.ay.segOf(cb, 0);
+        if (!(a >= sa[0] - 1e-9 && a <= sa[1] + 1e-9 && b >= sb[0] - 1e-9 && b <= sb[1] + 1e-9)) continue;
+        if (!isA && (sa[0] !== su[0])) continue; if (!isB && (sb[0] !== sv[0])) continue;
+        if ((ca - a) * (ca - a) + (cb - b) * (cb - b) < d * d) out.push(i * lat.Mv + j);
+      }
+      return out;
+    }
+
+    /* ── physical-space contour ───────────────────────────────── */
+    function drawContour() {
+      var m = cur.model, g, dpr = window.devicePixelRatio || 1, W = cv1.parentNode.clientWidth;
+      var h = q('[data-h="1"]'), sub = q('[data-sub="1"]'), cbar = q('[data-cbar]');
+      h.textContent = U.plain(t('f' + S.field));
+      if (!W) return;
+      if (m.error) {
+        setSize([cv1, ov1], W, 220); g = cv1.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, 220);
+        g.fillStyle = C.fg2; g.font = '13px Poppins, system-ui, sans-serif'; g.textAlign = 'center'; g.fillText(t('fail2'), W / 2, 110);
+        cbar.innerHTML = ''; sub.textContent = ''; view = null; drawHover(); return;
+      }
+      var md = m.md, sm = cur.sm, nn = md.nn, i, sc = S.scale * autoScale(), ns = sm.n;
+      var qx = new Float64Array(ns), qy = new Float64Array(ns), nx = new Float64Array(nn), ny = new Float64Array(nn);
+      var x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+      for (i = 0; i < ns; i++) {
+        var ux = cur.V[i * 5], uy = cur.V[i * 5 + 1]; if (!isFinite(ux)) { ux = 0; uy = 0; }
+        qx[i] = sm.X[i] + sc * ux; qy[i] = sm.Y[i] + sc * uy;
+        x0 = Math.min(x0, qx[i], sm.X[i]); x1 = Math.max(x1, qx[i], sm.X[i]); y0 = Math.min(y0, qy[i], sm.Y[i]); y1 = Math.max(y1, qy[i], sm.Y[i]);
+      }
+      for (i = 0; i < nn; i++) { nx[i] = md.X[i] + sc * cur.nodeV[i * 5]; ny[i] = md.Y[i] + sc * cur.nodeV[i * 5 + 1]; }
+      if (S.ov.net) for (var a1 = 0; a1 < md.patch.nu; a1++) for (var b1 = 0; b1 < md.patch.nv; b1++) { var cp = md.patch.ctrl(a1, b1); x0 = Math.min(x0, cp[0]); x1 = Math.max(x1, cp[0]); y0 = Math.min(y0, cp[1]); y1 = Math.max(y1, cp[1]); }
+      var fit = V.fit(W, x0, x1, y0, y1, 40, 200, 560), SX = fit.SX, SY = fit.SY, H = fit.H;
+      setSize([cv1, ov1], W, H);
+      g = cv1.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+      var fd = FIELD[S.field], sv = sampleValues(), bp = U.bandPainter(sv.lo, sv.hi, fd.div, C);
+      var px = new Float64Array(ns), py = new Float64Array(ns);
+      for (i = 0; i < ns; i++) { px[i] = SX(qx[i]); py[i] = SY(qy[i]); }
+      V.contour(bp, sm, px, py, sv.vals); bp.paint(g);
+      drawOverlays(g, md, sm, px, py, SX, SY, nx, ny, true, sc);
+      U.bcGlyphs(g, { X: md.X, Y: md.Y, bedges: cur.bedges, fixed: cur.fixed, pr: m.pr, px: nx, py: ny, SX: SX, SY: SY, C: C, loadTags: ['s0', 's1', 't0', 't1'] });
+      pointSupports(g, nx, ny, SX, SY);
+      view = { SX: SX, SY: SY, nx: nx, ny: ny, px: px, py: py, sc: sc };
+      sub.textContent = U.fill(t(sc > 0 ? 'p1s' : 'p1sU'), { f: U.plain(t('f' + S.field)), s: fmt(sc) });
+      U.colorbar(cbar, bp.cols, bp.lev, fd.unit);
+      cur.bp = bp; cur.sv = sv;
+      drawHover();
+    }
+    function pointSupports(g, nx, ny, SX, SY) {
+      g.save(); g.strokeStyle = C.fg2; g.fillStyle = C.fg2; g.lineWidth = 1.2;
+      cur.points.forEach(function (p) {
+        var x = SX(nx[p.n]), y = SY(ny[p.n]);
+        if (p.uy != null) { g.beginPath(); g.moveTo(x, y + 2); g.lineTo(x - 5, y + 10); g.lineTo(x + 5, y + 10); g.closePath(); g.stroke(); g.beginPath(); g.moveTo(x - 6, y + 13); g.lineTo(x + 6, y + 13); g.stroke(); }
+        if (p.ux != null) { g.beginPath(); g.moveTo(x + 2, y); g.lineTo(x + 10, y - 5); g.lineTo(x + 10, y + 5); g.closePath(); g.stroke(); g.beginPath(); g.moveTo(x + 13, y - 6); g.lineTo(x + 13, y + 6); g.stroke(); }
+      });
+      g.restore();
+    }
+    // overlays shared by both views. phys: physical view (nodes at nx, ny); else parameter view
+    function drawOverlays(g, md, sm, px, py, SX, SY, nx, ny, phys, sc) {
+      var lat = md.lat, nn = md.nn, i, nc = lat.Mu * lat.Mv;
+      if (S.ov.support && S.sel != null) {
+        var cells = supportCells(md, S.sel), path = new Path2D();
+        cells.forEach(function (c) { var rim = V.cellRim(sm, c, px, py); path.moveTo(rim[0][0], rim[0][1]); for (var k = 1; k < rim.length; k++) path.lineTo(rim[k][0], rim[k][1]); path.closePath(); });
+        g.fillStyle = U.rgba(C.accent, 0.16); g.fill(path, 'nonzero');
+        g.save(); g.strokeStyle = U.rgba(C.accent, 0.55); g.lineWidth = 0.8; g.stroke(path); g.restore();
+      }
+      if (S.ov.cells) {
+        var cp = new Path2D();
+        for (i = 0; i < nc; i++) { var rim2 = V.cellRim(sm, i, px, py); cp.moveTo(rim2[0][0], rim2[0][1]); for (var k2 = 1; k2 < rim2.length; k2++) cp.lineTo(rim2[k2][0], rim2[k2][1]); cp.closePath(); }
+        g.strokeStyle = U.rgba(C.fg, 0.32); g.lineWidth = 0.6; g.stroke(cp);
+      }
+      if (S.ov.knots) {
+        if (phys && !sc) V.knotLines(g, md, SX, SY, C);
+        else if (phys) knotLinesSampled(g, md, sm, px, py);
+        else paramKnots(g, md, SX, SY);
+      }
+      if (S.ov.net && phys) V.controlNet(g, md.patch, SX, SY, C);
+      if (S.ov.gauss && cur.model.ngp <= 20000) {
+        g.fillStyle = U.rgba(C.fg, 0.55);
+        var gpts = gaussPositions(md, phys);
+        for (i = 0; i < gpts.length; i += 2) g.fillRect(SX(gpts[i]) - 1, SY(gpts[i + 1]) - 1, 2, 2);
+      }
+      if (S.ov.nodes) {
+        var r = nn > 600 ? 1.6 : 2.4;
+        g.fillStyle = C.surface; g.strokeStyle = C.fg; g.lineWidth = 1;
+        for (i = 0; i < nn; i++) { g.beginPath(); g.arc(SX(nx[i]), SY(ny[i]), r, 0, Math.PI * 2); g.fill(); g.stroke(); }
+      }
+      if (S.sel != null) { g.beginPath(); g.arc(SX(nx[S.sel]), SY(ny[S.sel]), 4.5, 0, Math.PI * 2); g.fillStyle = C.accent; g.fill(); g.lineWidth = 1.5; g.strokeStyle = C.surface; g.stroke(); }
+      if (lineData && phys) {
+        var d = lineData.d, md2 = cur.model.md, o = new Float64Array(5);
+        g.save(); g.setLineDash([6, 4]); g.strokeStyle = C.fg; g.lineWidth = 1.4; g.beginPath();
+        for (i = 0; i <= 40; i++) {
+          var s = d.param ? i / 40 : d.xr[0] + (d.xr[1] - d.xr[0]) * i / 40, uv = d.pt(s), a = md2.ax.index(uv[0]), b = md2.ay.index(uv[1]);
+          var p = md2.patch.point(uv[0], uv[1]), v = sc ? R.evalAt(cur.model, a, b, 1, 1, o) : null;
+          var X = SX(p[0] + (v ? sc * v[0] : 0)), Y = SY(p[1] + (v ? sc * v[1] : 0));
+          if (i) g.lineTo(X, Y); else g.moveTo(X, Y);
+        }
+        g.stroke(); g.restore();
+      }
+    }
+    // knot lines through the deformed samples (cells that start on a knot line)
+    function knotLinesSampled(g, md, sm, px, py) {
+      var lat = md.lat, S1 = SUB + 1;
+      g.save(); g.setLineDash([7, 3, 2, 3]);
+      md.ax.A.slice(1, -1).forEach(function (a) {
+        g.strokeStyle = md.ax.c0.indexOf(a) >= 0 ? C.fg : U.rgba(C.fg, 0.55); g.lineWidth = md.ax.c0.indexOf(a) >= 0 ? 1.4 : 1; g.beginPath();
+        for (var j = 0; j < lat.Mv; j++) { var base = (a * lat.Mv + j) * sm.np; for (var qq = 0; qq <= SUB; qq++) { var k = base + qq * S1; if (j === 0 && qq === 0) g.moveTo(px[k], py[k]); else g.lineTo(px[k], py[k]); } }
+        g.stroke();
+      });
+      md.ay.A.slice(1, -1).forEach(function (b) {
+        g.strokeStyle = md.ay.c0.indexOf(b) >= 0 ? C.fg : U.rgba(C.fg, 0.55); g.lineWidth = md.ay.c0.indexOf(b) >= 0 ? 1.4 : 1; g.beginPath();
+        for (var i = 0; i < lat.Mu; i++) { var base = (i * lat.Mv + b) * sm.np; for (var p = 0; p <= SUB; p++) { var k = base + p; if (i === 0 && p === 0) g.moveTo(px[k], py[k]); else g.lineTo(px[k], py[k]); } }
+        g.stroke();
+      });
+      g.restore();
+    }
+    function paramKnots(g, md, SX, SY) {
+      g.save(); g.setLineDash([7, 3, 2, 3]);
+      md.patch.ku.slice(1, -1).forEach(function (u) { var c0 = md.patch.c0u.indexOf(u) >= 0; g.strokeStyle = c0 ? C.fg : U.rgba(C.fg, 0.55); g.lineWidth = c0 ? 1.4 : 1; g.beginPath(); g.moveTo(SX(u), SY(0)); g.lineTo(SX(u), SY(1)); g.stroke(); });
+      md.patch.kv.slice(1, -1).forEach(function (v) { var c0 = md.patch.c0v.indexOf(v) >= 0; g.strokeStyle = c0 ? C.fg : U.rgba(C.fg, 0.55); g.lineWidth = c0 ? 1.4 : 1; g.beginPath(); g.moveTo(SX(0), SY(v)); g.lineTo(SX(1), SY(v)); g.stroke(); });
+      g.restore();
+    }
+    function gaussPositions(md, phys) {
+      var key = phys ? 'gpX' : 'gpU';
+      if (cur[key]) return cur[key];
+      var m = cur.model, out = [], o = new Float64Array(12), gl = NB.GL[+S.ng];
+      for (var i = 0; i < md.lat.Mu; i++) for (var j = 0; j < md.lat.Mv; j++) for (var p = 0; p < gl.p.length; p++) for (var qq = 0; qq < gl.p.length; qq++) {
+        md.map.at(i + (1 + gl.p[p]) / 2, j + (1 + gl.p[qq]) / 2, o);
+        out.push(phys ? o[0] : o[7], phys ? o[1] : o[8]);
+      }
+      if (phys && view && view.sc) { /* undeformed positions are fine at small scales */ }
+      cur[key] = out; return out;
+    }
+
+    /* ── parameter-space view ─────────────────────────────────── */
+    function drawParam() {
+      var m = cur.model, dpr = window.devicePixelRatio || 1, wrap = cvp.parentNode, W = wrap.clientWidth, info = q('[data-info]');
+      if (!W) return;
+      if (m.error) { setSize([cvp, ovp], W, 120); var g0 = cvp.getContext('2d'); g0.setTransform(dpr, 0, 0, dpr, 0, 0); g0.clearRect(0, 0, W, 120); info.innerHTML = ''; pview = null; return; }
+      var md = m.md, sm = cur.sm, ns = sm.n, i, M = 28, side = Math.min(W - 2 * M, 360), H = side + 2 * M;
+      setSize([cvp, ovp], W, H);
+      var ox = (W - side) / 2, SX = function (u) { return ox + u * side; }, SY = function (v) { return M + (1 - v) * side; };
+      var g = cvp.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+      var sv = cur.sv || sampleValues(), bp = U.bandPainter(sv.lo, sv.hi, FIELD[S.field].div, C), px = new Float64Array(ns), py = new Float64Array(ns);
+      for (i = 0; i < ns; i++) { px[i] = SX(sm.U[i]); py[i] = SY(sm.W[i]); }
+      V.contour(bp, sm, px, py, sv.vals); bp.paint(g);
+      var nu = new Float64Array(md.nn), nv = new Float64Array(md.nn);
+      for (i = 0; i < md.nn; i++) { nu[i] = md.ax.param(md.lat.A[i], 1); nv[i] = md.ay.param(md.lat.B[i], 1); }
+      drawOverlays(g, md, sm, px, py, SX, SY, nu, nv, false, 0);
+      // frame and axis labels
+      g.strokeStyle = C.fg2; g.lineWidth = 1; g.strokeRect(SX(0), SY(1), side, side);
+      g.fillStyle = C.fg2; g.font = '11px "IBM Plex Mono", ui-monospace, monospace'; g.textAlign = 'center'; g.textBaseline = 'top';
+      md.patch.ku.forEach(function (u) { g.fillText(String(+u.toFixed(3)), SX(u), SY(0) + 5); });
+      g.textAlign = 'right'; g.textBaseline = 'middle';
+      md.patch.kv.forEach(function (v) { g.fillText(String(+v.toFixed(3)), SX(0) - 5, SY(v)); });
+      g.textAlign = 'left'; g.textBaseline = 'top'; g.fillText('ξ', SX(1) + 6, SY(0) + 5);
+      g.textAlign = 'right'; g.textBaseline = 'bottom'; g.fillText('η', SX(0) - 5, SY(1) - 6);
+      pview = { SX: SX, SY: SY, px: px, py: py, nu: nu, nv: nv, side: side };
+      fillInfo(md);
+      drawHover();
+    }
+    function fillInfo(md) {
+      var P = md.patch, ws = {}, i, j;
+      for (i = 0; i < P.nu; i++) for (j = 0; j < P.nv; j++) ws[+P.ctrl(i, j)[2].toFixed(4)] = 1;
+      var wl = Object.keys(ws).map(Number).sort(function (a, b) { return b - a; }).map(function (w) { return String(+w.toFixed(4)); }).join(', ');
+      var c0 = P.c0u.map(function (u) { return 'ξ = ' + u; }).concat(P.c0v.map(function (v) { return 'η = ' + v; }));
+      var gl = +S.ng, rows = [
+        [t('iKnots'), 'Ξ = ' + V.knotText(P.U) + ', p = ' + P.p + '<br>H = ' + V.knotText(P.V) + ', q = ' + P.q],
+        [t('iCp'), U.fill(t('iCpV'), { a: P.nu, b: P.nv, w: wl })],
+        [t('iC0'), c0.length ? c0.join(', ') : t('iNone')],
+        [t('iLat'), U.fill(t('iLatV'), { a: md.lat.I, b: md.lat.J, c: md.lat.Mu * md.lat.Mv, g: U.group(md.lat.Mu * md.lat.Mv * gl * gl) })],
+        [t('iMap'), U.esc(t('iMapV'))],
+        [t('iHover'), '<span data-out="hover">—</span>']
+      ];
+      q('[data-info]').innerHTML = rows.map(function (r) { return '<dt>' + U.esc(r[0]) + '</dt><dd>' + r[1] + '</dd>'; }).join('');
+    }
+
+    /* ── hover, linked between the two views ──────────────────── */
+    function drawHover() {
+      var dpr = window.devicePixelRatio || 1, rd = q('[data-read="1"]'), ho = q('[data-out="hover"]');
+      [[ov1, view], [ovp, pview]].forEach(function (p) { var g = p[0].getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, p[0].width / dpr, p[0].height / dpr); });
+      if (!hover || !view || !pview || cur.model.error) { rd.textContent = ''; if (ho) ho.textContent = '—'; return; }
+      var m = cur.model, md = m.md, sm = cur.sm, fd = FIELD[S.field];
+      function ring(cvs, x, y) { var g = cvs.getContext('2d'); g.beginPath(); g.arc(x, y, 6, 0, Math.PI * 2); g.lineWidth = 2; g.strokeStyle = C.surface; g.stroke(); g.beginPath(); g.arc(x, y, 5, 0, Math.PI * 2); g.lineWidth = 1.6; g.strokeStyle = C.fg; g.stroke(); }
+      if (hover.node != null) {
+        var n = hover.node; ring(ov1, view.SX(view.nx[n]), view.SY(view.ny[n])); ring(ovp, pview.SX(pview.nu[n]), pview.SY(pview.nv[n]));
+        var x = md.X[n], y = md.Y[n], nv = cur.nodeV, v, ex = NaN;
+        if (S.field === 'phi') v = R.phiAt(m, S.sel, md.lat.A[n], md.lat.B[n]);
+        else { v = F.fieldOf(S.field, [nv[n * 5], nv[n * 5 + 1]], [nv[n * 5 + 2], nv[n * 5 + 3], nv[n * 5 + 4]]) * fd.k; ex = m.pr.exact ? F.fieldOf(S.field, m.pr.exact.u(x, y), m.pr.exact.s(x, y)) * fd.k : NaN; }
+        rd.textContent = U.fill(t('readNode'), { i: n, x: x.toFixed(3), y: y.toFixed(3), f: SYM[S.field], v: fmt(v) + (fd.unit ? ' ' + fd.unit : '') }) + (isFinite(ex) ? U.fill(t('readExact'), { v: fmt(ex) + ' ' + fd.unit }) : '');
+        if (ho) { var o = md.map.at(md.lat.A[n], md.lat.B[n]); ho.textContent = U.fill(t('readMap'), { u: o[7].toFixed(3), v: o[8].toFixed(3), x: x.toFixed(3), y: y.toFixed(3), j: fmt(o[11]) }); }
+        return;
+      }
+      var k = hover.k; ring(ov1, view.px[k], view.py[k]); ring(ovp, pview.px[k], pview.py[k]);
+      var val = cur.sv ? cur.sv.vals[k] : NaN;
+      rd.textContent = SYM[S.field] + ' = ' + fmt(val) + (fd.unit ? ' ' + fd.unit : '');
+      if (ho) ho.textContent = U.fill(t('readMap'), { u: sm.U[k].toFixed(3), v: sm.W[k].toFixed(3), x: sm.X[k].toFixed(3), y: sm.Y[k].toFixed(3), j: fmt(sm.J[k]) });
+    }
+    function nearest(ev, cvs, vw, nodesU, nodesV, SXf, SYf) {
+      var r = cvs.getBoundingClientRect(), mx = ev.clientX - r.left, my = ev.clientY - r.top, best = null, bd = 14 * 14, i;
+      for (i = 0; i < nodesU.length; i++) { var dx = SXf(nodesU[i]) - mx, dy = SYf(nodesV[i]) - my, d = dx * dx + dy * dy; if (d < bd) { bd = d; best = { node: i }; } }
+      if (best) return best;
+      bd = 30 * 30;
+      for (i = 0; i < vw.px.length; i++) { var ex = vw.px[i] - mx, ey = vw.py[i] - my, e = ex * ex + ey * ey; if (e < bd) { bd = e; best = { k: i }; } }
+      return best;
+    }
+    function onMove(ev, which) {
+      if (!view || !pview) return;
+      hover = which === 1 ? nearest(ev, ov1, view, view.nx, view.ny, view.SX, view.SY) : nearest(ev, ovp, pview, pview.nu, pview.nv, pview.SX, pview.SY);
+      drawHover();
+    }
+    ov1.addEventListener('mousemove', function (ev) { onMove(ev, 1); });
+    ovp.addEventListener('mousemove', function (ev) { onMove(ev, 2); });
+    [ov1, ovp].forEach(function (o) { o.addEventListener('mouseleave', function () { hover = null; drawHover(); }); });
+    [[ov1, 1], [ovp, 2]].forEach(function (p) {
+      p[0].addEventListener('click', function (ev) {
+        if (!view || !pview) return;
+        var h = p[1] === 1 ? nearest(ev, ov1, view, view.nx, view.ny, view.SX, view.SY) : nearest(ev, ovp, pview, pview.nu, pview.nv, pview.SX, pview.SY);
+        if (!h || h.node == null) return; S.sel = h.node; update(false);
+      });
+    });
+
+    /* ── line plot ────────────────────────────────────────────── */
+    function drawLine() {
+      var lg = q('[data-lg="2"]');
+      if (!lineData) { P2 = U.plot(cv2, { xr: [0, 1], yr: [0, 1] }, C); lg.innerHTML = ''; return; }
+      var L = lineData, lo = Infinity, hi = -Infinity, pts = [], items = [];
+      L.fe.concat(L.rf).forEach(function (v) { if (isFinite(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); } });
+      var pr = cur.model.pr;
+      if (pr.key === 'cell' && L.d.cellRef) pr.ref.pts.forEach(function (p) { if (p.f === 'uy') { var yv = p.val * 1e3; lo = Math.min(lo, yv); hi = Math.max(hi, yv); pts.push({ x: cur.model.md.patch.point(p.u, p.v)[1], y: yv, r: 5, fill: C.gold, stroke: C.surface, lw: 1.5, shape: 'diamond' }); } });
+      if (!isFinite(lo)) { lo = -1; hi = 1; }
+      var pad = (hi - lo) * 0.08 || Math.max(Math.abs(hi) * 0.1, 1e-3); lo -= pad; hi += pad;
+      var hasRef = L.rf.some(isFinite), refOnly = (S.problem === 'cantilever' && S.support === 'clamped') || (S.problem === 'hole' && S.outer === 'uniform');
+      var refName = S.problem === 'hole' ? (S.outer === 'kirsch' ? t('lgExact') : t('lgKirsch')) : S.problem === 'cantilever' ? (S.support === 'exact' ? t('lgExact') : t('lgTimo')) : t('lgExact');
+      var lines = [];
+      if (hasRef) lines.push(refOnly ? { x: L.xs, y: L.rf, stroke: C.fg2, width: 1.6, dash: [5, 4] } : { x: L.xs, y: L.rf, stroke: U.rgba(C.fg2, 0.45), width: 5 });
+      lines.push({ x: L.xs, y: L.fe, stroke: C.accent, width: 1.8 });
+      var xr = [Math.min.apply(null, L.xs), Math.max.apply(null, L.xs)];
+      P2 = U.plot(cv2, { xr: xr, yr: [lo, hi], xlabel: L.d.xl, ylabel: L.unit, ml: 56, hlines: lo < 0 && hi > 0 ? [{ y: 0, stroke: C.border, width: 1.5 }] : [], lines: lines, points: pts }, C);
+      items.push({ t: t('lgFE') + ' (' + t(S.rbf) + ', α = ' + S.alpha.toFixed(1) + ')', c: C.accent });
+      if (hasRef) items.push(refOnly ? { t: refName, c: C.fg2, dash: true } : { t: refName, c: U.rgba(C.fg2, 0.6) });
+      if (pts.length) items.push({ t: t('lgRef'), c: C.gold, type: 'marker', shape: 'diamond' });
+      lg.innerHTML = U.legendHtml(items);
+    }
+    cv2.addEventListener('mousemove', function (ev) {
+      if (!P2 || !lineData) return;
+      var r = cv2.getBoundingClientRect(), x = P2.invX(ev.clientX - r.left), L = lineData, i = 0, bd = Infinity;
+      for (var k = 0; k < L.xs.length; k++) { var d = Math.abs(L.xs[k] - x); if (d < bd) { bd = d; i = k; } }
+      q('[data-read="2"]').textContent = U.fill(t('readLine'), { x: L.d.xl.split(' ')[0] + ' = ' + fmt(L.xs[i]), fe: fmt(L.fe[i]), ex: fmt(L.rf[i]), u: L.unit });
+    });
+    cv2.addEventListener('mouseleave', function () { q('[data-read="2"]').textContent = ''; });
+
+    /* ── N-RPIM against FEM ───────────────────────────────────── */
+    function studyOK() { return S.problem !== 'patch' && hasExact(); }
+    function studyErr(model, fem) {
+      var pr = model.pr;
+      if (pr.key !== 'cell') return fem ? F.energyError(model) : R.energyError(model);
+      var p = pr.ref.pts[pr.ref.pts.length - 1], v;
+      if (fem) { var nd = R.femNode(model, p.u, p.v); v = model.u[2 * nd + (p.f === 'ux' ? 0 : 1)]; }
+      else { var w = R.evalParam(model, p.u, p.v); v = w ? (p.f === 'ux' ? w[0] : w[1]) : NaN; }
+      return Math.abs(v / p.val - 1);
+    }
+    function runStudy() {
+      if (!studyOK()) return;
+      var tok = ++studyTok, jobs = [], base = cfg();
+      SERIES.forEach(function (sr, si) { STUDY_N[S.problem].forEach(function (n) { jobs.push({ si: si, n: n }); }); });
+      study = { key: studyKey(), pts: SERIES.map(function () { return []; }), done: 0, total: jobs.length };
+      (function next() {
+        if (tok !== studyTok) return;
+        if (!jobs.length) { study.finished = true; drawConv(); return; }
+        var j = jobs.shift(), sr = SERIES[j.si], c = {}, k;
+        for (k in base) c[k] = base[k];
+        c.n = j.n;
+        if (sr.fem) { var fm = R.femRun(c); if (!fm.error) study.pts[j.si].push({ dof: fm.ndof, e: studyErr(fm, true) }); }
+        else { c.rbf = sr.rbf; var em = R.run(c); if (!em.error) study.pts[j.si].push({ dof: em.ndof, e: studyErr(em, false) }); }
+        study.done++; drawConv();
+        setTimeout(next, 0);
+      })();
+    }
+    function drawConv() {
+      var lg = q('[data-lg="3"]'), msg = q('[data-out="study"]'), btn = q('[data-act="study"]'), series = U.series(C), sub = q('[data-sub="4"]');
+      var valid = study && study.key === studyKey(), cellP = S.problem === 'cell';
+      sub.textContent = t(cellP ? 'p4sCell' : 'p4s');
+      btn.disabled = !studyOK() || !!(valid && !study.finished);
+      if (S.problem === 'patch') msg.textContent = t('noPatch');
+      else if (!hasExact()) msg.textContent = t('noExact');
+      else if (!study) msg.textContent = U.fill(t('idle'), { n: SERIES.length * STUDY_N[S.problem].length });
+      else if (!valid) msg.textContent = t('stale');
+      else msg.textContent = study.finished ? '' : U.fill(t('running'), { i: study.done, n: study.total });
+      var lines = [], pts = [], items = [], all = []; convPts = [];
+      if (valid) SERIES.forEach(function (sr, i) {
+        var P = study.pts[i].filter(function (p) { return p.e > 0 && isFinite(p.e); }); if (!P.length) return;
+        lines.push({ x: P.map(function (p) { return p.dof; }), y: P.map(function (p) { return p.e; }), stroke: series[i], width: 2, dash: sr.fem ? [5, 4] : null });
+        P.forEach(function (p) { pts.push({ x: p.dof, y: p.e, r: 4.5, fill: series[i], stroke: C.surface, lw: 1.5, shape: SHAPES[i] }); convPts.push({ s: t(sr.k), dof: p.dof, e: p.e }); all.push(p); });
+        var rate = P.length > 1 ? Math.log(P[P.length - 2].e / P[P.length - 1].e) / Math.log(Math.sqrt(P[P.length - 1].dof / P[P.length - 2].dof)) : NaN;
+        items.push({ t: t(sr.k) + (isFinite(rate) ? ' · ' + t('rate') + ' ' + rate.toFixed(2) : ''), c: series[i], type: 'marker', shape: SHAPES[i] });
+      });
+      if (cur && !cur.model.error && studyOK()) {
+        var ce = cellP ? studyErr(cur.model, false) : cur.err;
+        if (ce > 0 && isFinite(ce)) { all.push({ dof: cur.model.ndof, e: ce }); pts.push({ x: cur.model.ndof, y: ce, r: 7.5, stroke: C.fg, lw: 1.8 }); items.push({ t: t('cur'), c: C.surface, type: 'dot', b: C.fg }); }
+      }
+      var dx = [10, 1e4], dy = [1e-3, 1];
+      if (all.length) {
+        var mnx = Math.min.apply(null, all.map(function (p) { return p.dof; })), mxx = Math.max.apply(null, all.map(function (p) { return p.dof; }));
+        var mny = Math.min.apply(null, all.map(function (p) { return p.e; })), mxy = Math.max.apply(null, all.map(function (p) { return p.e; }));
+        dx = [Math.pow(10, Math.floor(Math.log10(mnx))), Math.pow(10, Math.ceil(Math.log10(mxx)))]; dy = [Math.pow(10, Math.floor(Math.log10(mny))), Math.pow(10, Math.ceil(Math.log10(mxy)))];
+        if (dy[1] / dy[0] < 100) dy[0] = dy[1] / 100; if (dx[1] / dx[0] < 100) dx[1] = dx[0] * 100;
+      }
+      var ylab = cellP ? U.fill(t('yRef'), { q: S.load === 'shear' ? 'v_B' : 'v_A' }) : t('yErr');
+      P3 = U.plot(cv3, { xr: dx, yr: dy, xlog: true, ylog: true, xlabel: 'DOF', ylabel: ylab, lines: lines, points: pts }, C);
+      lg.innerHTML = U.legendHtml(items);
+    }
+    cv3.addEventListener('mousemove', function (ev) {
+      if (!P3 || !convPts.length) return;
+      var r = cv3.getBoundingClientRect(), mx = ev.clientX - r.left, my = ev.clientY - r.top, best = null, bd = 16 * 16;
+      convPts.forEach(function (p) { var dx = P3.X(p.dof) - mx, dy = P3.Y(p.e) - my, d = dx * dx + dy * dy; if (d < bd) { bd = d; best = p; } });
+      q('[data-read="3"]').textContent = best ? U.fill(t('readConv'), { s: best.s, dof: U.group(best.dof), e: U.sci(best.e) }) : '';
+    });
+    cv3.addEventListener('mouseleave', function () { q('[data-read="3"]').textContent = ''; });
+
+    /* ── redraw / update ──────────────────────────────────────── */
+    function redraw() { if (!cur) return; sync(); setMetrics(); cur.sv = null; drawContour(); drawParam(); drawLine(); drawConv(); }
+    var pending = false, needCompute = false;
+    function update(recompute) {
+      if (recompute) needCompute = true;
+      if (pending) return; pending = true;
+      var heavy = needCompute && cost(cfg()) > LIVE_COST;
+      if (heavy) q('[data-sub="1"]').textContent = t('solving');
+      (heavy ? function (f) { setTimeout(f, 30); } : requestAnimationFrame)(function () {
+        pending = false;
+        if (needCompute) { needCompute = false; compute(); }
+        redraw();
+      });
+    }
+
+    var RECOMP = { ld: 1, ar: 1, nu: 1, n: 1, distort: 1, alpha: 1 };
+    function readInput(el) {
+      var k = el.getAttribute('data-in'), v = el.value;
+      if (k === 'n') S.n[S.problem] = +v;
+      else if (k === 'line' || k === 'field') S[k] = v;
+      else if (k === 'problem') {
+        S.problem = v; S.line = LINES[v][0]; S.distort = v === 'patch' ? 0.3 : 0; S.field = v === 'cantilever' ? 'svm' : v === 'cell' ? 'svm' : 'sxx'; S.sel = null;
+        fillLineSelect();
+      }
+      else S[k] = +v;
+      return k;
+    }
+    root.addEventListener('input', function (e) {
+      var k = e.target.getAttribute('data-in'); if (!k || e.target.tagName === 'SELECT') return;
+      readInput(e.target);
+      if (k === 'scale') { update(false); return; }
+      if (RECOMP[k]) { if (cost(cfg()) <= LIVE_COST) update(true); else sync(true); }
+    });
+    root.addEventListener('change', function (e) {
+      var k = e.target.getAttribute('data-in'); if (!k) return;
+      readInput(e.target);
+      if (k === 'line' || k === 'field') { computeLine(); update(false); return; }
+      if (k === 'scale') { update(false); return; }
+      update(true);
+    });
+    root.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b || !root.contains(b)) return;
+      var sg = b.parentNode.getAttribute('data-seg');
+      if (sg) { S[sg] = b.getAttribute('data-v'); update(true); return; }
+      var ov = b.getAttribute('data-ov');
+      if (ov && b.tagName === 'BUTTON') { S.ov[ov] = !S.ov[ov]; update(false); return; }
+      var act = b.getAttribute('data-act');
+      if (act === 'shuffle') { S.seed = (S.seed * 48271 + 11) % 2147483647; update(true); }
+      else if (act === 'reset') { studyTok++; study = null; S = clone(DEFAULTS); fillLineSelect(); update(true); }
+      else if (act === 'study') runStudy();
+    });
+
+    if ('ResizeObserver' in window) new ResizeObserver(function () { var w = root.clientWidth; if (w !== lastW) { lastW = w; update(false); } }).observe(root);
+    else window.addEventListener('resize', function () { update(false); });
+    function themeChanged() { C = U.readColors(root); update(false); }
+    var mo = new MutationObserver(function (list) { list.forEach(function (m) { if (m.attributeName === 'data-rzlang') applyLang(); else themeChanged(); }); });
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'class'] });
+    if (document.body) mo.observe(document.body, { attributes: true, attributeFilter: ['class', 'data-rzlang', 'data-theme'] });
+    if (window.matchMedia) { var mq = window.matchMedia('(prefers-color-scheme: dark)'); (mq.addEventListener ? mq.addEventListener('change', themeChanged) : mq.addListener(themeChanged)); }
+
+    compute(); applyLang();
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   2D NURBS-Divergence-Meshless (NDM) core, steady heat conduction — window.RZNDM
+   Rasin, Hirol, Zainal Abidin, Mokhtaram, Mohd Noor and Mohd Yassin,
+   Comput. Math. Appl. 196 (2025) 151–171.
+   · k∇²T + Q = 0 is integrated over one cell per node; the divergence theorem turns
+     each cell integral into four line integrals of the normal flux.
+   · Cells are rectangles in the NURBS parameter space, so on each side one normal
+     component is ±1 and the other 0: the line integrals reduce to
+     −∫_b (T_ξG12 + T_ηG22)dξ + ∫_r (T_ξG11 + T_ηG12)dη + ∫_t (T_ξG12 + T_ηG22)dξ − ∫_l (T_ξG11 + T_ηG12)dη
+     with G11 = (x_η² + y_η²)/|J|, G12 = −(x_ξx_η + y_ξy_η)/|J|, G22 = (x_ξ² + y_ξ²)/|J|.
+   · T is approximated by MLS (quadratic basis, exponential weight) or Gaussian RBF
+     in the parameter space. Dirichlet conditions are imposed directly: the row of a
+     boundary node is Σ N_j(x_I) T_j = T̂, even for MLS, which is not interpolating.
+   · One row per node (row-based assembly) → a non-symmetric banded system.
+   Also: Q4 finite elements on the same nodes, for comparison.
+   ═══════════════════════════════════════════════════════════════ */
+(function (root) {
+  'use strict';
+  var N = root.RZNURBS;
+  var KCOND = 1;     // thermal conductivity k (W/m·K); the paper does not state it, k = 1 reproduces its tables
+
+  /* ── problems ─────────────────────────────────────────────────── */
+  // bc(tag, x, y) → { T: value } (prescribed temperature) | { q: value } (heat flux into the domain, W/m²) | null (insulated)
+  // source Q(x, y) (W/m³), exact { T(x, y), g(x, y) → [∂T/∂x, ∂T/∂y] } | null, ref { pts: [{ name, u, v, T }] }
+  function problem(cfg) {
+    var G = N.GEOM, n = Math.max(1, Math.round(cfg.n || 4)), k = KCOND;
+    if (cfg.problem === 'radial') {
+      // quarter annulus, heat flux q into the inner arc, T₀ on the outer arc, insulated straight edges: T = T₀ + (q a/k) ln(b/r)
+      var a = 0.3, b = 0.6, q = 60, T0 = 30;
+      return { key: 'radial', patch: G.annulus(a, b), mu: n, mv: n, k: k, a: a, b: b, q: q, T0: T0,
+        bc: function (tag) { return tag === 's0' ? { q: q } : tag === 's1' ? { T: T0 } : null; },
+        source: null,
+        exact: { T: function (x, y) { return T0 + q * a / k * Math.log(b / Math.hypot(x, y)); },
+                 g: function (x, y) { var r2 = x * x + y * y, c = -q * a / k / r2; return [c * x, c * y]; } },
+        ref: { pts: [] }, bbox: [0, b, 0, b] };
+    }
+    if (cfg.problem === 'annulus') {
+      // the paper's quarter-annular disc (section 4.2): 60 W/m² into the inner arc, 30 °C on the other three sides
+      return { key: 'annulus', patch: G.annulus(0.3, 0.6), mu: n, mv: n, k: k, q: 60, T0: 30,
+        bc: function (tag) { return tag === 's0' ? { q: 60 } : { T: 30 }; },
+        source: null, exact: null,
+        // no closed form: reference from Q4 on 128 × 256 cells, Richardson-extrapolated (p = 2.00), checked against NDM-MLS
+        ref: { pts: [{ name: 'P', u: 0, v: 0.5, T: 39.1487 }, { name: 'Q', u: 0.5, v: 0.5, T: 33.1757 }] }, bbox: [0, 0.6, 0, 0.6] };
+    }
+    if (cfg.problem === 'blade') {
+      // fan blade (section 4.1): 60 W/m² into the hub arc ξ = 0, 30 °C on the other edges.
+      // Reference: the converged values implied by the paper's Table 2 (value and error of each method).
+      return { key: 'blade', patch: G.fanBlade(), mu: n, mv: n, k: k, q: 60, T0: 30,
+        bc: function (tag) { return tag === 's0' ? { q: 60 } : { T: 30 }; },
+        source: null, exact: null,
+        ref: { pts: [{ name: 'P₁', u: 0, v: 0.5, T: 31.966 }, { name: 'P₂', u: 0.25, v: 0.5, T: 30.701 }, { name: 'P₃', u: 0.5, v: 0.75, T: 30.171 }] },
+        bbox: [-0.03, 0.2, -0.05, 0.21] };
+    }
+    // patch test: quadratic temperature on the unit square with a uniform source; flux on x = 1, T elsewhere
+    var c = [30, 1, -1, 5, -3, 2];     // T = c0 + c1 x + c2 y + c3 x² + c4 xy + c5 y²
+    function Te(x, y) { return c[0] + c[1] * x + c[2] * y + c[3] * x * x + c[4] * x * y + c[5] * y * y; }
+    function ge(x, y) { return [c[1] + 2 * c[3] * x + c[4] * y, c[2] + c[4] * x + 2 * c[5] * y]; }
+    var Qs = -k * (2 * c[3] + 2 * c[5]);
+    return { key: 'patch', patch: cfg.param === 'curved' ? G.squareCurved(0.15) : G.rect(0, 1, 0, 1), mu: n, mv: n, k: k,
+      bc: function (tag, x, y) { return tag === 's1' ? { q: k * ge(x, y)[0] } : { T: Te(x, y) }; },
+      source: function () { return Qs; }, exact: { T: Te, g: ge }, ref: { pts: [] }, bbox: [0, 1, 0, 1] };
+  }
+
+  /* ── set-up ───────────────────────────────────────────────────── */
+  // cfg: { problem, n, distort, seed, approx: 'mls' | 'rbf', alpha (support radius / spacing), overlap: 0 | 1, gamma, ngs (Gauss points per side) }
+  function setup(cfg) {
+    var pr = problem(cfg), P = pr.patch, ax = new N.Axis(P.ku, pr.mu, P.c0u), ay = new N.Axis(P.kv, pr.mv, P.c0v);
+    var lat = new N.Lattice(ax, ay, { distort: cfg.distort || 0, seed: cfg.seed || 1 });
+    var map = new N.Map(P, ax, ay), nn = lat.nn, X = new Float64Array(nn), Y = new Float64Array(nn), o = new Float64Array(12);
+    for (var k = 0; k < nn; k++) { map.at(lat.A[k], lat.B[k], o); X[k] = o[0]; Y[k] = o[1]; }
+    var rbf = cfg.approx === 'rbf';
+    var dS = cfg.alpha || 3;
+    var S = new N.Approx(lat, rbf ? { kind: 'rpim', rbf: 'exp', m: 0, d: dS, exp: { ac: 0.8, dc: cfg.dc || 2 * dS } }
+                                  : { kind: 'mls', m: 6, d: dS, c: cfg.c || 0.3 });
+    // knot lines inside the domain (index positions): line integrals are split there
+    return { cfg: cfg, pr: pr, patch: P, ax: ax, ay: ay, lat: lat, map: map, X: X, Y: Y, nn: nn, S: S, k: pr.k,
+             gamma: cfg.overlap ? (cfg.gamma || 1.6) : 1, ngs: cfg.ngs || 5, kxA: ax.A.slice(1, -1), kxB: ay.A.slice(1, -1) };
+  }
+
+  // integration cell of node I in the index space: [a0, a1] × [b0, b1]
+  function cellOf(md, I) {
+    var lat = md.lat, h = md.gamma / 2, i = lat.LI[I], j = lat.LJ[I];
+    return [Math.max(0, i - h), Math.min(lat.Mu, i + h), Math.max(0, j - h), Math.min(lat.Mv, j + h)];
+  }
+  // break [t0, t1] at interior knot lines
+  function pieces(t0, t1, knots) {
+    var out = [t0];
+    for (var k = 0; k < knots.length; k++) if (knots[k] > t0 + 1e-12 && knots[k] < t1 - 1e-12) out.push(knots[k]);
+    out.push(t1);
+    return out;
+  }
+  // boundary condition on a cell side that lies on the domain boundary (null if the side is interior)
+  function sideTag(md, s, c) {
+    var lat = md.lat;
+    if (s === 'b' && c[2] === 0) return 't0';
+    if (s === 't' && c[3] === lat.Mv) return 't1';
+    if (s === 'l' && c[0] === 0) return 's0';
+    if (s === 'r' && c[1] === lat.Mu) return 's1';
+    return null;
+  }
+  // Gauss points on the four sides of a cell: { s, a, b, w (incl. half-length), along ('a' | 'b'), sign }
+  var SIDES = [['b', 'a', -1], ['r', 'b', 1], ['t', 'a', 1], ['l', 'b', -1]];
+  function sidePoints(md, c, ng) {
+    var g = N.GL[ng], out = [];
+    SIDES.forEach(function (sd) {
+      var name = sd[0], along = sd[1], sign = sd[2];
+      var t0 = along === 'a' ? c[0] : c[2], t1 = along === 'a' ? c[1] : c[3], fixedV = name === 'b' ? c[2] : name === 't' ? c[3] : name === 'l' ? c[0] : c[1];
+      var P = pieces(t0, t1, along === 'a' ? md.kxA : md.kxB);
+      for (var k = 0; k + 1 < P.length; k++) for (var q = 0; q < ng; q++) {
+        var t = (P[k] + P[k + 1]) / 2 + (P[k + 1] - P[k]) / 2 * g.p[q], w = g.w[q] * (P[k + 1] - P[k]) / 2;
+        out.push({ s: name, a: along === 'a' ? t : fixedV, b: along === 'a' ? fixedV : t, w: w, along: along, sign: sign });
+      }
+    });
+    return out;
+  }
+  // flux coefficient of shape function k at a side point: (G-terms) with index-space derivatives; o = map output
+  function fluxCoef(o, da, db, along) {
+    var J = o[6], xa = o[2], ya = o[3], xb = o[4], yb = o[5];
+    var g12 = -(xa * xb + ya * yb) / J;
+    if (along === 'a') return da * g12 + db * (xa * xa + ya * ya) / J;    // T_a G12 + T_b G22 (bottom and top sides)
+    return da * (xb * xb + yb * yb) / J + db * g12;                      // T_a G11 + T_b G12 (left and right sides)
+  }
+  // side hint for the parameter map and supports at a point on a knot line (never happens inside pieces)
+  function sideHint(t) { return t % 1 === 0 ? 1 : 0; }
+
+  /* ── solve ────────────────────────────────────────────────────── */
+  function run(cfg) {
+    var t0 = now(), md = setup(cfg), pr = md.pr, lat = md.lat, nn = md.nn, S = md.S, map = md.map, k = md.k, ng = md.ngs;
+    var o = new Float64Array(12), acc = new Float64Array(nn), mark = new Uint8Array(nn), touched = [], rows = new Array(nn), rhs = new Float64Array(nn);
+    var dirich = new Uint8Array(nn), That = new Float64Array(nn), I, q, kk, bad = 0;
+    // Dirichlet nodes: on a boundary edge where the temperature is prescribed
+    for (I = 0; I < nn; I++) lat.edges(I).forEach(function (tag) { var v = pr.bc(tag, md.X[I], md.Y[I]); if (v && v.T !== undefined) { dirich[I] = 1; That[I] = v.T; } });
+    function put(j, v) { if (!mark[j]) { mark[j] = 1; touched.push(j); } acc[j] += v; }
+    var gA = N.GL[Math.max(2, Math.min(6, ng))], src = pr.source;
+    for (I = 0; I < nn; I++) {
+      touched.length = 0;
+      if (dirich[I]) {
+        var nd = S.at(lat.A[I], lat.B[I], false, 1, 1);
+        if (nd < 0) { bad++; rows[I] = null; continue; }
+        for (kk = 0; kk < nd; kk++) put(S.idx[kk], S.phi[kk]);
+        rhs[I] = That[I];
+      } else {
+        var c = cellOf(md, I), sp = sidePoints(md, c, ng), b0 = 0;
+        for (q = 0; q < sp.length; q++) {
+          var P = sp[q], tag = sideTag(md, P.s, c), bc = tag ? pr.bc(tag, 0, 0) : null;
+          map.at(P.a, P.b, o, sideHint(P.a), sideHint(P.b));
+          if (tag && (!bc || bc.q !== undefined)) {
+            // known flux on the boundary: ∫ (q_in / k) ds goes to the right-hand side
+            if (bc) { var bq = pr.bc(tag, o[0], o[1]).q, ds = P.along === 'a' ? Math.hypot(o[2], o[3]) : Math.hypot(o[4], o[5]); b0 -= P.w * bq / k * ds; }
+            continue;
+          }
+          var n = S.at(P.a, P.b, true, sideHint(P.a), sideHint(P.b));
+          if (n < 0) { bad++; continue; }
+          for (kk = 0; kk < n; kk++) put(S.idx[kk], P.sign * P.w * fluxCoef(o, S.da[kk], S.db[kk], P.along));
+        }
+        // heat source: ∫ (−Q / k) dΩ over the cell
+        if (src) {
+          var PA = pieces(c[0], c[1], md.kxA), PB = pieces(c[2], c[3], md.kxB);
+          for (var ia = 0; ia + 1 < PA.length; ia++) for (var ib = 0; ib + 1 < PB.length; ib++)
+            for (var p1 = 0; p1 < gA.p.length; p1++) for (var p2 = 0; p2 < gA.p.length; p2++) {
+              var aa = (PA[ia] + PA[ia + 1]) / 2 + (PA[ia + 1] - PA[ia]) / 2 * gA.p[p1], bb = (PB[ib] + PB[ib + 1]) / 2 + (PB[ib + 1] - PB[ib]) / 2 * gA.p[p2];
+              map.at(aa, bb, o);
+              b0 -= gA.w[p1] * gA.w[p2] * (PA[ia + 1] - PA[ia]) / 2 * (PB[ib + 1] - PB[ib]) / 2 * o[6] * src(o[0], o[1]) / k;
+            }
+        }
+        rhs[I] = b0;
+      }
+      var cols = new Int32Array(touched.length), vals = new Float64Array(touched.length);
+      for (kk = 0; kk < touched.length; kk++) { var j = touched[kk]; cols[kk] = j; vals[kk] = acc[j]; acc[j] = 0; mark[j] = 0; }
+      rows[I] = { c: cols, v: vals };
+    }
+    if (bad) return { error: 'support', bad: bad, md: md, why: S.fail };
+    var kl = 0, ku = 0;
+    for (I = 0; I < nn; I++) for (kk = 0; kk < rows[I].c.length; kk++) { var d = I - rows[I].c[kk]; if (d > kl) kl = d; if (-d > ku) ku = -d; }
+    var B = new N.Band(nn, kl, ku);
+    for (I = 0; I < nn; I++) for (kk = 0; kk < rows[I].c.length; kk++) B.add(I, rows[I].c[kk], rows[I].v[kk]);
+    var t1 = now(), piv = B.factor();
+    if (piv >= 0) return { error: 'singular', md: md, pivot: piv };
+    var Tn = B.solve(rhs), t2 = now();
+    var nnz = 0; for (I = 0; I < nn; I++) nnz += rows[I].c.length;
+    return { cfg: cfg, md: md, pr: pr, T: Tn, rows: rows, rhs: rhs, dirich: dirich, That: That, nn: nn, kl: kl, ku: ku, nnz: nnz,
+             time: { assemble: t1 - t0, solve: t2 - t1 } };
+  }
+
+  /* ── evaluation ───────────────────────────────────────────────── */
+  // [T, ∂T/∂x, ∂T/∂y] at index point (a, b); sa, sb pick the side on a knot line. null if the approximation fails.
+  function evalAt(model, a, b, sa, sb, out) {
+    var md = model.md, S = md.S, o = model._o || (model._o = new Float64Array(12));
+    md.map.at(a, b, o, sa, sb);
+    if (!(Math.abs(o[6]) > 1e-10 * (Math.abs(o[2] * o[5]) + Math.abs(o[3] * o[4]) + 1e-300))) {
+      a += a > md.lat.Mu / 2 ? -1e-4 : 1e-4; b += b > md.lat.Mv / 2 ? -1e-4 : 1e-4; md.map.at(a, b, o, sa, sb);
+    }
+    var n = S.at(a, b, true, sa, sb); if (n < 0) return null;
+    var T = 0, Ta = 0, Tb = 0;
+    for (var k = 0; k < n; k++) { var v = model.T[S.idx[k]]; T += S.phi[k] * v; Ta += S.da[k] * v; Tb += S.db[k] * v; }
+    out = out || new Float64Array(3);
+    out[0] = T; out[1] = (o[5] * Ta - o[3] * Tb) / o[6]; out[2] = (-o[4] * Ta + o[2] * Tb) / o[6];
+    return out;
+  }
+  function evalParam(model, u, v, out) { var md = model.md; return evalAt(model, md.ax.index(u), md.ay.index(v), 1, 1, out); }
+  function phiAt(model, I, a, b, sa, sb) { return model.md.S.phiOf(I, a, b, sa, sb); }
+
+  // relative errors against the exact solution: energy (flux) norm and L2 norm of T − T_exact, over the exact geometry
+  function errors(model) {
+    var ex = model.pr.exact; if (!ex) return null;
+    var md = model.md, lat = md.lat, g = N.GL[4], o = new Float64Array(3), m = new Float64Array(12), e1 = 0, d1 = 0, e0 = 0, d0 = 0, tmax = 0;
+    for (var i = 0; i < lat.Mu; i++) for (var j = 0; j < lat.Mv; j++) for (var p = 0; p < 4; p++) for (var q = 0; q < 4; q++) {
+      var a = i + (1 + g.p[p]) / 2, b = j + (1 + g.p[q]) / 2;
+      md.map.at(a, b, m);
+      var w = g.w[p] * g.w[q] * 0.25 * m[6], x = m[0], y = m[1], r = evalAt(model, a, b, 0, 0, o); if (!r) continue;
+      var ge = ex.g(x, y), Te = ex.T(x, y);
+      e1 += w * ((r[1] - ge[0]) * (r[1] - ge[0]) + (r[2] - ge[1]) * (r[2] - ge[1])); d1 += w * (ge[0] * ge[0] + ge[1] * ge[1]);
+      e0 += w * (r[0] - Te) * (r[0] - Te); d0 += w * Te * Te;
+    }
+    for (var I = 0; I < lat.nn; I++) {
+      var v = evalAt(model, lat.A[I], lat.B[I], 1, 1, o); if (v) tmax = Math.max(tmax, Math.abs(v[0] - ex.T(md.X[I], md.Y[I])));
+    }
+    return { energy: Math.sqrt(e1 / d1), l2: Math.sqrt(e0 / d0), tmax: tmax };
+  }
+  // the balance of one cell, evaluated with the solution: fluxes out through each side (W/m per unit thickness, ÷ k)
+  function cellReport(model, I) {
+    var md = model.md, pr = md.pr, S = md.S, lat = md.lat, k = md.k, o = new Float64Array(12);
+    if (model.dirich[I]) {
+      var n = S.at(lat.A[I], lat.B[I], false, 1, 1), own = 0;
+      for (var q0 = 0; q0 < n; q0++) if (S.idx[q0] === I) own = S.phi[q0];
+      return { kind: 'dirichlet', T: model.That[I], stencil: model.rows[I].c.length, own: own };
+    }
+    var c = cellOf(md, I), sp = sidePoints(md, c, md.ngs), out = { kind: 'cell', cell: c, sides: {}, known: {}, gps: [], stencil: model.rows[I].c.length };
+    SIDES.forEach(function (s) { out.sides[s[0]] = 0; out.known[s[0]] = null; });
+    sp.forEach(function (P) {
+      var tag = sideTag(md, P.s, c), bc = tag ? pr.bc(tag, 0, 0) : null;
+      md.map.at(P.a, P.b, o, sideHint(P.a), sideHint(P.b));
+      var ds = P.along === 'a' ? Math.hypot(o[2], o[3]) : Math.hypot(o[4], o[5]);
+      out.gps.push([P.a, P.b, P.s]);
+      if (tag && (!bc || bc.q !== undefined)) { out.known[P.s] = (out.known[P.s] || 0) + (bc ? P.w * pr.bc(tag, o[0], o[1]).q / k * ds : 0); return; }
+      var n = S.at(P.a, P.b, true, sideHint(P.a), sideHint(P.b)), f = 0; if (n < 0) return;
+      for (var kk = 0; kk < n; kk++) f += P.sign * P.w * fluxCoef(o, S.da[kk], S.db[kk], P.along) * model.T[S.idx[kk]];
+      out.sides[P.s] += f;
+    });
+    // Σ (all four sides) = F̂ = −∫ Q/k dΩ; the known sides were moved to the right-hand side when solving
+    var tot = 0, kn = 0;
+    SIDES.forEach(function (s) { var k0 = out.known[s[0]]; if (k0 !== null) kn += k0; tot += k0 !== null ? k0 : out.sides[s[0]]; });
+    out.total = tot; out.knownSum = kn; out.source = model.rhs[I] + kn;
+    return out;
+  }
+
+  /* ── Q4 finite elements on the same nodes (straight-sided elements) ── */
+  function femRun(cfg) {
+    var t0 = now(), md = setup(cfg), pr = md.pr, lat = md.lat, nn = md.nn, X = md.X, Y = md.Y, Mu = lat.Mu, Mv = lat.Mv, k = md.k, i, j, a, b, q;
+    var fixed = new Uint8Array(nn), Tb = new Float64Array(nn);
+    for (i = 0; i < nn; i++) lat.edges(i).forEach(function (tag) { var v = pr.bc(tag, X[i], Y[i]); if (v && v.T !== undefined) { fixed[i] = 1; Tb[i] = v.T; } });
+    var eq = new Int32Array(nn), neq = 0; for (i = 0; i < nn; i++) eq[i] = fixed[i] ? -1 : neq++;
+    var C = []; for (i = 0; i < Mu; i++) for (j = 0; j < Mv; j++) C.push([lat.node(i, j), lat.node(i + 1, j), lat.node(i + 1, j + 1), lat.node(i, j + 1)]);
+    var top = new Int32Array(neq); for (a = 0; a < neq; a++) top[a] = a;
+    C.forEach(function (e) { var mn = Infinity; e.forEach(function (n) { if (eq[n] >= 0 && eq[n] < mn) mn = eq[n]; }); e.forEach(function (n) { if (eq[n] >= 0 && mn < top[eq[n]]) top[eq[n]] = mn; }); });
+    var K = new root.RZFEM.Skyline(top), f = new Float64Array(neq), g2 = N.GL[2], src = pr.source;
+    var NQ = [0, 0, 0, 0], dX = [0, 0, 0, 0], dY = [0, 0, 0, 0];
+    function shp(e, xi, et) {   // bilinear shape functions on element e; returns det J and fills NQ, dX, dY
+      var sx = [-1, 1, 1, -1], sy = [-1, -1, 1, 1], j11 = 0, j12 = 0, j21 = 0, j22 = 0, dn = [], de = [];
+      for (var t = 0; t < 4; t++) {
+        NQ[t] = (1 + sx[t] * xi) * (1 + sy[t] * et) / 4; dn[t] = sx[t] * (1 + sy[t] * et) / 4; de[t] = sy[t] * (1 + sx[t] * xi) / 4;
+        j11 += dn[t] * X[e[t]]; j12 += dn[t] * Y[e[t]]; j21 += de[t] * X[e[t]]; j22 += de[t] * Y[e[t]];
+      }
+      var det = j11 * j22 - j12 * j21;
+      for (t = 0; t < 4; t++) { dX[t] = (j22 * dn[t] - j12 * de[t]) / det; dY[t] = (-j21 * dn[t] + j11 * de[t]) / det; }
+      return det;
+    }
+    C.forEach(function (e) {
+      for (var p1 = 0; p1 < 2; p1++) for (var p2 = 0; p2 < 2; p2++) {
+        var det = shp(e, g2.p[p1], g2.p[p2]), w = det * g2.w[p1] * g2.w[p2], xq = 0, yq = 0;
+        for (var t = 0; t < 4; t++) { xq += NQ[t] * X[e[t]]; yq += NQ[t] * Y[e[t]]; }
+        var Qv = src ? src(xq, yq) : 0;
+        for (var r = 0; r < 4; r++) {
+          var er = eq[e[r]]; if (er < 0) continue;
+          f[er] += w * NQ[r] * Qv;
+          for (var s = 0; s < 4; s++) {
+            var kv = w * k * (dX[r] * dX[s] + dY[r] * dY[s]), es = eq[e[s]];
+            if (es < 0) f[er] -= kv * Tb[e[s]]; else if (er <= es) K.add(er, es, kv);
+          }
+        }
+      }
+    });
+    // heat flux on the boundary, along the straight element edges
+    [['s0', 0, null], ['s1', Mu, null], ['t0', null, 0], ['t1', null, Mv]].forEach(function (E) {
+      var along = E[1] === null, segs = along ? Mu : Mv;
+      for (var sgi = 0; sgi < segs; sgi++) {
+        var n1 = along ? lat.node(sgi, E[2]) : lat.node(E[1], sgi), n2 = along ? lat.node(sgi + 1, E[2]) : lat.node(E[1], sgi + 1), L = Math.hypot(X[n2] - X[n1], Y[n2] - Y[n1]);
+        for (q = 0; q < 2; q++) {
+          var s = (1 + g2.p[q]) / 2, xq = X[n1] + s * (X[n2] - X[n1]), yq = Y[n1] + s * (Y[n2] - Y[n1]), bc = pr.bc(E[0], xq, yq);
+          if (!bc || bc.q === undefined) continue;
+          if (eq[n1] >= 0) f[eq[n1]] += (1 - s) * bc.q * L * g2.w[q] / 2;
+          if (eq[n2] >= 0) f[eq[n2]] += s * bc.q * L * g2.w[q] / 2;
+        }
+      }
+    });
+    if (K.factor() >= 0) return { error: 'singular', md: md };
+    var x = K.solve(f), T = new Float64Array(nn);
+    for (i = 0; i < nn; i++) T[i] = eq[i] >= 0 ? x[eq[i]] : Tb[i];
+    return { cfg: cfg, md: md, pr: pr, T: T, C: C, shp: shp, NQ: NQ, dX: dX, dY: dY, time: { total: now() - t0 } };
+  }
+  function femErrors(fm) {
+    var ex = fm.pr.exact; if (!ex) return null;
+    var g = N.GL[3], e1 = 0, d1 = 0, e0 = 0, d0 = 0, X = fm.md.X, Y = fm.md.Y, tmax = 0;
+    fm.C.forEach(function (e) {
+      for (var p1 = 0; p1 < 3; p1++) for (var p2 = 0; p2 < 3; p2++) {
+        var det = fm.shp(e, g.p[p1], g.p[p2]), w = det * g.w[p1] * g.w[p2], xq = 0, yq = 0, T = 0, tx = 0, ty = 0;
+        for (var t = 0; t < 4; t++) { xq += fm.NQ[t] * X[e[t]]; yq += fm.NQ[t] * Y[e[t]]; T += fm.NQ[t] * fm.T[e[t]]; tx += fm.dX[t] * fm.T[e[t]]; ty += fm.dY[t] * fm.T[e[t]]; }
+        var ge = ex.g(xq, yq), Te = ex.T(xq, yq);
+        e1 += w * ((tx - ge[0]) * (tx - ge[0]) + (ty - ge[1]) * (ty - ge[1])); d1 += w * (ge[0] * ge[0] + ge[1] * ge[1]);
+        e0 += w * (T - Te) * (T - Te); d0 += w * Te * Te;
+      }
+    });
+    for (var i = 0; i < fm.T.length; i++) tmax = Math.max(tmax, Math.abs(fm.T[i] - ex.T(X[i], Y[i])));
+    return { energy: Math.sqrt(e1 / d1), l2: Math.sqrt(e0 / d0), tmax: tmax };
+  }
+  function femNode(fm, u, v) { var md = fm.md; return fm.T[md.lat.node(Math.round(md.ax.index(u)), Math.round(md.ay.index(v)))]; }
+
+  function size(cfg) {
+    var pr = problem(cfg), P = pr.patch, ax = new N.Axis(P.ku, pr.mu), ay = new N.Axis(P.kv, pr.mv), nodes = (ax.M + 1) * (ay.M + 1);
+    return { nodes: nodes, Mu: ax.M, Mv: ay.M };
+  }
+  function now() { return N.now(); }
+
+  root.RZNDM = { K: KCOND, problem: problem, setup: setup, run: run, cellOf: cellOf, sidePoints: sidePoints, evalAt: evalAt, evalParam: evalParam,
+                 phiAt: phiAt, errors: errors, cellReport: cellReport, femRun: femRun, femErrors: femErrors, femNode: femNode, size: size };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+/* ═══════════════════════════════════════════════════════════════
+   2D NDM Explorer (NURBS-Divergence-Meshless, heat conduction) — UI
+   Registered as RZTools tool 'ndm2d'; mount with <div data-rz-tool="ndm2d"></div>
+   ═══════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var D = window.RZNDM, NB = window.RZNURBS, V = NB.view, RZT = window.RZTools, U = RZT.util, fmt = U.fmt;
+  var SHAPES = ['circle', 'square', 'tri', 'diamond'];
+  var FLD = { T: { unit: '°C', div: false }, q: { unit: 'W/m²', div: false }, err: { unit: '°C', div: false }, phi: { unit: '', div: true } };
+  var SYM = { T: 'T', q: '|q|', err: '|T − Texact|', phi: 'φ' };
+
+  var T = {
+    en: {
+      gModel: 'Model', gApprox: 'Approximation', gCells: 'Integration cells', gNodes: 'Nodes', gView: 'View',
+      problem: 'Problem', pradial: 'Quarter annulus · radial flow (exact)', pannulus: 'Quarter annulus (paper)', pblade: 'Fan blade (paper)', ppatch: 'Patch test (quadratic T)',
+      approx: 'Shape functions', mls: 'MLS', rbf: 'RBF', alpha: 'Support radius `d = α h`, α', cells: 'Cell layout', nonov: 'Non-overlapping', ov: 'Overlapping', ngs: 'Gauss points per side',
+      n: 'Refinement level', size: '{nodes} nodes · {cells} cell equations · {dir} boundary rows', distort: 'Irregular nodes', shuffle: 'New layout',
+      field: 'Contour', fT: 'Temperature T', fq: 'Heat flux |q| = k|∇T|', ferr: 'Error |T − T exact|', fphi: 'Shape function φ of the selected node',
+      show: 'Show', oNodes: 'Nodes', oCells: 'Cells', oGauss: 'Gauss points', oSupport: 'Support', oKnots: 'Knot lines', oNet: 'Control net', reset: 'Reset',
+      mNodes: 'unknowns · {c} cell equations · {d} boundary rows', mTin: 'T at the inner arc, θ = 45° · exact {v}', mTP: 'T at P · reference {v}', mTP1: 'T at P₁ (ξ = 0, η = 0.5) · paper {v}',
+      mPatch: 'max |T − T exact| at the nodes', mErr: 'Relative error, energy norm', mTQ: 'T at Q · reference {v}', mTP2: 'T at P₂ (ξ = 0.25, η = 0.5) · paper {v}',
+      mFem: 'FEM Q4, same nodes · energy norm', mFemP: 'FEM Q4, same nodes · T at {p}', mRow: 'nonzeros per row (mean) · non-symmetric', mTime: 'assemble + solve',
+      pass: 'passed', notExact: 'not exact',
+      support: 'The approximation fails at {n} points: the support holds too few nodes ({k}). Increase the support radius or the refinement.',
+      singular: 'The system matrix is singular. Change the support radius or the cell layout.', fail2: 'The model could not be solved.',
+      big: 'Large model: it solves when you release the slider.', solving: 'Solving…',
+      mlsDir: 'MLS does not interpolate: at its own node a shape function is {v}, not 1. NDM still imposes the temperature directly, because the row of a boundary node is the condition itself, Σ N_j(x_I) T_j = T̂, not an integral that needs a weak form.',
+      patchOK: 'Passed: with a quadratic MLS basis, NDM recovers this quadratic temperature exactly, even with one Gauss point per side, overlapping cells or irregular nodes. Along a straight side the flux of a quadratic field is linear, so every line integral is exact.',
+      patchRBF: 'Pure Gaussian RBFs do not reproduce a constant or a linear field, so even this quadratic temperature is not recovered.',
+      patchCurved: '',
+      ovNote: 'Overlapping cells still give one valid balance equation per node; the paper finds that they converge at a slightly lower rate than non-overlapping cells.',
+      bladeNote: 'Geometry and boundary conditions from Rasin et al. (2025), Table 1 and Fig. 3: 60 W/m² into the hub arc, 30 °C on the other edges, k = 1 W/(m·K). The reference temperatures are the converged values implied by the paper’s Table 2.',
+      annNote: 'The paper’s quarter-annular disc (Table 3): 60 W/m² into the inner arc, 30 °C on the other three sides, k = 1 W/(m·K). There is no closed-form solution; the reference values come from Richardson-extrapolated finite elements (128 × 256 cells).',
+      radNote: 'The paper’s quarter annulus with insulated straight edges, so the heat flows radially: T = 30 + (q a / k) ln(b / r), with q = 60 W/m² into the inner arc (a = 0.3 m), 30 °C on the outer arc (b = 0.6 m).',
+      p1s: '{f} in the physical space. Squares: nodes on a prescribed-temperature edge, whose row is the boundary condition; circles: one cell equation each. Solid edge: prescribed T; arrows: heat flux in; dashed: insulated. Tap a node to inspect its equation.',
+      p2: 'Parameter space and the cell equation', p2s: 'Cells are rectangles in the NURBS parameter space, so the outward normal on each side is (0, ±1) or (±1, 0). The divergence theorem turns the cell integral of ∇²T into four line integrals; their sum equals the heat source (here zero) minus any prescribed flux.',
+      eqTitle: 'Cell equation of node {i}', eqDir: 'Boundary row of node {i}', side_b: 'bottom', side_r: 'right', side_t: 'top', side_l: 'left',
+      eqKnown: 'prescribed flux', eqIns: 'insulated', eqSum: 'net outflow, sum of the four sides', eqSrc: 'heat source F̂ = −∫ Q/k dΩ', eqStencil: '{n} nodes in this row',
+      eqDirTxt: 'T̂ = {T} °C. Row: Σ N_j(x_I) T_j = T̂ over {n} nodes; N_I(x_I) = {own}.',
+      eqUnit: 'Line integrals of ∇T·n (K); multiply by k for W per metre of thickness.',
+      iKnots: 'Knot vectors', iCp: 'Control net', iCpV: '{a} × {b} control points · weights {w}', iC0: 'C⁰ lines', iNone: 'none', iHover: 'Point',
+      readMap: '(ξ, η) = ({u}, {v}) → (x, y) = ({x}, {y}) m · |J| = {j}',
+      p3: 'Along a line', p3s: 'NDM result against the reference. Hover to read values.',
+      lradial_T45: 'T along θ = 45°, inner to outer arc', lradial_q45: 'Heat flux |q| along θ = 45°', lannulus_T45: 'T along θ = 45°, inner to outer arc', lannulus_Tin: 'T around the inner arc, θ = 0° → 90°',
+      lblade_Tmid: 'T along η = 0.5, hub to tip', lblade_Thub: 'T along the hub arc ξ = 0', lpatch_Tmid: 'T along y = 0.5', lpatch_qmid: 'Heat flux |q| along y = 0.5',
+      lgNdm: 'NDM', lgExact: 'exact', lgRef: 'reference', lgFem: 'FEM Q4, same nodes',
+      p4: 'NDM against FEM', p4s: 'Relative energy-norm error against the number of nodes, for the radial-flow problem: NDM with MLS on non-overlapping and on overlapping cells, NDM with Gaussian RBFs, and bilinear Q4 finite elements on the same nodes. Support radius, Gauss points per side and node layout follow your settings.',
+      run: 'Run comparison', running: 'Solving {i} of {n}…', stale: 'Settings changed since the last run. Run it again.', idle: 'Press “Run comparison” to solve {n} models, from coarse to fine.',
+      noStudy: 'The comparison uses the radial-flow problem, which has an exact solution.',
+      sMLS: 'NDM-MLS', sMLSo: 'NDM-MLS, overlapping', sRBF: 'NDM-RBF', sQ4: 'FEM Q4, same nodes', rate: 'rate', cur: 'current model', yErr: 'energy-norm error',
+      readNode: 'node {i} at ({x}, {y}) m · {f} = {v}', readExact: ' · exact {v}', readLine: '{x} · NDM {fe} · ref {ex} {u}', readConv: '{s} · {dof} nodes · error {e}'
+    },
+    ms: {
+      gModel: 'Model', gApprox: 'Approximation', gCells: 'Integration cells', gNodes: 'Nod', gView: 'Paparan',
+      problem: 'Masalah', pradial: 'Suku anulus · aliran jejarian (exact)', pannulus: 'Suku anulus (paper)', pblade: 'Bilah kipas (paper)', ppatch: 'Patch test (T kuadratik)',
+      approx: 'Shape functions', mls: 'MLS', rbf: 'RBF', alpha: 'Jejari support `d = α h`, α', cells: 'Susunan cell', nonov: 'Tidak bertindih', ov: 'Bertindih', ngs: 'Gauss points setiap sisi',
+      n: 'Tahap refinement', size: '{nodes} nod · {cells} persamaan cell · {dir} baris sempadan', distort: 'Nod tidak sekata', shuffle: 'Susunan baharu',
+      field: 'Kontur', fT: 'Suhu T', fq: 'Fluks haba |q| = k|∇T|', ferr: 'Ralat |T − T exact|', fphi: 'Shape function φ bagi nod terpilih',
+      show: 'Papar', oNodes: 'Nod', oCells: 'Cell', oGauss: 'Gauss points', oSupport: 'Support', oKnots: 'Knot lines', oNet: 'Control net', reset: 'Set semula',
+      mNodes: 'anu · {c} persamaan cell · {d} baris sempadan', mTin: 'T pada lengkok dalam, θ = 45° · exact {v}', mTP: 'T pada P · rujukan {v}', mTP1: 'T pada P₁ (ξ = 0, η = 0.5) · paper {v}',
+      mPatch: 'max |T − T exact| pada nod', mErr: 'Ralat relatif, energy norm', mTQ: 'T pada Q · rujukan {v}', mTP2: 'T pada P₂ (ξ = 0.25, η = 0.5) · paper {v}',
+      mFem: 'FEM Q4, nod yang sama · energy norm', mFemP: 'FEM Q4, nod yang sama · T pada {p}', mRow: 'nonzero setiap baris (purata) · tidak simetri', mTime: 'assemble + solve',
+      pass: 'lulus', notExact: 'tidak exact',
+      support: 'Approximation gagal pada {n} titik: support-nya mengandungi terlalu sedikit nod ({k}). Naikkan jejari support atau refinement.',
+      singular: 'Matriks sistem singular. Ubah jejari support atau susunan cell.', fail2: 'Model tidak dapat diselesaikan.',
+      big: 'Model besar: ia diselesaikan apabila anda melepaskan slider.', solving: 'Menyelesaikan…',
+      mlsDir: 'MLS tidak menginterpolasi: pada nodnya sendiri, shape function bernilai {v}, bukan 1. NDM tetap mengenakan suhu secara terus, kerana baris bagi nod sempadan ialah syarat itu sendiri, Σ N_j(x_I) T_j = T̂, bukan kamiran yang memerlukan weak form.',
+      patchOK: 'Lulus: dengan basis MLS kuadratik, NDM memperoleh semula suhu kuadratik ini secara exact, walaupun dengan satu Gauss point setiap sisi, cell bertindih atau nod tidak sekata. Pada sisi lurus, fluks medan kuadratik adalah linear, jadi setiap line integral adalah exact.',
+      patchRBF: 'RBF Gaussian tulen tidak menghasilkan semula medan malar atau linear, jadi suhu kuadratik ini pun tidak diperoleh semula.',
+      patchCurved: '',
+      ovNote: 'Cell bertindih tetap memberi satu persamaan keseimbangan yang sah bagi setiap nod; paper mendapati ia converge pada kadar yang sedikit lebih rendah berbanding cell tidak bertindih.',
+      bladeNote: 'Geometri dan syarat sempadan daripada Rasin et al. (2025), Jadual 1 dan Rajah 3: 60 W/m² masuk melalui lengkok hab, 30 °C pada sisi lain, k = 1 W/(m·K). Suhu rujukan ialah nilai converged yang tersirat daripada Jadual 2 paper.',
+      annNote: 'Suku anulus daripada paper (Jadual 3): 60 W/m² masuk melalui lengkok dalam, 30 °C pada tiga sisi lain, k = 1 W/(m·K). Tiada penyelesaian bentuk tertutup; nilai rujukan diperoleh daripada finite element dengan ekstrapolasi Richardson (128 × 256 cell).',
+      radNote: 'Suku anulus daripada paper dengan sisi lurus bertebat, jadi haba mengalir secara jejarian: T = 30 + (q a / k) ln(b / r), dengan q = 60 W/m² masuk melalui lengkok dalam (a = 0.3 m), 30 °C pada lengkok luar (b = 0.6 m).',
+      p1s: '{f} dalam ruang fizikal. Segi empat: nod pada sisi bersuhu tetap, yang barisnya ialah syarat sempadan; bulatan: satu persamaan cell setiap satu. Sisi padu: T ditetapkan; anak panah: fluks haba masuk; putus-putus: bertebat. Ketik nod untuk meneliti persamaannya.',
+      p2: 'Ruang parameter dan persamaan cell', p2s: 'Cell ialah segi empat tepat dalam ruang parameter NURBS, jadi normal luar pada setiap sisi ialah (0, ±1) atau (±1, 0). Teorem divergence menukar kamiran cell bagi ∇²T kepada empat line integral; jumlahnya sama dengan sumber haba (di sini sifar) tolak fluks yang ditetapkan.',
+      eqTitle: 'Persamaan cell bagi nod {i}', eqDir: 'Baris sempadan bagi nod {i}', side_b: 'bawah', side_r: 'kanan', side_t: 'atas', side_l: 'kiri',
+      eqKnown: 'fluks ditetapkan', eqIns: 'bertebat', eqSum: 'aliran keluar bersih, jumlah empat sisi', eqSrc: 'sumber haba F̂ = −∫ Q/k dΩ', eqStencil: '{n} nod dalam baris ini',
+      eqDirTxt: 'T̂ = {T} °C. Baris: Σ N_j(x_I) T_j = T̂ melibatkan {n} nod; N_I(x_I) = {own}.',
+      eqUnit: 'Line integral bagi ∇T·n (K); darab dengan k untuk W setiap meter ketebalan.',
+      iKnots: 'Knot vectors', iCp: 'Control net', iCpV: '{a} × {b} control points · pemberat {w}', iC0: 'Garis C⁰', iNone: 'tiada', iHover: 'Titik',
+      readMap: '(ξ, η) = ({u}, {v}) → (x, y) = ({x}, {y}) m · |J| = {j}',
+      p3: 'Sepanjang satu garis', p3s: 'Keputusan NDM berbanding rujukan. Halakan untuk membaca nilai.',
+      lradial_T45: 'T sepanjang θ = 45°, lengkok dalam ke luar', lradial_q45: 'Fluks haba |q| sepanjang θ = 45°', lannulus_T45: 'T sepanjang θ = 45°, lengkok dalam ke luar', lannulus_Tin: 'T sekeliling lengkok dalam, θ = 0° → 90°',
+      lblade_Tmid: 'T sepanjang η = 0.5, hab ke hujung', lblade_Thub: 'T sepanjang lengkok hab ξ = 0', lpatch_Tmid: 'T sepanjang y = 0.5', lpatch_qmid: 'Fluks haba |q| sepanjang y = 0.5',
+      lgNdm: 'NDM', lgExact: 'exact', lgRef: 'rujukan', lgFem: 'FEM Q4, nod yang sama',
+      p4: 'NDM berbanding FEM', p4s: 'Ralat relatif energy norm berbanding bilangan nod, bagi masalah aliran jejarian: NDM dengan MLS pada cell tidak bertindih dan bertindih, NDM dengan RBF Gaussian, dan finite element bilinear Q4 pada nod yang sama. Jejari support, Gauss points setiap sisi dan susunan nod mengikut tetapan anda.',
+      run: 'Jalankan perbandingan', running: 'Menyelesaikan {i} daripada {n}…', stale: 'Tetapan telah berubah sejak larian terakhir. Jalankan semula.', idle: 'Tekan “Jalankan perbandingan” untuk menyelesaikan {n} model, dari kasar ke halus.',
+      noStudy: 'Perbandingan ini menggunakan masalah aliran jejarian, yang mempunyai exact solution.',
+      sMLS: 'NDM-MLS', sMLSo: 'NDM-MLS, bertindih', sRBF: 'NDM-RBF', sQ4: 'FEM Q4, nod yang sama', rate: 'kadar', cur: 'model semasa', yErr: 'ralat energy norm',
+      readNode: 'nod {i} pada ({x}, {y}) m · {f} = {v}', readExact: ' · exact {v}', readLine: '{x} · NDM {fe} · rujukan {ex} {u}', readConv: '{s} · {dof} nod · ralat {e}'
+    }
+  };
+
+  var NMAX = { radial: 14, annulus: 14, blade: 14, patch: 12 };
+  var LINES = { radial: ['T45', 'q45'], annulus: ['T45', 'Tin'], blade: ['Tmid', 'Thub'], patch: ['Tmid', 'qmid'] };
+  var STUDY_N = [2, 3, 4, 6, 8, 12];
+  var SERIES = [{ k: 'sMLS', approx: 'mls', overlap: 0 }, { k: 'sMLSo', approx: 'mls', overlap: 1 }, { k: 'sRBF', approx: 'rbf', overlap: 0 }, { k: 'sQ4', fem: true }];
+  var LIVE_COST = 7e5, SUB = 4, RBFMAX = 3.5;
+
+  function seg(name, opts) {
+    return '<div class="rzt-seg" role="group" data-seg="' + name + '">' + opts.map(function (o) {
+      return '<button type="button" data-v="' + o[0] + '"' + (o[1] ? ' data-k="' + o[1] + '"' : '') + '>' + (o[2] || '') + '</button>';
+    }).join('') + '</div>';
+  }
+  function rng(k, min, max, step) { return '<input class="rzt-rng" type="range" min="' + min + '" max="' + max + '" step="' + step + '" data-in="' + k + '">'; }
+  function lab(k, out) { return '<span class="rzt-lab"><span data-k="' + k + '"></span>' + (out ? '<output data-out="' + k + '"></output>' : '') + '</span>'; }
+  function chip(k) { return '<button type="button" data-ov="' + k + '" data-k="o' + k.charAt(0).toUpperCase() + k.slice(1) + '"></button>'; }
+
+  var HTML =
+    '<div class="rzt-body">' +
+      '<div class="rzt-ctrl">' +
+        '<p class="rzt-grp" data-k="gModel"></p>' +
+        '<label class="rzt-field rzt-wide"><span class="rzt-lab" data-k="problem"></span>' +
+          '<select class="rzt-sel" data-in="problem"><option value="radial" data-k="pradial"></option><option value="annulus" data-k="pannulus"></option><option value="blade" data-k="pblade"></option><option value="patch" data-k="ppatch"></option></select></label>' +
+        '<p class="rzt-grp" data-k="gApprox"></p>' +
+        '<div class="rzt-field"><span class="rzt-lab" data-k="approx"></span>' + seg('approx', [['mls', 'mls'], ['rbf', 'rbf']]) + '</div>' +
+        '<label class="rzt-field">' + lab('alpha', true) + rng('alpha', 2.5, 5, 0.5) + '</label>' +
+        '<p class="rzt-grp" data-k="gCells"></p>' +
+        '<div class="rzt-field rzt-wide"><span class="rzt-lab" data-k="cells"></span>' + seg('overlap', [['0', 'nonov'], ['1', 'ov']]) + '</div>' +
+        '<div class="rzt-field"><span class="rzt-lab" data-k="ngs"></span>' + seg('ngs', [['1', '', '1'], ['3', '', '3'], ['5', '', '5']]) + '</div>' +
+        '<p class="rzt-grp" data-k="gNodes"></p>' +
+        '<label class="rzt-field">' + lab('n', true) + rng('n', 2, 12, 1) + '<span class="rzt-size" data-out="size"></span></label>' +
+        '<div class="rzt-field">' + lab('distort', true) + rng('distort', 0, 0.4, 0.05) + '<button type="button" class="rzt-btn" data-act="shuffle" data-k="shuffle"></button></div>' +
+        '<p class="rzt-grp" data-k="gView"></p>' +
+        '<label class="rzt-field rzt-wide"><span class="rzt-lab" data-k="field"></span>' +
+          '<select class="rzt-sel" data-in="field">' + ['T', 'q', 'err', 'phi'].map(function (f) { return '<option value="' + f + '" data-k="f' + f + '"></option>'; }).join('') + '</select></label>' +
+        '<div class="rzt-field rzt-wide"><span class="rzt-lab" data-k="show"></span><div class="rzt-chips">' +
+          chip('nodes') + chip('cells') + chip('gauss') + chip('support') + chip('knots') + chip('net') + '</div></div>' +
+        '<button type="button" class="rzt-btn rzt-reset" data-act="reset" data-k="reset"></button>' +
+      '</div>' +
+      '<div class="rzt-main">' +
+        '<div class="rzt-metrics">' +
+          '<div class="rzt-m"><span class="rzt-mv" data-m="nn"></span><span class="rzt-ml" data-m="nnl"></span></div>' +
+          '<div class="rzt-m"><span class="rzt-mv"><span data-m="q"></span> <span class="rzt-chip" data-m="qc"></span></span><span class="rzt-ml" data-m="ql"></span></div>' +
+          '<div class="rzt-m"><span class="rzt-mv"><span data-m="err"></span> <span class="rzt-chip" data-m="errc"></span></span><span class="rzt-ml" data-m="errl"></span></div>' +
+          '<div class="rzt-m"><span class="rzt-mv" data-m="fem"></span><span class="rzt-ml" data-m="feml"></span></div>' +
+          '<div class="rzt-m"><span class="rzt-mv" data-m="row"></span><span class="rzt-ml" data-k="mRow"></span></div>' +
+          '<div class="rzt-m"><span class="rzt-mv" data-m="time"></span><span class="rzt-ml" data-k="mTime"></span></div>' +
+        '</div>' +
+        '<div class="rzt-note rzt-warn" data-note="warn" hidden></div>' +
+        '<div class="rzt-note rzt-ok" data-note="ok" hidden></div>' +
+        '<div class="rzt-plot"><div class="rzt-ph"><span class="rzt-h" data-h="1"></span><span class="rzt-sub" data-sub="1"></span></div>' +
+          '<div class="rzt-cvwrap"><canvas class="rzt-cv rzt-cv-fem" data-cv="1"></canvas><canvas class="rzt-ov" data-ov="1" aria-hidden="true"></canvas></div>' +
+          '<div class="rzt-cbar" data-cbar></div><span class="rzt-read rzt-read-b" data-read="1"></span></div>' +
+        '<div class="rzt-plot"><div class="rzt-ph"><span class="rzt-h" data-k="p2"></span><span class="rzt-sub" data-k="p2s"></span></div>' +
+          '<div class="rzt-ps"><div class="rzt-cvwrap rzt-psq"><canvas class="rzt-cv rzt-cv-ps" data-cv="p"></canvas><canvas class="rzt-ov" data-ov="p" aria-hidden="true"></canvas></div>' +
+          '<div><div class="rzt-eq" data-eq></div><dl class="rzt-info" data-info></dl></div></div></div>' +
+        '<div class="rzt-plot"><div class="rzt-ph"><span class="rzt-h" data-k="p3"></span>' +
+          '<select class="rzt-sel rzt-sel-inline" data-in="line"></select><span class="rzt-sub" data-k="p3s"></span><div class="rzt-legend" data-lg="2"></div></div>' +
+          '<canvas class="rzt-cv" data-cv="2"></canvas><span class="rzt-read" data-read="2"></span></div>' +
+        '<div class="rzt-plot"><div class="rzt-ph"><span class="rzt-h" data-k="p4"></span><span class="rzt-sub" data-k="p4s"></span>' +
+          '<div class="rzt-row"><button type="button" class="rzt-btn rzt-primary" data-act="study" data-k="run"></button><span class="rzt-sub" data-out="study"></span></div>' +
+          '<div class="rzt-legend" data-lg="3"></div></div>' +
+          '<canvas class="rzt-cv" data-cv="3"></canvas><span class="rzt-read" data-read="3"></span></div>' +
+      '</div>' +
+    '</div>';
+
+  var DEFAULTS = { problem: 'radial', approx: 'mls', alpha: 3.5, overlap: '0', ngs: '5', distort: 0, seed: 7, field: 'T', line: 'T45',
+                   n: { radial: 6, annulus: 6, blade: 6, patch: 4 }, ov: { nodes: true, cells: true, gauss: false, support: false, knots: true, net: false }, sel: null };
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+  RZT.register('ndm2d', function (root) {
+    root.classList.add('rzt', 'rzt-on');
+    root.innerHTML = HTML;
+    var S = clone(DEFAULTS), C = U.readColors(root), lang = 'en', cur = null, study = null, studyTok = 0, lastW = 0;
+    function q(sel) { return root.querySelector(sel); }
+    function qa(sel) { return Array.prototype.slice.call(root.querySelectorAll(sel)); }
+    function t(k) { return (T[lang] || T.en)[k] || T.en[k] || k; }
+    var cv1 = q('[data-cv="1"]'), ov1 = q('[data-ov="1"]'), cvp = q('[data-cv="p"]'), ovp = q('[data-ov="p"]'), cv2 = q('[data-cv="2"]'), cv3 = q('[data-cv="3"]');
+    var view = null, pview = null, P2 = null, P3 = null, lineData = null, convPts = [], hover = null;
+
+    function alphaEff() { return S.approx === 'rbf' ? Math.min(S.alpha, RBFMAX) : S.alpha; }
+    function cfg(extra) {
+      var c = { problem: S.problem, n: S.n[S.problem], approx: S.approx, alpha: alphaEff(), overlap: +S.overlap, ngs: +S.ngs, distort: S.distort, seed: S.seed };
+      for (var k in extra) c[k] = extra[k];
+      return c;
+    }
+    // ≈ solve time in units of 0.15 µs: nodes × side points × support size (RBF also factorises a matrix per point)
+    function cost(c) { var sz = D.size(c), s = Math.PI * c.alpha * c.alpha; return sz.nodes * (4 * c.ngs + 2) * s * (c.approx === 'rbf' ? s / 8 : 1); }
+    function studyKey() { return [S.alpha, S.ngs, S.distort, S.seed].join('|'); }
+
+    /* ── compute ───────────────────────────────────────────────── */
+    function compute() {
+      var key = JSON.stringify(cfg());
+      if (cur && cur.key === key) { computeLine(); return; }
+      var m = D.run(cfg()), r = { model: m, key: key };
+      hover = null;   // indices of the previous model are not valid any more
+      if (!m.error) {
+        var md = m.md, nn = md.nn, i, out = new Float64Array(3), sm = V.samples(md, SUB), ns = sm.n, ex = m.pr.exact;
+        r.sm = sm; r.V = new Float64Array(ns * 3).fill(NaN);
+        for (i = 0; i < ns; i++) { var v = D.evalAt(m, sm.A[i], sm.B[i], sm.SA[i], sm.SB[i], out); if (v) r.V.set(v, i * 3); }
+        r.nodeV = new Float64Array(nn * 3);
+        for (i = 0; i < nn; i++) { var w = D.evalAt(m, md.lat.A[i], md.lat.B[i], 1, 1, out); if (w) r.nodeV.set(w, i * 3); }
+        r.errs = ex ? D.errors(m) : null;
+        r.refs = m.pr.ref.pts.map(function (p) { var vv = D.evalParam(m, p.u, p.v); return vv ? vv[0] : NaN; });
+        var fm = D.femRun(cfg());
+        r.fem = fm.error ? null : { errs: ex ? D.femErrors(fm) : null, refs: m.pr.ref.pts.map(function (p) { return D.femNode(fm, p.u, p.v); }), tin: m.pr.key === 'radial' ? D.femNode(fm, 0, 0.5) : NaN };
+        if (m.pr.key === 'radial') { var ti = D.evalParam(m, 0, 0.5); r.tin = ti ? ti[0] : NaN; }
+        var nd = 0; for (i = 0; i < nn; i++) nd += m.dirich[i];
+        r.nd = nd;
+        if (S.sel == null || S.sel >= nn) S.sel = defaultNode(md, m);
+      }
+      cur = r;
+      computeLine();
+    }
+    function defaultNode(md, m) {
+      var lat = md.lat, i = Math.max(1, Math.round(lat.Mu * 0.35)), j = Math.round(lat.Mv * 0.4);
+      var k = lat.node(Math.min(lat.Mu - 1, i), Math.max(1, Math.min(lat.Mv - 1, j)));
+      return m.dirich[k] ? lat.node(1, 1) : k;
+    }
+
+    function lineDef() {
+      var m = cur.model, pr = m.pr, key = S.line, P = m.md.patch, ex = pr.exact;
+      function rr(u, v) { var p = P.point(u, v); return Math.hypot(p[0], p[1]); }
+      function th(u, v) { var p = P.point(u, v); return Math.atan2(p[1], p[0]) * 180 / Math.PI; }
+      if (pr.key === 'radial' || pr.key === 'annulus') {
+        if (key === 'Tin') return { f: 'T', xl: 'θ (°)', pt: function (s) { return [0, s]; }, x: th, ref: null, marks: [0] };
+        var f = key === 'q45' ? 'q' : 'T';
+        return { f: f, xl: 'r (m)', pt: function (s) { return [s, 0.5]; }, x: rr, ref: ex ? function (u, v) { var p = P.point(u, v); return f === 'q' ? pr.k * Math.hypot.apply(null, ex.g(p[0], p[1])) : ex.T(p[0], p[1]); } : null, marks: pr.key === 'annulus' ? [0, 1] : [] };
+      }
+      if (pr.key === 'blade') {
+        if (key === 'Thub') return { f: 'T', xl: 'η', pt: function (s) { return [0, s]; }, x: function (u, v) { return v; }, ref: null, marks: [0] };
+        return { f: 'T', xl: 'ξ', pt: function (s) { return [s, 0.5]; }, x: function (u) { return u; }, ref: null, marks: [0, 1] };
+      }
+      var g = key === 'qmid' ? 'q' : 'T';
+      return { f: g, xl: 'x (m)', pt: function (s) { return [s, 0.5]; }, x: function (u, v) { return P.point(u, v)[0]; },
+               ref: function (u, v) { var p = P.point(u, v); return g === 'q' ? pr.k * Math.hypot.apply(null, ex.g(p[0], p[1])) : ex.T(p[0], p[1]); }, marks: [] };
+    }
+    function fieldOf(f, v, x, y) {
+      if (f === 'T') return v[0];
+      if (f === 'q') return D.K * Math.hypot(v[1], v[2]);
+      if (f === 'err') { var ex = cur.model.pr.exact; return ex ? Math.abs(v[0] - ex.T(x, y)) : NaN; }
+      return NaN;
+    }
+    function computeLine() {
+      lineData = null;
+      var m = cur.model; if (m.error) return;
+      var d = lineDef(), Np = 97, xs = [], fe = [], rf = [], out = new Float64Array(3), md = m.md;
+      for (var i = 0; i < Np; i++) {
+        var s = i / (Np - 1), uv = d.pt(s), x = d.x(uv[0], uv[1]), v = D.evalAt(m, md.ax.index(uv[0]), md.ay.index(uv[1]), 1, 1, out);
+        var p = md.patch.point(uv[0], uv[1]);
+        xs.push(x); fe.push(v ? fieldOf(d.f, v, p[0], p[1]) : NaN); rf.push(d.ref ? d.ref(uv[0], uv[1]) : NaN);
+      }
+      var marks = [];
+      m.pr.ref.pts.forEach(function (p, k) { if (d.marks.indexOf(k) >= 0) { var on = d.pt(0); if ((d.xl === 'θ (°)' && p.u === 0) || (d.xl === 'η' && p.u === 0) || (d.xl !== 'θ (°)' && d.xl !== 'η' && Math.abs(p.v - 0.5) < 1e-9)) marks.push({ x: d.x(p.u, p.v), y: p.T }); } });
+      lineData = { d: d, xs: xs, fe: fe, rf: rf, unit: FLD[d.f].unit, marks: marks };
+    }
+
+    /* ── language ─────────────────────────────────────────────── */
+    function applyLang() {
+      var b = document.body && document.body.getAttribute('data-rzlang'); lang = b === 'ms' ? 'ms' : 'en';
+      qa('[data-k]').forEach(function (el) {
+        var key = el.getAttribute('data-k'); if (!key) return;
+        var txt = t(key);
+        if (el.tagName !== 'OPTION' && /[`α-ω]/.test(txt)) el.innerHTML = U.labelHtml(txt); else el.textContent = U.plain(txt);
+      });
+      fillLineSelect(); redraw();
+    }
+    function fillLineSelect() {
+      var sel = q('[data-in="line"]');
+      sel.innerHTML = LINES[S.problem].map(function (k) { return '<option value="' + k + '">' + U.esc(t('l' + S.problem + '_' + k)) + '</option>'; }).join('');
+      sel.value = S.line;
+    }
+
+    /* ── controls and metrics ─────────────────────────────────── */
+    function sync(pendingBig) {
+      var sz = D.size(cfg()), m = cur && !cur.model.error ? cur : null;
+      q('[data-in="problem"]').value = S.problem; q('[data-in="field"]').value = S.field;
+      var ni = q('[data-in="n"]'); ni.max = NMAX[S.problem]; ni.value = S.n[S.problem];
+      var ai = q('[data-in="alpha"]'); ai.max = S.approx === 'rbf' ? RBFMAX : 5; ai.value = alphaEff();
+      q('[data-in="distort"]').value = S.distort;
+      q('[data-out="n"]').textContent = S.n[S.problem]; q('[data-out="alpha"]').textContent = alphaEff().toFixed(1); q('[data-out="distort"]').textContent = S.distort.toFixed(2);
+      var nd = m ? m.nd : 0;
+      q('[data-out="size"]').textContent = U.fill(t('size'), { nodes: U.group(sz.nodes), cells: U.group(sz.nodes - nd), dir: U.group(nd) }) + (pendingBig ? ' · ' + t('big') : '');
+      ['approx', 'overlap', 'ngs'].forEach(function (g) { qa('[data-seg="' + g + '"] button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === String(S[g]))); }); });
+      qa('[data-ov]').forEach(function (b) { if (b.tagName === 'BUTTON') b.setAttribute('aria-pressed', String(!!S.ov[b.getAttribute('data-ov')])); });
+      q('[data-act="shuffle"]').hidden = !(S.distort > 0);
+      q('[data-in="field"] option[value="err"]').disabled = !(m && m.model.pr.exact);
+    }
+    function chipPct(el, val, ref) {
+      var rel = (val - ref) / ref, dv = Math.abs(rel), pc = dv * 100;
+      el.textContent = pc < 0.001 ? '<0.001%' : (rel >= 0 ? '+' : '\u2212') + (pc < 0.1 ? pc.toFixed(3) : pc.toFixed(2)) + '%';
+      el.classList.add(dv <= 1e-3 ? 'is-good' : dv <= 1e-2 ? 'is-ok' : 'is-bad');
+    }
+    function setMetrics() {
+      function put(k, v) { q('[data-m="' + k + '"]').textContent = v; }
+      var m = cur.model, chp = q('[data-m="qc"]'), chp2 = q('[data-m="errc"]'), warn = q('[data-note="warn"]'), ok = q('[data-note="ok"]');
+      chp.className = 'rzt-chip'; chp.textContent = ''; chp2.className = 'rzt-chip'; chp2.textContent = ''; warn.hidden = true; ok.hidden = true;
+      if (m.error) {
+        ['nn', 'q', 'err', 'fem', 'row', 'time'].forEach(function (k) { put(k, '—'); }); ['nnl', 'ql', 'errl', 'feml'].forEach(function (k) { put(k, ''); });
+        warn.textContent = U.fill(t(m.error) || t('fail2'), { n: m.bad || 0, k: m.why || '' }); warn.hidden = false; return;
+      }
+      var pr = m.pr, W = [], O = [], nn = m.nn;
+      put('nn', U.group(nn)); put('nnl', U.fill(t('mNodes'), { c: U.group(nn - cur.nd), d: U.group(cur.nd) }));
+      put('row', (m.nnz / nn).toFixed(1)); put('time', Math.max(1, Math.round(m.time.assemble + m.time.solve)) + ' ms');
+      function errTxt(e) { return e >= 1e-4 ? fmt(e * 100) + ' %' : U.sci(e); }
+      if (pr.key === 'radial') {
+        var te = pr.exact.T(0.3 * Math.SQRT1_2, 0.3 * Math.SQRT1_2);
+        put('q', cur.tin.toFixed(3) + ' °C'); put('ql', U.fill(t('mTin'), { v: te.toFixed(3) + ' °C' })); chipPct(chp, cur.tin, te);
+        put('err', errTxt(cur.errs.energy)); put('errl', t('mErr'));
+        if (cur.fem) { put('fem', errTxt(cur.fem.errs.energy)); put('feml', t('mFem')); }
+        O.push(t('radNote'));
+      } else if (pr.key === 'patch') {
+        var passed = cur.errs.tmax < 1e-9;
+        put('q', U.sci(cur.errs.tmax) + ' °C'); put('ql', t('mPatch')); chp.textContent = t(passed ? 'pass' : 'notExact'); chp.classList.add(passed ? 'is-good' : 'is-ok');
+        put('err', errTxt(cur.errs.energy)); put('errl', t('mErr'));
+        if (cur.fem) { put('fem', errTxt(cur.fem.errs.energy)); put('feml', t('mFem')); }
+        if (passed) O.push(t('patchOK')); else if (S.approx === 'rbf') W.push(t('patchRBF'));
+      } else {
+        var p0 = pr.ref.pts[0], p1 = pr.ref.pts[1], blade = pr.key === 'blade';
+        put('q', cur.refs[0].toFixed(3) + ' °C'); put('ql', U.fill(t(blade ? 'mTP1' : 'mTP'), { v: p0.T.toFixed(3) + ' °C' })); chipPct(chp, cur.refs[0], p0.T);
+        put('err', cur.refs[1].toFixed(3) + ' °C'); put('errl', U.fill(t(blade ? 'mTP2' : 'mTQ'), { v: p1.T.toFixed(3) + ' °C' })); chipPct(chp2, cur.refs[1], p1.T);
+        if (cur.fem) { put('fem', cur.fem.refs[0].toFixed(3) + ' °C'); put('feml', U.fill(t('mFemP'), { p: blade ? 'P₁' : 'P' })); }
+        O.push(t(blade ? 'bladeNote' : 'annNote'));
+      }
+      if (S.approx === 'mls' && pr.key !== 'patch') O.push(U.fill(t('mlsDir'), { v: fmt(D.phiAt(m, S.sel, m.md.lat.A[S.sel], m.md.lat.B[S.sel], 1, 1)) }));
+      if (S.overlap === '1') O.push(t('ovNote'));
+      if (W.length) { warn.textContent = W.join(' '); warn.hidden = false; }
+      if (O.length) { ok.textContent = O.join(' '); ok.hidden = false; }
+    }
+
+    /* ── sample values ────────────────────────────────────────── */
+    function sampleValues() {
+      var m = cur.model, sm = cur.sm, vals = new Float64Array(sm.n), lo = Infinity, hi = -Infinity, i;
+      for (i = 0; i < sm.n; i++) {
+        var v;
+        if (S.field === 'phi') v = D.phiAt(m, S.sel, sm.A[i], sm.B[i], sm.SA[i], sm.SB[i]);
+        else v = isFinite(cur.V[i * 3]) ? fieldOf(S.field, [cur.V[i * 3], cur.V[i * 3 + 1], cur.V[i * 3 + 2]], sm.X[i], sm.Y[i]) : NaN;
+        vals[i] = v; if (isFinite(v)) { if (v < lo) lo = v; if (v > hi) hi = v; }
+      }
+      return { vals: vals, lo: lo, hi: hi };
+    }
+    function setSize(cvs, W, H) {
+      var dpr = window.devicePixelRatio || 1;
+      cvs.forEach(function (c) { c.style.height = H + 'px'; if (c.width !== Math.round(W * dpr) || c.height !== Math.round(H * dpr)) { c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); } });
+    }
+    // closed outline of an index-space rectangle [a0, a1] × [b0, b1], mapped by f(a, b) → [x, y] (screen)
+    function rectPath(c, f, nseg) {
+      var pts = [], k, n = nseg || 16;
+      for (k = 0; k <= n; k++) pts.push(f(c[0] + (c[1] - c[0]) * k / n, c[2]));
+      for (k = 1; k <= n; k++) pts.push(f(c[1], c[2] + (c[3] - c[2]) * k / n));
+      for (k = n - 1; k >= 0; k--) pts.push(f(c[0] + (c[1] - c[0]) * k / n, c[3]));
+      for (k = n - 1; k > 0; k--) pts.push(f(c[0], c[2] + (c[3] - c[2]) * k / n));
+      return pts;
+    }
+
+    /* ── physical view ────────────────────────────────────────── */
+    function drawContour() {
+      var m = cur.model, g, dpr = window.devicePixelRatio || 1, W = cv1.parentNode.clientWidth;
+      var h = q('[data-h="1"]'), sub = q('[data-sub="1"]'), cbar = q('[data-cbar]');
+      h.textContent = U.plain(t('f' + S.field));
+      if (!W) return;
+      if (m.error) {
+        setSize([cv1, ov1], W, 220); g = cv1.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, 220);
+        g.fillStyle = C.fg2; g.font = '13px Poppins, system-ui, sans-serif'; g.textAlign = 'center'; g.fillText(t('fail2'), W / 2, 110);
+        cbar.innerHTML = ''; sub.textContent = ''; view = null; drawHover(); return;
+      }
+      var md = m.md, sm = cur.sm, ns = sm.n, i, x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+      for (i = 0; i < ns; i++) { x0 = Math.min(x0, sm.X[i]); x1 = Math.max(x1, sm.X[i]); y0 = Math.min(y0, sm.Y[i]); y1 = Math.max(y1, sm.Y[i]); }
+      if (S.ov.net) for (var a1 = 0; a1 < md.patch.nu; a1++) for (var b1 = 0; b1 < md.patch.nv; b1++) { var cp = md.patch.ctrl(a1, b1); x0 = Math.min(x0, cp[0]); x1 = Math.max(x1, cp[0]); y0 = Math.min(y0, cp[1]); y1 = Math.max(y1, cp[1]); }
+      var fit = V.fit(W, x0, x1, y0, y1, 34, 220, 520), SX = fit.SX, SY = fit.SY, H = fit.H;
+      setSize([cv1, ov1], W, H);
+      g = cv1.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+      var fd = FLD[S.field], sv = sampleValues(), bp = U.bandPainter(sv.lo, sv.hi, fd.div, C), px = new Float64Array(ns), py = new Float64Array(ns);
+      for (i = 0; i < ns; i++) { px[i] = SX(sm.X[i]); py[i] = SY(sm.Y[i]); }
+      V.contour(bp, sm, px, py, sv.vals); bp.paint(g);
+      var o = new Float64Array(12);
+      function phys(a, b) { md.map.at(a, b, o, 1, 1); return [SX(o[0]), SY(o[1])]; }
+      drawCommon(g, md, phys, function (n) { return [SX(md.X[n]), SY(md.Y[n])]; }, true, SX, SY);
+      boundaryGlyphs(g, md, phys);
+      view = { SX: SX, SY: SY, px: px, py: py, node: function (n) { return [SX(md.X[n]), SY(md.Y[n])]; } };
+      sub.textContent = U.fill(t('p1s'), { f: U.plain(t('f' + S.field)) });
+      U.colorbar(cbar, bp.cols, bp.lev, fd.unit);
+      cur.sv = sv;
+      drawHover();
+    }
+    // overlays common to both views; F(a, b) maps index → screen, nodeXY(n) gives a node's screen position
+    function drawCommon(g, md, Fm, nodeXY, phys, SX, SY) {
+      var m = cur.model, lat = md.lat, nn = md.nn, i;
+      if (S.ov.cells) {
+        g.save(); g.strokeStyle = U.rgba(C.fg, S.overlap === '1' ? 0.22 : 0.3); g.lineWidth = 0.7;
+        for (i = 0; i < nn; i++) { if (m.dirich[i]) continue; V.stroke(g, rectPath(D.cellOf(md, i), Fm, 6), true); g.stroke(); }
+        g.restore();
+      }
+      if (S.ov.knots) {
+        g.save(); g.setLineDash([7, 3, 2, 3]);
+        md.ax.A.slice(1, -1).forEach(function (a) { var c0 = md.ax.c0.indexOf(a) >= 0; g.strokeStyle = c0 ? C.fg : U.rgba(C.fg, 0.55); g.lineWidth = c0 ? 1.4 : 1; var pts = []; for (var k = 0; k <= 40; k++) pts.push(Fm(a, lat.Mv * k / 40)); V.stroke(g, pts); g.stroke(); });
+        md.ay.A.slice(1, -1).forEach(function (b) { var c0 = md.ay.c0.indexOf(b) >= 0; g.strokeStyle = c0 ? C.fg : U.rgba(C.fg, 0.55); g.lineWidth = c0 ? 1.4 : 1; var pts = []; for (var k = 0; k <= 40; k++) pts.push(Fm(lat.Mu * k / 40, b)); V.stroke(g, pts); g.stroke(); });
+        g.restore();
+      }
+      if (S.ov.net && phys) V.controlNet(g, md.patch, SX, SY, C);
+      if (S.ov.gauss) {
+        g.fillStyle = U.rgba(C.fg, 0.5);
+        for (i = 0; i < nn; i++) { if (m.dirich[i]) continue; D.sidePoints(md, D.cellOf(md, i), md.ngs).forEach(function (P) { var s = Fm(P.a, P.b); g.fillRect(s[0] - 1, s[1] - 1, 2, 2); }); }
+      }
+      if (S.ov.support && S.sel != null) {
+        var a = lat.A[S.sel], b = lat.B[S.sel], d = md.S.d, su = lat.ax.segOf(a, 1), sv2 = lat.ay.segOf(b, 1), pts = [];
+        for (i = 0; i <= 72; i++) {
+          var th = 2 * Math.PI * i / 72, aa = Math.max(su[0], Math.min(su[1], a + d * Math.cos(th))), bb = Math.max(sv2[0], Math.min(sv2[1], b + d * Math.sin(th)));
+          pts.push(Fm(aa, bb));
+        }
+        V.stroke(g, pts, true); g.fillStyle = U.rgba(C.accent, 0.12); g.fill();
+        g.save(); g.setLineDash([5, 4]); g.strokeStyle = C.accent; g.lineWidth = 1.4; g.stroke(); g.restore();
+      }
+      // the selected node's cell: outline, side Gauss points and outward normals
+      if (S.sel != null && !m.dirich[S.sel]) {
+        var c = D.cellOf(md, S.sel);
+        g.save(); V.stroke(g, rectPath(c, Fm, 16), true); g.fillStyle = U.rgba(C.gold, 0.14); g.fill(); g.lineWidth = 2; g.strokeStyle = C.gold; g.stroke(); g.restore();
+        g.fillStyle = C.fg;
+        D.sidePoints(md, c, md.ngs).forEach(function (P) { var s = Fm(P.a, P.b); g.beginPath(); g.arc(s[0], s[1], 2.2, 0, Math.PI * 2); g.fill(); });
+        // outward normals at the side midpoints
+        var mids = [['b', (c[0] + c[1]) / 2, c[2], 0, -1], ['r', c[1], (c[2] + c[3]) / 2, 1, 0], ['t', (c[0] + c[1]) / 2, c[3], 0, 1], ['l', c[0], (c[2] + c[3]) / 2, -1, 0]];
+        g.save(); g.strokeStyle = C.accent; g.fillStyle = C.accent; g.lineWidth = 1.6;
+        mids.forEach(function (mm) {
+          var p0 = Fm(mm[1], mm[2]), e = 1e-3, pa = Fm(mm[1] + (mm[3] ? 0 : e), mm[2] + (mm[3] ? e : 0)), pb = Fm(mm[1] - (mm[3] ? 0 : e), mm[2] - (mm[3] ? e : 0));
+          // screen normal: perpendicular to the side tangent, pointing away from the cell
+          var tx = pa[0] - pb[0], ty = pa[1] - pb[1], L = Math.hypot(tx, ty) || 1, nx = ty / L, ny = -tx / L;
+          var inner = Fm(mm[1] - mm[3] * 0.25 * (c[1] - c[0]), mm[2] - mm[4] * 0.25 * (c[3] - c[2]));
+          if ((inner[0] - p0[0]) * nx + (inner[1] - p0[1]) * ny > 0) { nx = -nx; ny = -ny; }
+          var len = 16, ex = p0[0] + nx * len, ey = p0[1] + ny * len;
+          g.beginPath(); g.moveTo(p0[0], p0[1]); g.lineTo(ex, ey); g.stroke();
+          g.beginPath(); g.moveTo(ex, ey); g.lineTo(ex - nx * 5 - ny * 3, ey - ny * 5 + nx * 3); g.lineTo(ex - nx * 5 + ny * 3, ey - ny * 5 - nx * 3); g.closePath(); g.fill();
+        });
+        g.restore();
+      }
+      if (S.ov.nodes) {
+        var r = nn > 600 ? 1.7 : 2.5;
+        g.lineWidth = 1; g.strokeStyle = C.fg; g.fillStyle = C.surface;
+        for (i = 0; i < nn; i++) {
+          var p = nodeXY(i); g.beginPath();
+          if (m.dirich[i]) g.rect(p[0] - r, p[1] - r, 2 * r, 2 * r); else g.arc(p[0], p[1], r, 0, Math.PI * 2);
+          g.fill(); g.stroke();
+        }
+      }
+      if (S.sel != null) { var ps = nodeXY(S.sel); g.beginPath(); g.arc(ps[0], ps[1], 4.5, 0, Math.PI * 2); g.fillStyle = C.accent; g.fill(); g.lineWidth = 1.5; g.strokeStyle = C.surface; g.stroke(); }
+      if (lineData && phys) {
+        var d = lineData.d, pts2 = [];
+        for (i = 0; i <= 40; i++) { var uv = d.pt(i / 40); pts2.push(Fm(md.ax.index(uv[0]), md.ay.index(uv[1]))); }
+        g.save(); g.setLineDash([6, 4]); g.strokeStyle = C.fg; g.lineWidth = 1.4; V.stroke(g, pts2); g.stroke(); g.restore();
+      }
+    }
+    // boundary conditions: prescribed T (solid), heat flux in (arrows), insulated (dashed)
+    function boundaryGlyphs(g, md, Fm) {
+      var pr = cur.model.pr, lat = md.lat;
+      [['s0', 0, null], ['s1', lat.Mu, null], ['t0', null, 0], ['t1', null, lat.Mv]].forEach(function (E) {
+        var bc = pr.bc(E[0], 0, 0), along = E[1] === null, M = along ? lat.Mu : lat.Mv, pts = [];
+        for (var k = 0; k <= 60; k++) { var s = M * k / 60; pts.push(Fm(along ? s : E[1], along ? E[2] : s)); }
+        g.save();
+        if (bc && bc.T !== undefined) { g.strokeStyle = C.accent; g.lineWidth = 3; V.stroke(g, pts); g.stroke(); }
+        else if (!bc) { g.setLineDash([4, 4]); g.strokeStyle = C.fg2; g.lineWidth = 1.5; V.stroke(g, pts); g.stroke(); }
+        else {
+          g.strokeStyle = C.gold; g.fillStyle = C.gold; g.lineWidth = 1.8;
+          var cx = 0, cy = 0; pts.forEach(function (p) { cx += p[0]; cy += p[1]; }); cx /= pts.length; cy /= pts.length;
+          var mid = Fm(lat.Mu / 2, lat.Mv / 2);
+          for (var j = 3; j < 60; j += 6) {
+            var a = pts[j - 1], b = pts[j + 1], tx = b[0] - a[0], ty = b[1] - a[1], L = Math.hypot(tx, ty) || 1, nx = -ty / L, ny = tx / L, p = pts[j];
+            if ((mid[0] - p[0]) * nx + (mid[1] - p[1]) * ny < 0) { nx = -nx; ny = -ny; }
+            var sx = p[0] - nx * 18, sy = p[1] - ny * 18, ex = p[0] - nx * 3, ey = p[1] - ny * 3;
+            g.beginPath(); g.moveTo(sx, sy); g.lineTo(ex, ey); g.stroke();
+            g.beginPath(); g.moveTo(ex, ey); g.lineTo(ex - nx * 5 - ny * 3, ey - ny * 5 + nx * 3); g.lineTo(ex - nx * 5 + ny * 3, ey - ny * 5 - nx * 3); g.closePath(); g.fill();
+          }
+        }
+        g.restore();
+      });
+    }
+
+    /* ── parameter-space view and the cell equation ───────────── */
+    function drawParam() {
+      var m = cur.model, dpr = window.devicePixelRatio || 1, W = cvp.parentNode.clientWidth;
+      if (!W) return;
+      if (m.error) { setSize([cvp, ovp], W, 120); var g0 = cvp.getContext('2d'); g0.setTransform(dpr, 0, 0, dpr, 0, 0); g0.clearRect(0, 0, W, 120); q('[data-info]').innerHTML = ''; q('[data-eq]').innerHTML = ''; pview = null; return; }
+      var md = m.md, sm = cur.sm, ns = sm.n, i, M = 30, side = Math.min(W - 2 * M, 360), H = side + 2 * M;
+      setSize([cvp, ovp], W, H);
+      var ox = (W - side) / 2, SX = function (u) { return ox + u * side; }, SY = function (v) { return M + (1 - v) * side; };
+      var g = cvp.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+      var sv = cur.sv || sampleValues(), bp = U.bandPainter(sv.lo, sv.hi, FLD[S.field].div, C), px = new Float64Array(ns), py = new Float64Array(ns);
+      for (i = 0; i < ns; i++) { px[i] = SX(sm.U[i]); py[i] = SY(sm.W[i]); }
+      V.contour(bp, sm, px, py, sv.vals); bp.paint(g);
+      function Fm(a, b) { return [SX(md.ax.param(a, 1)), SY(md.ay.param(b, 1))]; }
+      drawCommon(g, md, Fm, function (n) { return Fm(md.lat.A[n], md.lat.B[n]); }, false, SX, SY);
+      g.strokeStyle = C.fg2; g.lineWidth = 1; g.strokeRect(SX(0), SY(1), side, side);
+      g.fillStyle = C.fg2; g.font = '11px "IBM Plex Mono", ui-monospace, monospace'; g.textAlign = 'center'; g.textBaseline = 'top';
+      md.patch.ku.forEach(function (u) { g.fillText(String(+u.toFixed(3)), SX(u), SY(0) + 5); });
+      g.textAlign = 'right'; g.textBaseline = 'middle';
+      md.patch.kv.forEach(function (v) { g.fillText(String(+v.toFixed(3)), SX(0) - 5, SY(v)); });
+      g.textAlign = 'left'; g.textBaseline = 'top'; g.fillText('ξ', SX(1) + 6, SY(0) + 5);
+      g.textAlign = 'right'; g.textBaseline = 'bottom'; g.fillText('η', SX(0) - 5, SY(1) - 6);
+      pview = { SX: SX, SY: SY, px: px, py: py, node: function (n) { return Fm(md.lat.A[n], md.lat.B[n]); } };
+      fillEq(md); fillInfo(md);
+      drawHover();
+    }
+    function fillEq(md) {
+      var m = cur.model, I = S.sel, el = q('[data-eq]'); if (I == null) { el.innerHTML = ''; return; }
+      var rep = D.cellReport(m, I), html;
+      if (rep.kind === 'dirichlet') {
+        html = '<p class="rzt-eq-h">' + U.esc(U.fill(t('eqDir'), { i: I })) + '</p><p>' + U.esc(U.fill(t('eqDirTxt'), { T: fmt(rep.T), n: rep.stencil, own: fmt(rep.own) })) + '</p>';
+      } else {
+        var rows = [['b', '−∫ (T,ξ G₁₂ + T,η G₂₂) dξ'], ['r', '+∫ (T,ξ G₁₁ + T,η G₁₂) dη'], ['t', '+∫ (T,ξ G₁₂ + T,η G₂₂) dξ'], ['l', '−∫ (T,ξ G₁₁ + T,η G₁₂) dη']];
+        html = '<p class="rzt-eq-h">' + U.esc(U.fill(t('eqTitle'), { i: I })) + '</p><table class="rzt-tbl rzt-eq-t"><tbody>' + rows.map(function (r) {
+          var kn = rep.known[r[0]], val = kn !== null ? kn : rep.sides[r[0]], tag = kn !== null ? (kn === 0 ? t('eqIns') : t('eqKnown')) : '';
+          return '<tr><td>' + U.esc(t('side_' + r[0])) + '</td><td class="rzt-eq-f">' + U.esc(r[1]) + (tag ? ' <em>' + U.esc(tag) + '</em>' : '') + '</td><td>' + U.esc(fmt(val)) + '</td></tr>';
+        }).join('') + '<tr class="rzt-eq-s"><td colspan="2">' + U.esc(t('eqSum')) + '</td><td>' + U.esc(fmt(rep.total)) + '</td></tr>' +
+          '<tr><td colspan="2">' + U.esc(t('eqSrc')) + '</td><td>' + U.esc(fmt(rep.source)) + '</td></tr></tbody></table>' +
+          '<p class="rzt-eq-n">' + U.esc(U.fill(t('eqStencil'), { n: rep.stencil })) + ' · ' + U.esc(t('eqUnit')) + '</p>';
+      }
+      el.innerHTML = html;
+    }
+    function fillInfo(md) {
+      var P = md.patch, ws = {}, i, j;
+      for (i = 0; i < P.nu; i++) for (j = 0; j < P.nv; j++) ws[+P.ctrl(i, j)[2].toFixed(4)] = 1;
+      var wl = Object.keys(ws).map(Number).sort(function (a, b) { return b - a; }).map(function (w) { return String(+w.toFixed(4)); }).join(', ');
+      var c0 = P.c0u.map(function (u) { return 'ξ = ' + u; }).concat(P.c0v.map(function (v) { return 'η = ' + v; }));
+      var rows = [
+        [t('iKnots'), 'Ξ = ' + V.knotText(P.U) + ', p = ' + P.p + '<br>H = ' + V.knotText(P.V) + ', q = ' + P.q],
+        [t('iCp'), U.fill(t('iCpV'), { a: P.nu, b: P.nv, w: wl })],
+        [t('iC0'), c0.length ? c0.join(', ') : t('iNone')],
+        [t('iHover'), '<span data-out="hover">—</span>']
+      ];
+      q('[data-info]').innerHTML = rows.map(function (r) { return '<dt>' + U.esc(r[0]) + '</dt><dd>' + r[1] + '</dd>'; }).join('');
+    }
+
+    /* ── hover, linked between the views ──────────────────────── */
+    function drawHover() {
+      var dpr = window.devicePixelRatio || 1, rd = q('[data-read="1"]'), ho = q('[data-out="hover"]');
+      [ov1, ovp].forEach(function (cv) { var g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, cv.width / dpr, cv.height / dpr); });
+      if (!hover || !view || !pview || cur.model.error) { rd.textContent = ''; if (ho) ho.textContent = '—'; return; }
+      var m = cur.model, md = m.md, sm = cur.sm, fd = FLD[S.field];
+      function ring(cv, p) { var g = cv.getContext('2d'); g.beginPath(); g.arc(p[0], p[1], 6, 0, Math.PI * 2); g.lineWidth = 2; g.strokeStyle = C.surface; g.stroke(); g.beginPath(); g.arc(p[0], p[1], 5, 0, Math.PI * 2); g.lineWidth = 1.6; g.strokeStyle = C.fg; g.stroke(); }
+      if (hover.node != null) {
+        var n = hover.node; ring(ov1, view.node(n)); ring(ovp, pview.node(n));
+        var x = md.X[n], y = md.Y[n], nv = cur.nodeV, v, ex = NaN;
+        if (S.field === 'phi') v = D.phiAt(m, S.sel, md.lat.A[n], md.lat.B[n], 1, 1);
+        else { v = fieldOf(S.field, [nv[n * 3], nv[n * 3 + 1], nv[n * 3 + 2]], x, y); if (S.field === 'T' && m.pr.exact) ex = m.pr.exact.T(x, y); }
+        rd.textContent = U.fill(t('readNode'), { i: n, x: x.toFixed(3), y: y.toFixed(3), f: SYM[S.field], v: fmt(v) + (fd.unit ? ' ' + fd.unit : '') }) + (isFinite(ex) ? U.fill(t('readExact'), { v: fmt(ex) + ' ' + fd.unit }) : '');
+        if (ho) { var o = md.map.at(md.lat.A[n], md.lat.B[n]); ho.textContent = U.fill(t('readMap'), { u: o[7].toFixed(3), v: o[8].toFixed(3), x: x.toFixed(3), y: y.toFixed(3), j: fmt(o[11]) }); }
+        return;
+      }
+      var k = hover.k; ring(ov1, [view.px[k], view.py[k]]); ring(ovp, [pview.px[k], pview.py[k]]);
+      rd.textContent = SYM[S.field] + ' = ' + fmt(cur.sv ? cur.sv.vals[k] : NaN) + (fd.unit ? ' ' + fd.unit : '');
+      if (ho) ho.textContent = U.fill(t('readMap'), { u: sm.U[k].toFixed(3), v: sm.W[k].toFixed(3), x: sm.X[k].toFixed(3), y: sm.Y[k].toFixed(3), j: fmt(sm.J[k]) });
+    }
+    function nearest(ev, cv, vw) {
+      var r = cv.getBoundingClientRect(), mx = ev.clientX - r.left, my = ev.clientY - r.top, best = null, bd = 14 * 14, i, nn = cur.model.md.nn;
+      for (i = 0; i < nn; i++) { var p = vw.node(i), dx = p[0] - mx, dy = p[1] - my, d = dx * dx + dy * dy; if (d < bd) { bd = d; best = { node: i }; } }
+      if (best) return best;
+      bd = 30 * 30;
+      for (i = 0; i < vw.px.length; i++) { var ex = vw.px[i] - mx, ey = vw.py[i] - my, e = ex * ex + ey * ey; if (e < bd) { bd = e; best = { k: i }; } }
+      return best;
+    }
+    [[ov1, function () { return view; }], [ovp, function () { return pview; }]].forEach(function (p) {
+      p[0].addEventListener('mousemove', function (ev) { if (!view || !pview || cur.model.error) return; hover = nearest(ev, p[0], p[1]()); drawHover(); });
+      p[0].addEventListener('mouseleave', function () { hover = null; drawHover(); });
+      p[0].addEventListener('click', function (ev) { if (!view || !pview || cur.model.error) return; var h = nearest(ev, p[0], p[1]()); if (!h || h.node == null) return; S.sel = h.node; update(false); });
+    });
+
+    /* ── line plot ────────────────────────────────────────────── */
+    function drawLine() {
+      var lg = q('[data-lg="2"]');
+      if (!lineData) { P2 = U.plot(cv2, { xr: [0, 1], yr: [0, 1] }, C); lg.innerHTML = ''; return; }
+      var L = lineData, lo = Infinity, hi = -Infinity, pts = [], items = [];
+      L.fe.concat(L.rf).concat(L.marks.map(function (m) { return m.y; })).forEach(function (v) { if (isFinite(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); } });
+      if (!isFinite(lo)) { lo = 0; hi = 1; }
+      var pad = (hi - lo) * 0.08 || Math.max(Math.abs(hi) * 0.01, 1e-3); lo -= pad; hi += pad;
+      var hasRef = L.rf.some(isFinite), lines = [];
+      if (hasRef) lines.push({ x: L.xs, y: L.rf, stroke: U.rgba(C.fg2, 0.45), width: 5 });
+      lines.push({ x: L.xs, y: L.fe, stroke: C.accent, width: 1.8 });
+      L.marks.forEach(function (mk) { pts.push({ x: mk.x, y: mk.y, r: 5, fill: C.gold, stroke: C.surface, lw: 1.5, shape: 'diamond' }); });
+      var xr = [Math.min.apply(null, L.xs), Math.max.apply(null, L.xs)];
+      P2 = U.plot(cv2, { xr: xr, yr: [lo, hi], xlabel: L.d.xl, ylabel: L.unit, ml: 56, lines: lines, points: pts }, C);
+      items.push({ t: t('lgNdm') + ' (' + t(S.approx) + ', α = ' + alphaEff().toFixed(1) + ')', c: C.accent });
+      if (hasRef) items.push({ t: t('lgExact'), c: U.rgba(C.fg2, 0.6) });
+      if (pts.length) items.push({ t: t('lgRef'), c: C.gold, type: 'marker', shape: 'diamond' });
+      lg.innerHTML = U.legendHtml(items);
+    }
+    cv2.addEventListener('mousemove', function (ev) {
+      if (!P2 || !lineData) return;
+      var r = cv2.getBoundingClientRect(), x = P2.invX(ev.clientX - r.left), L = lineData, i = 0, bd = Infinity;
+      for (var k = 0; k < L.xs.length; k++) { var d = Math.abs(L.xs[k] - x); if (d < bd) { bd = d; i = k; } }
+      q('[data-read="2"]').textContent = U.fill(t('readLine'), { x: L.d.xl.split(' ')[0] + ' = ' + fmt(L.xs[i]), fe: fmt(L.fe[i]), ex: fmt(L.rf[i]), u: L.unit });
+    });
+    cv2.addEventListener('mouseleave', function () { q('[data-read="2"]').textContent = ''; });
+
+    /* ── NDM against FEM (radial flow) ────────────────────────── */
+    function runStudy() {
+      var tok = ++studyTok, jobs = [];
+      SERIES.forEach(function (sr, si) { STUDY_N.forEach(function (n) { jobs.push({ si: si, n: n }); }); });
+      study = { key: studyKey(), pts: SERIES.map(function () { return []; }), done: 0, total: jobs.length };
+      (function next() {
+        if (tok !== studyTok) return;
+        if (!jobs.length) { study.finished = true; drawConv(); return; }
+        var j = jobs.shift(), sr = SERIES[j.si], c = { problem: 'radial', n: j.n, alpha: S.alpha, ngs: +S.ngs, distort: S.distort, seed: S.seed };
+        if (sr.fem) { var fm = D.femRun(c); if (!fm.error) study.pts[j.si].push({ dof: fm.T.length, e: D.femErrors(fm).energy }); }
+        else {
+          c.approx = sr.approx; c.overlap = sr.overlap; if (sr.approx === 'rbf') c.alpha = Math.min(S.alpha, RBFMAX);
+          var em = D.run(c); if (!em.error) study.pts[j.si].push({ dof: em.nn, e: D.errors(em).energy });
+        }
+        study.done++; drawConv();
+        setTimeout(next, 0);
+      })();
+    }
+    function drawConv() {
+      var lg = q('[data-lg="3"]'), msg = q('[data-out="study"]'), btn = q('[data-act="study"]'), series = U.series(C);
+      var valid = study && study.key === studyKey(), okP = S.problem === 'radial';
+      btn.disabled = !okP || !!(valid && !study.finished);
+      if (!okP) msg.textContent = t('noStudy');
+      else if (!study) msg.textContent = U.fill(t('idle'), { n: SERIES.length * STUDY_N.length });
+      else if (!valid) msg.textContent = t('stale');
+      else msg.textContent = study.finished ? '' : U.fill(t('running'), { i: study.done, n: study.total });
+      var lines = [], pts = [], items = [], all = []; convPts = [];
+      if (valid && okP) SERIES.forEach(function (sr, i) {
+        var P = study.pts[i].filter(function (p) { return p.e > 0 && isFinite(p.e); }); if (!P.length) return;
+        lines.push({ x: P.map(function (p) { return p.dof; }), y: P.map(function (p) { return p.e; }), stroke: series[i], width: 2, dash: sr.fem ? [5, 4] : sr.overlap ? [2, 3] : null });
+        P.forEach(function (p) { pts.push({ x: p.dof, y: p.e, r: 4.5, fill: series[i], stroke: C.surface, lw: 1.5, shape: SHAPES[i] }); convPts.push({ s: t(sr.k), dof: p.dof, e: p.e }); all.push(p); });
+        var rate = P.length > 1 ? Math.log(P[P.length - 2].e / P[P.length - 1].e) / Math.log(Math.sqrt(P[P.length - 1].dof / P[P.length - 2].dof)) : NaN;
+        items.push({ t: t(sr.k) + (isFinite(rate) ? ' · ' + t('rate') + ' ' + rate.toFixed(2) : ''), c: series[i], type: 'marker', shape: SHAPES[i] });
+      });
+      if (cur && !cur.model.error && okP && cur.errs) { all.push({ dof: cur.model.nn, e: cur.errs.energy }); pts.push({ x: cur.model.nn, y: cur.errs.energy, r: 7.5, stroke: C.fg, lw: 1.8 }); items.push({ t: t('cur'), c: C.surface, type: 'dot', b: C.fg }); }
+      var dx = [10, 1e3], dy = [1e-4, 1];
+      if (all.length) {
+        var mnx = Math.min.apply(null, all.map(function (p) { return p.dof; })), mxx = Math.max.apply(null, all.map(function (p) { return p.dof; }));
+        var mny = Math.min.apply(null, all.map(function (p) { return p.e; })), mxy = Math.max.apply(null, all.map(function (p) { return p.e; }));
+        dx = [Math.pow(10, Math.floor(Math.log10(mnx))), Math.pow(10, Math.ceil(Math.log10(mxx)))]; dy = [Math.pow(10, Math.floor(Math.log10(mny))), Math.pow(10, Math.ceil(Math.log10(mxy)))];
+        if (dy[1] / dy[0] < 100) dy[0] = dy[1] / 100; if (dx[1] / dx[0] < 100) dx[1] = dx[0] * 100;
+      }
+      P3 = U.plot(cv3, { xr: dx, yr: dy, xlog: true, ylog: true, xlabel: t('gNodes').toLowerCase(), ylabel: t('yErr'), lines: lines, points: pts }, C);
+      lg.innerHTML = U.legendHtml(items);
+    }
+    cv3.addEventListener('mousemove', function (ev) {
+      if (!P3 || !convPts.length) return;
+      var r = cv3.getBoundingClientRect(), mx = ev.clientX - r.left, my = ev.clientY - r.top, best = null, bd = 16 * 16;
+      convPts.forEach(function (p) { var dx = P3.X(p.dof) - mx, dy = P3.Y(p.e) - my, d = dx * dx + dy * dy; if (d < bd) { bd = d; best = p; } });
+      q('[data-read="3"]').textContent = best ? U.fill(t('readConv'), { s: best.s, dof: U.group(best.dof), e: U.sci(best.e) }) : '';
+    });
+    cv3.addEventListener('mouseleave', function () { q('[data-read="3"]').textContent = ''; });
+
+    /* ── redraw / update ──────────────────────────────────────── */
+    function redraw() { if (!cur) return; sync(); setMetrics(); cur.sv = null; drawContour(); drawParam(); drawLine(); drawConv(); }
+    var pending = false, needCompute = false;
+    function update(recompute) {
+      if (recompute) needCompute = true;
+      if (pending) return; pending = true;
+      var heavy = needCompute && cost(cfg()) > LIVE_COST;
+      if (heavy) q('[data-sub="1"]').textContent = t('solving');
+      (heavy ? function (f) { setTimeout(f, 30); } : requestAnimationFrame)(function () {
+        pending = false;
+        if (needCompute) { needCompute = false; compute(); }
+        redraw();
+      });
+    }
+    var RECOMP = { n: 1, distort: 1, alpha: 1 };
+    function readInput(el) {
+      var k = el.getAttribute('data-in'), v = el.value;
+      if (k === 'n') S.n[S.problem] = +v;
+      else if (k === 'line' || k === 'field') S[k] = v;
+      else if (k === 'problem') { S.problem = v; S.line = LINES[v][0]; S.sel = null; if (S.field === 'err' && v !== 'radial' && v !== 'patch') S.field = 'T'; fillLineSelect(); }
+      else S[k] = +v;
+      return k;
+    }
+    root.addEventListener('input', function (e) {
+      var k = e.target.getAttribute('data-in'); if (!k || e.target.tagName === 'SELECT') return;
+      readInput(e.target);
+      if (RECOMP[k]) { if (cost(cfg()) <= LIVE_COST) update(true); else sync(true); }
+    });
+    root.addEventListener('change', function (e) {
+      var k = e.target.getAttribute('data-in'); if (!k) return;
+      readInput(e.target);
+      if (k === 'line' || k === 'field') { computeLine(); update(false); return; }
+      update(true);
+    });
+    root.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b || !root.contains(b)) return;
+      var sg = b.parentNode.getAttribute('data-seg');
+      if (sg) { S[sg] = b.getAttribute('data-v'); update(true); return; }
+      var ov = b.getAttribute('data-ov');
+      if (ov && b.tagName === 'BUTTON') { S.ov[ov] = !S.ov[ov]; update(false); return; }
+      var act = b.getAttribute('data-act');
+      if (act === 'shuffle') { S.seed = (S.seed * 48271 + 11) % 2147483647; update(true); }
+      else if (act === 'reset') { studyTok++; study = null; S = clone(DEFAULTS); fillLineSelect(); update(true); }
+      else if (act === 'study') runStudy();
+    });
+
+    if ('ResizeObserver' in window) new ResizeObserver(function () { var w = root.clientWidth; if (w !== lastW) { lastW = w; update(false); } }).observe(root);
+    else window.addEventListener('resize', function () { update(false); });
+    function themeChanged() { C = U.readColors(root); update(false); }
+    var mo = new MutationObserver(function (list) { list.forEach(function (m) { if (m.attributeName === 'data-rzlang') applyLang(); else themeChanged(); }); });
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'class'] });
+    if (document.body) mo.observe(document.body, { attributes: true, attributeFilter: ['class', 'data-rzlang', 'data-theme'] });
+    if (window.matchMedia) { var mq = window.matchMedia('(prefers-color-scheme: dark)'); (mq.addEventListener ? mq.addEventListener('change', themeChanged) : mq.addListener(themeChanged)); }
+
+    compute(); applyLang();
+  });
+})();
+
+window.RZTools.version='1.3.0';
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',window.RZTools.boot);else window.RZTools.boot();

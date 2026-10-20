@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2D NDM Explorer · rz-tools</title>
+<meta name="description" content="Interactive NURBS-Divergence-Meshless (NDM) solver for steady heat conduction: cell equations from the divergence theorem in the NURBS parameter space, MLS or RBF approximation, direct Dirichlet conditions, and a comparison with finite elements.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* UTM maroon/gold tokens, shared with people.utm.my/arazin */
+:root {
+  --bg: #F4F6FA; --surface: #FFFFFF; --fg: #0F1624; --fg2: #5D6B85; --border: #DDE3EF;
+  --accent: #7B1535; --gold: #C8A020; --tag-bg: #F8EEF0;
+  --font-body: 'Poppins', system-ui, -apple-system, sans-serif; --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0B1020; --surface: #131D35; --fg: #E4EAF6; --fg2: #8A9BBC; --border: #22324F;
+  --accent: #D4607A; --gold: #D4A830; --tag-bg: #2A1520; color-scheme: dark; }
+  :root:not([data-theme="light"]) .rzt.rzt-on { --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414; } }
+:root[data-theme="dark"] {
+  --bg: #0B1020; --surface: #131D35; --fg: #E4EAF6; --fg2: #8A9BBC; --border: #22324F;
+  --accent: #D4607A; --gold: #D4A830; --tag-bg: #2A1520; color-scheme: dark; }
+:root[data-theme="dark"] .rzt.rzt-on { --rzt-ok: #7AC97A; --rzt-ok-bg: #0D2B0D; --rzt-warn: #E0B44A; --rzt-warn-bg: #2B1E00; --rzt-bad: #F08A8A; --rzt-bad-bg: #3A1414; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); }
+a { color: var(--accent); }
+.page { max-width: 1180px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-right, 0px)) 48px max(16px, env(safe-area-inset-left, 0px)); }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; border-bottom: 1px solid var(--border); }
+.brand { font-weight: 600; font-size: 15px; color: var(--fg); text-decoration: none; }
+.brand em { font-style: normal; color: var(--accent); } .brand span { color: var(--fg2); font-weight: 400; }
+.sw { display: flex; gap: 8px; }
+.seg { display: flex; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.seg button { font: 500 12px var(--font-mono); letter-spacing: .05em; padding: 5px 10px; border: 0; background: var(--surface); color: var(--fg2); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.intro { padding-block: 28px 22px; max-width: 760px; }
+.eyebrow { margin: 0 0 8px; font: 500 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+h1 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 36px); font-weight: 700; letter-spacing: -.01em; line-height: 1.15; text-wrap: balance; }
+.lead { margin: 0; font-size: 16px; line-height: 1.65; color: var(--fg2); }
+.rzt-doc { margin-top: 22px; max-width: 900px; }
+.foot { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--fg2); }
+body[data-rzlang="en"] [lang="ms"], body[data-rzlang="ms"] [lang="en"] { display: none !important; }
+</style>
+</head>
+<body data-rzlang="en">
+<div class="page">
+  <header class="top">
+    <a class="brand" href="https://people.utm.my/arazin/">A R <em>Zainal Abidin</em> <span>&middot; UTM</span></a>
+    <div class="sw">
+      <div class="seg" role="group" aria-label="Language" data-sw="lang"><button type="button" data-v="en" aria-pressed="true">EN</button><button type="button" data-v="ms" aria-pressed="false">BM</button></div>
+      <div class="seg" role="group" aria-label="Theme" data-sw="theme"><button type="button" data-v="light" aria-pressed="false">Light</button><button type="button" data-v="dark" aria-pressed="false">Dark</button></div>
+    </div>
+  </header>
+  <div class="intro">
+    <p class="eyebrow"><span lang="en">Interactive tool &middot; Meshfree methods · NURBS</span><span lang="ms">Alatan interaktif &middot; Meshfree methods · NURBS</span></p>
+    <h1>2D NDM Explorer</h1>
+    <p class="lead" lang="en">The divergence theorem turns the heat equation over each cell into four line integrals, and NURBS make every cell a rectangle in the parameter space, so each normal is simply (0, ±1) or (±1, 0). Inspect the equation of any cell, switch between MLS and RBF, let the cells overlap, and compare the accuracy with finite elements.</p>
+    <p class="lead" lang="ms">Teorem divergence menukar persamaan haba bagi setiap cell kepada empat line integral, dan NURBS menjadikan setiap cell segi empat tepat dalam ruang parameter, jadi setiap normal hanyalah (0, ±1) atau (±1, 0). Teliti persamaan mana-mana cell, tukar antara MLS dan RBF, biarkan cell bertindih, dan bandingkan ketepatannya dengan finite element.</p>
+  </div>
+
+  <div data-rz-tool="ndm2d"><p>Loading the interactive tool&hellip; (JavaScript required)</p></div>
+
+  <div class="rzt-doc">
+<div lang="en">
+<details open><summary>How the NDM method works</summary><div>
+<p>The NURBS-Divergence-Meshless method (Rasin et al., 2025) starts from steady heat conduction, k&nabla;&sup2;T + Q = 0, and does not use a weak form. Each node gets a cell, the equation is integrated over the cell, and the divergence theorem turns the area integral into the flux through the cell boundary:</p>
+<div class="rzt-eq">&#8750;<sub>&Gamma;<sub>c</sub></sub> &nabla;T &middot; n ds = &minus;&int;<sub>&Omega;<sub>c</sub></sub> Q / k d&Omega; = F&#770;</div>
+<p>The cells are drawn in the NURBS parameter space, where they are rectangles. On each side one component of the outward normal is &plusmn;1 and the other is 0, so the boundary integral splits into four line integrals along the sides (the paper&rsquo;s Eq. 8):</p>
+<div class="rzt-eq">&minus;&int;<sub>b</sub> (T,<sub>&xi;</sub> G<sub>12</sub> + T,<sub>&eta;</sub> G<sub>22</sub>) d&xi; + &int;<sub>r</sub> (T,<sub>&xi;</sub> G<sub>11</sub> + T,<sub>&eta;</sub> G<sub>12</sub>) d&eta; + &int;<sub>t</sub> (T,<sub>&xi;</sub> G<sub>12</sub> + T,<sub>&eta;</sub> G<sub>22</sub>) d&xi; &minus; &int;<sub>l</sub> (T,<sub>&xi;</sub> G<sub>11</sub> + T,<sub>&eta;</sub> G<sub>12</sub>) d&eta; = F&#770;<br>G<sub>11</sub> = (x<sub>&eta;</sub>&sup2; + y<sub>&eta;</sub>&sup2;) / |J| &nbsp;&nbsp; G<sub>12</sub> = &minus;(x<sub>&xi;</sub>x<sub>&eta;</sub> + y<sub>&xi;</sub>y<sub>&eta;</sub>) / |J| &nbsp;&nbsp; G<sub>22</sub> = (x<sub>&xi;</sub>&sup2; + y<sub>&xi;</sub>&sup2;) / |J|</div>
+<p>The G terms carry the whole geometry, taken from the derivatives of the NURBS map. Each side integral is one-dimensional and uses 1, 3 or 5 Gauss&ndash;Legendre points. The cell inspector beside the parameter space shows the four integrals for the selected node, evaluated with the solution, and their sum.</p>
+<ul>
+<li><b>Approximation.</b> T(&xi;, &eta;) = &Sigma;<sub>j</sub> N<sub>j</sub>(&xi;, &eta;) T<sub>j</sub>, built in the parameter space either by Moving Least Squares (quadratic basis, exponential weight e<sup>&minus;(r/c)&sup2;</sup>) or by Gaussian radial basis functions, R = e<sup>&minus;&alpha;<sub>c</sub>(r/d<sub>c</sub>)&sup2;</sup> with &alpha;<sub>c</sub> = 0.8, without polynomial terms, as in the paper.</li>
+<li><b>One row per node.</b> n nodes give n cell equations, each assembled as one row of the matrix. The system is banded but not symmetric, so it is solved by LU factorisation with partial pivoting.</li>
+<li><b>Boundary conditions.</b> On a prescribed-temperature edge the cell equation of a node is replaced by the condition itself, &Sigma;<sub>j</sub> N<sub>j</sub>(x<sub>I</sub>) T<sub>j</sub> = T&#770;. This direct imposition works even for MLS, whose shape functions do not interpolate, because nothing has to be integrated by parts (Li and Zhang, 2020). On a flux edge the prescribed flux replaces &nabla;T&middot;n on the boundary side and moves to the right-hand side.</li>
+<li><b>Cells.</b> Cells may overlap, or hold no node at all, and each still gives a valid balance equation. The paper finds that overlapping cells converge at a slightly lower rate.</li>
+</ul>
+<p>Choices in this tool: the support is a circle of radius d = &alpha;h in the parameter space (the paper uses the knot span); the MLS weight uses c = 0.3 d; the RBF uses d<sub>c</sub> = 2d; side integrals are split at the knot lines, and supports stop at C&#8304; knot lines; k = 1 W/(m&middot;K), which reproduces the paper&rsquo;s fan-blade temperatures.</p>
+</div></details>
+<details><summary>Things to try</summary><div>
+<ol>
+<li>Tap a node in the radial-flow problem and read its cell equation: the heat crosses the two radial sides (about &plusmn;2.5) and almost none crosses the two angular sides. The sum of the four is zero to round-off.</li>
+<li>Tap a node on the outer arc. Its row is the boundary condition, and with MLS its own shape function is only about 0.7 there (about 0.58 for an interior node), yet T at that node is exactly 30 &deg;C.</li>
+<li>Open the patch test: NDM-MLS recovers the quadratic temperature to about 10<sup>&minus;14</sup>, even with one Gauss point per side, overlapping cells or irregular nodes. Switch to RBF and it no longer does.</li>
+<li>Run the comparison. NDM-MLS converges at a rate of about 2.5, overlapping cells at about 2, bilinear Q4 at about 1, while the Gaussian RBF stalls once the nodes become dense.</li>
+<li>Open the fan blade. At refinement 6 (91 nodes) NDM-MLS is within about 0.02% of the paper&rsquo;s converged hub temperature, and Q4 on the same nodes within about 0.12%. Let the cells overlap and the error grows to about 0.2%.</li>
+<li>Change the Gauss points per side from 5 to 1. The fluxes along these short sides are nearly linear, so the answer hardly changes, as the paper also found.</li>
+<li>Show the knot lines on the fan blade and inspect a cell that straddles the bold line &xi; = 0.5: its side integrals are split at the knot, and the supports on either side stop there.</li>
+</ol>
+</div></details>
+</div>
+
+<div lang="ms">
+<details open><summary>Bagaimana kaedah NDM berfungsi</summary><div>
+<p>Kaedah NURBS-Divergence-Meshless (Rasin et al., 2025) bermula daripada konduksi haba mantap, k&nabla;&sup2;T + Q = 0, dan tidak menggunakan weak form. Setiap nod diberi satu cell, persamaan dikamir ke atas cell itu, dan teorem divergence menukar kamiran luas kepada fluks merentasi sempadan cell:</p>
+<div class="rzt-eq">&#8750;<sub>&Gamma;<sub>c</sub></sub> &nabla;T &middot; n ds = &minus;&int;<sub>&Omega;<sub>c</sub></sub> Q / k d&Omega; = F&#770;</div>
+<p>Cell dilukis dalam ruang parameter NURBS, di mana ia berbentuk segi empat tepat. Pada setiap sisi, satu komponen normal luar ialah &plusmn;1 dan satu lagi 0, jadi kamiran sempadan terpecah kepada empat line integral sepanjang sisi (Pers. 8 dalam paper):</p>
+<div class="rzt-eq">&minus;&int;<sub>b</sub> (T,<sub>&xi;</sub> G<sub>12</sub> + T,<sub>&eta;</sub> G<sub>22</sub>) d&xi; + &int;<sub>r</sub> (T,<sub>&xi;</sub> G<sub>11</sub> + T,<sub>&eta;</sub> G<sub>12</sub>) d&eta; + &int;<sub>t</sub> (T,<sub>&xi;</sub> G<sub>12</sub> + T,<sub>&eta;</sub> G<sub>22</sub>) d&xi; &minus; &int;<sub>l</sub> (T,<sub>&xi;</sub> G<sub>11</sub> + T,<sub>&eta;</sub> G<sub>12</sub>) d&eta; = F&#770;<br>G<sub>11</sub> = (x<sub>&eta;</sub>&sup2; + y<sub>&eta;</sub>&sup2;) / |J| &nbsp;&nbsp; G<sub>12</sub> = &minus;(x<sub>&xi;</sub>x<sub>&eta;</sub> + y<sub>&xi;</sub>y<sub>&eta;</sub>) / |J| &nbsp;&nbsp; G<sub>22</sub> = (x<sub>&xi;</sub>&sup2; + y<sub>&xi;</sub>&sup2;) / |J|</div>
+<p>Sebutan G membawa seluruh maklumat geometri, diambil daripada terbitan pemetaan NURBS. Setiap kamiran sisi adalah satu dimensi dan menggunakan 1, 3 atau 5 titik Gauss&ndash;Legendre. Pemeriksa cell di sebelah ruang parameter menunjukkan empat kamiran bagi nod terpilih, dinilai dengan penyelesaian, serta jumlahnya.</p>
+<ul>
+<li><b>Approximation.</b> T(&xi;, &eta;) = &Sigma;<sub>j</sub> N<sub>j</sub>(&xi;, &eta;) T<sub>j</sub>, dibina dalam ruang parameter sama ada dengan Moving Least Squares (basis kuadratik, weight eksponen e<sup>&minus;(r/c)&sup2;</sup>) atau dengan radial basis functions Gaussian, R = e<sup>&minus;&alpha;<sub>c</sub>(r/d<sub>c</sub>)&sup2;</sup> dengan &alpha;<sub>c</sub> = 0.8, tanpa sebutan polinomial, seperti dalam paper.</li>
+<li><b>Satu baris setiap nod.</b> n nod memberi n persamaan cell, setiap satu dipasang sebagai satu baris matriks. Sistemnya berjalur tetapi tidak simetri, jadi ia diselesaikan dengan pemfaktoran LU dengan partial pivoting.</li>
+<li><b>Syarat sempadan.</b> Pada sisi bersuhu tetap, persamaan cell bagi nod digantikan dengan syarat itu sendiri, &Sigma;<sub>j</sub> N<sub>j</sub>(x<sub>I</sub>) T<sub>j</sub> = T&#770;. Pengenaan terus ini berfungsi walaupun untuk MLS, yang shape functions-nya tidak menginterpolasi, kerana tiada apa yang perlu dikamir secara bahagian (Li dan Zhang, 2020). Pada sisi fluks, fluks yang ditetapkan menggantikan &nabla;T&middot;n pada sisi sempadan dan berpindah ke sebelah kanan persamaan.</li>
+<li><b>Cell.</b> Cell boleh bertindih, atau tidak mengandungi sebarang nod, dan setiap satu tetap memberi persamaan keseimbangan yang sah. Paper mendapati cell bertindih converge pada kadar yang sedikit lebih rendah.</li>
+</ul>
+<p>Pilihan dalam tool ini: support ialah bulatan berjejari d = &alpha;h dalam ruang parameter (paper menggunakan knot span); weight MLS menggunakan c = 0.3 d; RBF menggunakan d<sub>c</sub> = 2d; kamiran sisi dipecahkan pada knot lines, dan support berhenti pada knot lines C&#8304;; k = 1 W/(m&middot;K), yang menghasilkan semula suhu bilah kipas dalam paper.</p>
+</div></details>
+<details><summary>Cubaan untuk anda</summary><div>
+<ol>
+<li>Ketik satu nod dalam masalah aliran jejarian dan baca persamaan cell-nya: haba merentasi dua sisi jejarian (kira-kira &plusmn;2.5) dan hampir tiada yang merentasi dua sisi sudut. Jumlah keempat-empatnya sifar hingga ralat pembundaran.</li>
+<li>Ketik satu nod pada lengkok luar. Barisnya ialah syarat sempadan, dan dengan MLS shape function-nya sendiri hanya kira-kira 0.7 di situ (kira-kira 0.58 bagi nod dalaman), namun T pada nod itu tepat 30 &deg;C.</li>
+<li>Buka patch test: NDM-MLS memperoleh semula suhu kuadratik hingga kira-kira 10<sup>&minus;14</sup>, walaupun dengan satu Gauss point setiap sisi, cell bertindih atau nod tidak sekata. Tukar kepada RBF dan ia tidak lagi berbuat demikian.</li>
+<li>Jalankan perbandingan. NDM-MLS converge pada kadar kira-kira 2.5, cell bertindih kira-kira 2, bilinear Q4 kira-kira 1, manakala RBF Gaussian terhenti apabila nod menjadi padat.</li>
+<li>Buka bilah kipas. Pada refinement 6 (91 nod), NDM-MLS berada dalam lingkungan kira-kira 0.02% daripada suhu hab converged dalam paper, dan Q4 pada nod yang sama dalam lingkungan kira-kira 0.12%. Biarkan cell bertindih dan ralat meningkat kepada kira-kira 0.2%.</li>
+<li>Ubah Gauss points setiap sisi dari 5 ke 1. Fluks sepanjang sisi pendek ini hampir linear, jadi jawapan hampir tidak berubah, seperti yang turut didapati dalam paper.</li>
+<li>Paparkan knot lines pada bilah kipas dan periksa cell yang merentasi garis tebal &xi; = 0.5: kamiran sisinya dipecahkan pada knot itu, dan support di kedua-dua belah berhenti di situ.</li>
+</ol>
+</div></details>
+</div>
+
+  </div>
+  <p class="foot">rz-tools v1.3.0 &middot; Faculty of Civil Engineering, Universiti Teknologi Malaysia &middot; <a href="https://people.utm.my/arazin/">people.utm.my/arazin</a> &middot; <a href="https://github.com/RazinUTM/rz-tools">source</a></p>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  if (!document.body.getAttribute('data-rzlang')) document.body.setAttribute('data-rzlang', 'en');
+  function press(g, v) { document.querySelectorAll('[data-sw="' + g + '"] button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === v)); }); }
+  var dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+  press('theme', dark ? 'dark' : 'light');
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-sw] button'); if (!b) return;
+    var g = b.parentNode.getAttribute('data-sw'), v = b.getAttribute('data-v');
+    if (g === 'lang') document.body.setAttribute('data-rzlang', v); else root.setAttribute('data-theme', v);
+    press(g, v);
+  });
+})();
+</script>
+<script src="../dist/rz-tools.js"></script>
+</body>
+</html>
